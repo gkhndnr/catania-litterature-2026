@@ -112,3 +112,6 @@ ul.checks li::before{content:"";position:absolute;left:0;top:4px;width:16px;heig
 .prose.wide{max-width:none;padding:0}
 .prose.wide table{margin-bottom:16px}
 .lead.small,.small{font-size:16px;color:var(--soft)}
+.rc.crit{border-top-color:var(--blue);background:#EEF3F6}
+.rc .small{font-size:13.5px;color:var(--mute)}
+.notes{font-size:15.5px;line-height:1.55}
