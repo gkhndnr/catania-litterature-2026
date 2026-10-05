@@ -88,3 +88,27 @@ h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.1}
 .audio summary{cursor:pointer;font-weight:600;color:var(--blue)}
 .audio details p{max-width:70ch;margin:8px 0}
 .audio-note{margin:8px 0 0;font-size:13px;color:var(--mute)}
+
+/* feuille de route (2026-10 refonte) */
+.route{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin:8px 0 20px}
+.rc{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--wine);padding:16px 20px}
+.rc:nth-child(2){border-top-color:var(--blue)}.rc:nth-child(3){border-top-color:var(--ink)}.rc:nth-child(4){border-top-color:var(--gold)}
+.rc h2{font-size:21px;margin:0 0 8px}
+.rc ul,.rc ol{margin:0;padding-left:1.2em;color:var(--soft);font-size:15.5px}
+.rc li{margin:4px 0}
+.rc b{color:var(--ink)}
+.rc p{margin:8px 0 0;font-size:15.5px;color:var(--soft)}
+.rc.ia{background:var(--ink);border-color:var(--ink);color:#D8CFDD}
+.rc.ia h2,.rc.ia b{color:var(--paper)}.rc.ia ol,.rc.ia p{color:#D8CFDD}.rc.ia a{color:var(--gold)}
+ul.checks{list-style:none;padding-left:0}
+ul.checks li{padding-left:28px;position:relative}
+ul.checks li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;border:2px solid var(--wine);border-radius:3px}
+.prod{padding-top:8px;border-top:1px dashed var(--line)}
+.deckt{font-size:28px;margin:28px 0 12px}
+.how .howgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;font-size:15.5px;color:var(--soft)}
+.how .howgrid div{background:var(--card);border:1px solid var(--line);padding:18px}
+.how .howgrid b{display:block;font:700 19px var(--serif);color:var(--ink);margin-bottom:4px}
+.wk .wa{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--wine);font-weight:700;margin-top:4px}
+.prose.wide{max-width:none;padding:0}
+.prose.wide table{margin-bottom:16px}
+.lead.small,.small{font-size:16px;color:var(--soft)}
