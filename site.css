@@ -80,3 +80,11 @@ h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 [hidden]{display:none!important}
 @media (min-width:700px){.stage:not(:fullscreen){max-width:calc((100vh - 230px) * 16 / 9);margin-inline:auto}.controls,.notes{max-width:calc((100vh - 230px) * 16 / 9);margin-inline:auto}}
+
+.audio{margin:16px 0 20px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--wine)}
+.audio-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}
+.audio audio{flex:1 1 280px;max-width:100%;height:40px}
+.audio details{margin-top:10px;color:var(--soft)}
+.audio summary{cursor:pointer;font-weight:600;color:var(--blue)}
+.audio details p{max-width:70ch;margin:8px 0}
+.audio-note{margin:8px 0 0;font-size:13px;color:var(--mute)}

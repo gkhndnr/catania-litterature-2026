@@ -4,6 +4,7 @@ Site du cours « Letteratura francese dal Preromanticismo a Les années folles �
 
 - `index.html` : accueil, calendrier des 8 semaines, outils, charte IA
 - `s1.html` … `s8.html` : présentations hebdomadaires (flèches du clavier, balayage sur mobile, plein écran, notes de l'enseignant en option)
+- `audio/s1.mp3` … `audio/s8.mp3` : résumés audio hebdomadaires (voix de synthèse, environ 2 min), lus depuis chaque page de semaine avec leur transcription
 - `carnet.html` : carnet de l'enseignant, séance par séance
 - Atelier IA : https://claude.ai/artifact/CFbd252hSjfJVZJkZSWaEU
 
