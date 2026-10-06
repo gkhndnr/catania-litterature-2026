@@ -10,7 +10,7 @@ os.makedirs(IMG, exist_ok=True)
 SPECS = {
  "accueil": dict(page="index.html", width=1280, top="body", bottom=".weeks .wk:nth-child(4)",
    pins=[(".bar nav a[href='s1.html']","below"), (".bar nav a[href='guide.html']","below"), (".bar nav a[href='biblio.html']","below"),
-         (".bar nav a[href='carnet.html']","below"), (".bar nav a[target]","below"), (".weeks .wk:first-child","tr")]),
+         (".bar nav a[href='carnet.html']","below"), (".bar nav a[href*='classroom']","below"), (".bar nav a[href*='claude.ai']","below"), (".weeks .wk:first-child","tr")]),
  "semaine": dict(page="s1.html", width=1280, top=".weektabs", bottom=".audio",
    pins=[(".weektabs a:last-child","right"), (".deckhead h1","right"), (".route .rc:nth-child(1) h2","right"), (".route .rc:nth-child(2) h2","right"),
          (".route .rc:nth-child(4) h2","right"), (".route .rc.ia h2","right"), (".route .rc.crit h2","right"), (".audio .eyebrow","right")]),

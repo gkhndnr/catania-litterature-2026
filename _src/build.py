@@ -21,6 +21,18 @@ SANS = "'Source Sans 3', Arial, sans-serif"
 HAND = "'Caveat', 'Brush Script MT', cursive"
 APP = "https://claude.ai/artifact/CFbd252hSjfJVZJkZSWaEU"
 SITE = "https://gkhndnr.github.io/catania-litterature-2026/"
+CLASSROOM = "https://classroom.google.com/c/ODg5MzMzMTU4ODc4?cjc=rxdffgje"
+CLASS_CODE = "rxdffgje"
+
+def qr(url, px=None, fg="#1F1A24"):
+    import qrcode, qrcode.image.svg
+    q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, border=2, image_factory=qrcode.image.svg.SvgPathImage)
+    q.add_data(url); q.make(fit=True)
+    svg = q.make_image().to_string(encoding="unicode")
+    vb = re.search(r'viewBox="([^"]+)"', svg).group(1); d = re.search(r' d="([^"]+)"', svg).group(1)
+    size = f' width="{px}" height="{px}"' if px else ''
+    return (f'<svg class="qr" viewBox="{vb}"{size} role="img" aria-label="QR code : {a(url)}" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">'
+            f'<rect width="100%" height="100%" fill="#fff"/><path d="{d}" fill="{fg}"/></svg>')
 COURSE = "Letteratura francese dal Preromanticismo a Les années folles"
 
 def nb(t):
@@ -171,17 +183,21 @@ def s_bilan(w):
     return slide("bilan", INK, PAPER, inner, extra="gap:36px", foot=footer(w))
 
 def s_site(w):
-    cols = [("Avant la séance", WINE, [("Page de la semaine","S1 … S8 : objectifs, textes, séances, devoirs"),("Résumé audio","moins de 2 min, avec la transcription"),("Bibliographie","les lectures critiques de chaque semaine")]),
+    cols = [("Avant la séance", WINE, [("Page de la semaine","objectifs, textes, séances, devoirs"),("Résumé audio","moins de 2 min, avec la transcription"),("Classroom","présentation et textes en PDF")]),
             ("En classe", BLUE, [("Présentation","flèches du clavier, clic ou balayage"),("Plein écran","bouton sous la présentation"),("Numéro","#5 dans l'adresse ouvre la 5e diapositive")]),
-            ("Après la séance", INK, [("Production","à déposer sur Studium chaque semaine"),("Atelier du siècle","l'IA propose, vous vérifiez dans le texte"),("Anthologie A.2","deux ou trois extraits par semaine")])]
-    cards = "".join(card(f'<p style="font-size:24px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{c}">{e(t)}</p>' +
-                         "".join(f'<div style="display:flex; flex-direction:column; gap:2px; padding:12px 0; border-bottom:1px solid {LINE}"><p style="font-family:{SERIF}; font-size:34px; font-weight:700">{e(k)}</p><p style="font-size:26px; line-height:1.3; color:{SOFT}">{e(v)}</p></div>' for k,v in items),
-                         top=c, pad="30px 34px") for t,c,items in cols)
+            ("Après la séance", INK, [("Production","à déposer sur Classroom chaque semaine"),("Atelier du siècle","l'IA propose, vous vérifiez dans le texte"),("Anthologie A.2","deux ou trois extraits par semaine")])]
+    cards = "".join(card(f'<p style="font-size:22px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{c}">{e(t)}</p>' +
+                         "".join(f'<div style="display:flex; flex-direction:column; gap:2px; padding:10px 0; border-bottom:1px solid {LINE}"><p style="font-family:{SERIF}; font-size:30px; font-weight:700">{e(k)}</p><p style="font-size:24px; line-height:1.3; color:{SOFT}">{e(v)}</p></div>' for k,v in items),
+                         top=c, pad="26px 28px") for t,c,items in cols)
+    qbox = lambda url, t, sub: (f'<div style="display:flex; gap:20px; align-items:center"><div style="flex:none; width:210px; height:210px">{qr(url, 210)}</div>'
+                                f'<div style="display:flex; flex-direction:column; gap:6px"><p style="font-family:{SERIF}; font-size:30px; font-weight:700; line-height:1.1">{e(t)}</p><p style="font-size:21px; line-height:1.3; color:{SOFT}">{e(sub)}</p></div></div>')
     inner = head("Mode d'emploi", "Le site du cours : qui trouve quoi, où ?") + (
-      f'<div style="display:flex; gap:28px; flex:1">{cards}</div>'
-      f'<div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px">'
-      f'<p style="font-family:{SERIF}; font-size:38px; font-weight:700; color:{WINE}">gkhndnr.github.io/catania-litterature-2026</p>'
-      f'<p style="font-size:26px; color:{SOFT}">Page Mode d\'emploi : tout le détail, étudiants et enseignants</p></div>')
+      f'<div style="display:flex; gap:24px; flex:1">{cards}'
+      f'<div style="flex:none; width:520px; display:flex; flex-direction:column; justify-content:space-between; gap:20px; padding:26px 28px; background:{CARD}; border-top:8px solid {GOLD}; border-radius:12px">'
+      f'<p style="font-size:22px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#9A6B12">Scannez</p>'
+      + qbox(CLASSROOM, "Google Classroom", f"rejoindre la classe · code {CLASS_CODE}")
+      + qbox(SITE, "Le site du cours", "gkhndnr.github.io/ catania-litterature-2026")
+      + '</div></div>')
     return slide("site", PAPER, INK, inner, extra="gap:30px", foot=footer(w))
 
 # ------------------------------------------------------------------ raw slides from old site
@@ -252,6 +268,7 @@ def shell(title, desc, active, body):
            f'<a href="guide.html"{" aria-current=page" if active=="guide" else ""}>Mode d\'emploi</a>'
            f'<a href="biblio.html"{" aria-current=page" if active=="biblio" else ""}>Bibliographie</a>'
            f'<a href="carnet.html"{" aria-current=page" if active=="carnet" else ""}>Enseignant</a>'
+           f'<a href="{CLASSROOM}" target=_blank rel=noopener>Classroom ↗</a>'
            f'<a href="{APP}" target=_blank rel=noopener>Atelier du siècle ↗</a>')
     return (f'<!doctype html>\n<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
             f'<title>{e(title)}</title><meta name="description" content="{a(desc)}">{FONTS}\n<link rel="stylesheet" href="site.css"></head><body>'
@@ -304,6 +321,7 @@ def week_page(w):
     body = (f'<main class="deckpage"><div class="weektabs" aria-label="Semaines">{tabs}</div>'
       f'<div class="deckhead"><p class="eyebrow">Semaine {w["n"]} · {e(w["dates"])} 2026 · {e(w["period"])}</p><h1>{e(w["title"])}</h1><p class="sub">{e(w["sub"])}</p></div>'
       + route(w) +
+      f'<p class="pdfs"><b>PDF pour travailler hors ligne</b> (aussi déposés sur <a href="{CLASSROOM}" target=_blank rel=noopener>Classroom</a>) : <a href="pdf/s{w["n"]}-presentation.pdf">présentation</a> · <a href="pdf/s{w["n"]}-textes.pdf">dossier de textes</a> · <a href="pdf/s{w["n"]}-guide-enseignant.pdf">guide de l\'enseignant</a></p>'
       f'<section class="audio" id="audio" aria-label="Résumé audio de la semaine {w["n"]}"><div class="audio-head"><p class="eyebrow">Résumé audio · moins de 2 minutes</p><audio controls preload="none" src="audio/s{w["n"]}.mp3">Votre navigateur ne lit pas l\'audio : <a href="audio/s{w["n"]}.mp3">télécharger le MP3</a>.</audio></div><details><summary>Lire la transcription</summary>{aud}</details><p class="audio-note">Voix de synthèse : en cas de doute sur une prononciation, le texte écrit fait foi.</p></section>'
       f'<h2 class="deckt">La présentation</h2>'
       f'<div class="stage" id="stage" tabindex="0" aria-label="Présentation, flèches pour naviguer">{frames}</div>'
@@ -339,6 +357,16 @@ def tagline(w):
     if b: p.append("Partie B : nouvelle")
     return " · ".join(p) or "Contexte et méthode"
 
+def access_block():
+    def card_(url, title, lines, label):
+        lis = "".join(f"<li>{e(x)}</li>" for x in lines)
+        return (f'<div class="qcard"><a class="qimg" href="{a(url)}" target=_blank rel=noopener aria-label="{a(label)}">{qr(url)}</a>'
+                f'<div><h3>{e(title)}</h3><ul>{lis}</ul><p><a class="btn" href="{a(url)}" target=_blank rel=noopener>{e(label)} ↗</a></p></div></div>')
+    return ('<section class="access" aria-label="Accès rapide"><h2>Accès rapide</h2><p class="lead small">Scannez avec l\'appareil photo du téléphone, ou cliquez.</p><div class="qgrid">'
+      + card_(CLASSROOM, "Google Classroom du cours", ["Rejoindre la classe : code " + CLASS_CODE + ".", "Chaque semaine : la présentation et le dossier de textes en PDF.", "Dépôt des productions et annonces."], "Rejoindre la classe")
+      + card_(SITE, "Ce site sur votre téléphone", ["Feuilles de route, résumés audio, présentations.", "À garder dans les favoris pour toute la durée du cours.", "Première visite : lisez le Mode d'emploi."], "Ouvrir le site")
+      + '</div></section>')
+
 def index_page():
     cards = "".join(f'<a class="wk" href="s{w["n"]}.html"><span class="wn">{w["n"]}</span><span class="wd">{e(w["dates"])} · {e(w["period"])}</span><b>{e(w["title"])}</b><span class="ws">{e(w["sub"].split(" · ")[0])}</span><span class="wr">{e(w["recit"])}</span><span class="wa">{tagline(w)}</span></a>' for w in WEEKS)
     body = (f'<main class="home"><section class="hero"><p class="eyebrow">Università di Catania · DISUM · automne 2026</p>'
@@ -346,8 +374,9 @@ def index_page():
       '<p class="lead">Huit semaines pour lire la littérature française de Rousseau aux Années folles : un texte du programme travaillé de près, une nouvelle, une méthode de commentaire pas à pas, et un atelier où l\'IA propose et le lecteur vérifie.</p>'
       '<p class="hand">Qui a le pouvoir de dire ce qu\'est la bonne littérature ?</p>'
       '<p class="meta">Gökhan Dinar, Visiting Professor · du 12 octobre au 5 décembre 2026 · trois séances de 2 heures par semaine</p></section>'
+      + access_block() +
       '<section class="how"><h2>Comment on travaille</h2><div class="howgrid">'
-      '<div><b>Chaque semaine</b>Des objectifs clairs, les textes de la fiche du cours, trois séances (contexte, texte, nouvelle et IA) et une petite production à déposer sur Studium.</div>'
+      '<div><b>Chaque semaine</b>Des objectifs clairs, les textes de la fiche du cours, trois séances (contexte, texte, nouvelle et IA) et une petite production à déposer sur Classroom.</div>'
       '<div><b>La fiche du cours</b>Les six paires de la liste A.1, les nouvelles de la partie B et des extraits pour votre anthologie A.2 sont tous travaillés en classe, par extraits.</div>'
       '<div><b>L\'examen</b>Je ne fais pas passer l\'examen. Le cours vous y prépare : commentaire écrit en huit étapes, lecture expressive, traduction, contexte.</div>'
       '<div><b>Pour réviser</b>Un résumé audio d\'moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
@@ -399,12 +428,12 @@ def carnet_page():
       '<li class="todo">Qui organise l\'écrit et l\'oral, et à quelles dates.</li>'
       '<li class="todo">Contenu de la première semaine assurée par Carminella Sipala.</li>'
       '<li class="todo">Accès des étudiants à claude.ai en classe.</li>'
-      '<li class="todo">Diffusion du lien du site sur Studium.</li></ul>'
+      '<li class="todo">Diffusion aux étudiants du lien du site et de l\'invitation Google Classroom (QR codes sur la page d\'accueil).</li></ul>'
       '<h2>Détails à vérifier dans les éditions</h2><ul>'
       '<li>René Vivien, Études et préludes : la fiche indique 1902, l\'édition originale (Lemerre) est généralement datée de 1901.</li>'
       '<li>Le Lac : ponctuation de la strophe du temps selon l\'édition utilisée.</li>'
       '<li>Gautier à Hernani : gilet rouge dans la tradition, pourpoint rose dans son Histoire du romantisme.</li>'
-      '<li>Droits : Cendrars, Breton, Maran, Morand ne sont pas dans le domaine public ; citations courtes seulement sur Studium.</li></ul>'
+      '<li>Droits : Cendrars, Breton, Maran, Morand ne sont pas dans le domaine public ; citations courtes seulement sur Classroom.</li></ul>'
       '</main>')
     open(os.path.join(OUT, "carnet.html"), "w", encoding="utf-8").write(shell("Carnet de l'enseignant · Catania 2026", "Carnet de l'enseignant : déroulé des séances, calendrier et correspondance avec la fiche du cours.", "carnet", body))
 

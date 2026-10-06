@@ -14,25 +14,28 @@ def S(key, alt, cap, mobile=False):
     return dict(src=f"img/guide-{key}.jpg", alt=alt, cap=cap, w=d["w"], h=d["h"], pins=d["pins"], mobile=mobile)
 
 APP = "https://claude.ai/artifact/CFbd252hSjfJVZJkZSWaEU"
+CLASSROOM = "https://classroom.google.com/c/ODg5MzMzMTU4ODc4?cjc=rxdffgje"
 
 GUIDE = dict(
 sub="Ce site accompagne le cours Letteratura francese dal Preromantismo a Les années folles (Università di Catania, automne 2026). Cette page explique où se trouve chaque chose et comment l'utiliser, d'abord pour les étudiants, puis pour les enseignants.",
-quick=[("Commencer","Ouvrir la semaine en cours","s1.html"),
+quick=[("Classroom","Rejoindre la classe (code rxdffgje)",CLASSROOM),
+       ("Commencer","Ouvrir la semaine en cours","s1.html"),
        ("Écouter","Résumé audio de la semaine 1","s1.html#audio"),
        ("Lire","Bibliographie et lectures critiques","biblio.html"),
        ("S'entraîner","L'Atelier du siècle (IA)",APP),
        ("Enseigner","Guide imprimable de la semaine 1","prof-s1.html")],
 parts=[
  dict(id="etudiants", title="Pour les étudiants",
-  intro="En cinq minutes : le site est organisé par semaines. Chaque semaine a une page avec une feuille de route, un résumé audio et une présentation. Studium reste la plateforme officielle pour les textes intégraux et pour déposer vos productions.",
+  intro="En cinq minutes : le site est organisé par semaines. Chaque semaine a une page avec une feuille de route, un résumé audio et une présentation. Google Classroom est l'espace de la classe : on y trouve chaque semaine la présentation et le dossier de textes en PDF, on y dépose ses productions et on y lit les annonces.",
   blocks=[
    dict(title="1. La page d'accueil",
-    text=["La barre noire en haut de chaque page vous permet d'aller partout. La page d'accueil présente le cours, les huit semaines, la correspondance avec la fiche officielle du cours (listes A.1, B et A.2) et la charte IA."],
+    text=["La barre noire en haut de chaque page vous permet d'aller partout. Juste sous le titre de la page d'accueil, l'encadré Accès rapide donne deux QR codes : l'un pour rejoindre la classe Google Classroom (code rxdffgje), l'autre pour ouvrir le site sur votre téléphone. La page d'accueil présente aussi le cours, les huit semaines, la correspondance avec la fiche officielle du cours (listes A.1, B et A.2) et la charte IA."],
     shot=S("accueil","Page d'accueil du site avec la barre de navigation et les cartes des semaines","La page d'accueil : la barre de navigation et la première carte de semaine."),
     legend=[("Semaines","ouvre la semaine 1 ; on passe ensuite d'une semaine à l'autre par les onglets S1 à S8."),
             ("Mode d'emploi","cette page."),
             ("Bibliographie","toutes les œuvres et lectures critiques, semaine par semaine."),
             ("Enseignant","le carnet de l'enseignant et les guides imprimables (utile aussi pour réviser)."),
+            ("Classroom","la classe Google Classroom : présentations et textes en PDF, dépôt des productions, annonces."),
             ("Atelier du siècle","l'outil d'IA du cours, sur claude.ai (il faut un compte)."),
             ("Carte de semaine","dates, période, titre, nouvelle étudiée et textes de la fiche du cours : un clic ouvre la semaine.")]),
    dict(title="2. La page d'une semaine : la feuille de route",
@@ -42,7 +45,7 @@ parts=[
             ("Titre et période","le thème de la semaine et les dates de l'histoire littéraire couvertes."),
             ("Je peux…","les objectifs ; cochez-les mentalement à la fin de la semaine."),
             ("Dans la fiche du cours","les textes des listes A.1, B et A.2 travaillés cette semaine."),
-            ("Avant la semaine suivante","ce qu'il faut lire, et Ma production : le petit travail à déposer sur Studium."),
+            ("Avant la semaine suivante","ce qu'il faut lire, et Ma production : le petit travail à déposer sur Classroom."),
             ("Labo IA","les trois gestes de l'atelier IA (demander, vérifier, améliorer) et le lien vers l'Atelier du siècle."),
             ("Lecture critique","l'article ou le chapitre de critique discuté en classe, avec sa référence."),
             ("Résumé audio","moins de 2 minutes pour réviser ; la transcription est juste en dessous.")]),
@@ -67,7 +70,7 @@ parts=[
    dict(title="5. Votre semaine type",
     steps=["Avant la séance A : lire la feuille de route et écouter le résumé audio (5 minutes).",
            "Pendant les séances : suivre la présentation, prendre des notes, lire à voix haute quand on vous le demande.",
-           "Après la séance C : revoir la présentation avec les notes de l'enseignant, écrire votre production, la déposer sur Studium.",
+           "Après la séance C : revoir la présentation avec les notes de l'enseignant, écrire votre production, la déposer sur Classroom.",
            "Chaque semaine : choisir deux ou trois extraits pour votre anthologie A.2 (rubrique Pour mon anthologie).",
            "Pendant tout le semestre : lire en entier une œuvre de chaque paire de la liste A.1 (six œuvres au total)."]),
    dict(title="6. L'Atelier du siècle et la charte IA",
@@ -82,7 +85,7 @@ parts=[
            "Lire le plan des trois séances avec les durées, puis les notes diapositive par diapositive : les lignes Q. sont les questions à poser, les lignes R. leurs réponses.",
            "Vérifier la rubrique Prononcer les noms propres et la rubrique Questions fréquentes des étudiants.",
            "Écouter le résumé audio de la semaine : c'est ce que les étudiants auront entendu.",
-           "Préparer sur Studium les textes intégraux signalés dans À anticiper (carnet)."],
+           "Préparer sur Classroom les textes intégraux signalés dans À anticiper (carnet)."],
     shot=S("prof","Guide imprimable de l'enseignant pour la semaine 1","Le guide imprimable de l'enseignant : l'essentiel, le plan, puis toutes les notes."),
     legend=[("Imprimer","imprime le guide (les menus disparaissent à l'impression)."),
             ("Comment utiliser ce guide","rappel de la logique Q. / R."),
@@ -113,11 +116,11 @@ parts=[
           ["Notes de l'enseignant","case à cocher sous la présentation"],
           ["Imprimer les notes","page Guide imprimable, bouton Imprimer ce guide"]])]),
 ],
-faq=[("Le site remplace-t-il Studium ?","Non. Studium reste la plateforme officielle : textes intégraux, dépôt des productions, annonces. Le site est le guide du cours."),
+faq=[("Le site remplace-t-il Google Classroom ?","Non. Google Classroom est l'espace de la classe : présentations et textes en PDF, dépôt des productions, annonces. Le site est le guide du cours. Pour rejoindre la classe : lien ou QR code sur la page d'accueil."),
      ("Le site est-il mis à jour ?","Oui, chaque semaine : nouvelles lectures critiques, notes plus détaillées, corrections. Rechargez la page si un contenu semble ancien."),
      ("Faut-il lire les notes de l'enseignant ?","Elles sont publiques et utiles pour réviser. Mais essayez d'abord de répondre aux questions vous-mêmes."),
      ("Les citations du site sont-elles fiables ?","Elles sont vérifiées dans les éditions ; en cas de doute, l'édition imprimée fait foi. Signalez toute erreur à l'enseignant : c'est aussi un exercice."),
      ("La voix du résumé audio prononce mal un nom : que faire ?","C'est une voix de synthèse. Le texte écrit (transcription) fait foi ; les prononciations conseillées sont dans le guide de l'enseignant de la semaine."),
      ("L'Atelier du siècle ne s'ouvre pas.","Il faut être connecté à un compte claude.ai dans le même navigateur. Sinon, travailler en binôme ou en grand groupe."),
-     ("Qui contacter ?","Gökhan Dinar, Visiting Professor, par la messagerie de Studium ou à la fin des séances.")],
+     ("Qui contacter ?","Gökhan Dinar, Visiting Professor, par Google Classroom (commentaires privés ou annonces) ou à la fin des séances.")],
 )

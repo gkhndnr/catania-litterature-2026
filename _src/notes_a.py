@@ -18,11 +18,11 @@ NOTES[1] = {
 
 "site": N("10 min, séance A, après les présentations",
   "Projeter la diapositive puis ouvrir le site en direct. Montrer dans l'ordre : 1. la page d'accueil et la carte de la semaine 1 ; 2. la feuille de route (objectifs, fiche du cours, séances, devoirs, anthologie, labo IA, lecture critique) ; 3. le lecteur audio et la transcription ; 4. la présentation (flèches, plein écran) ; 5. la page Mode d'emploi ; 6. l'Atelier du siècle (ne pas encore se connecter, ce sera en séance C) ; 7. la Bibliographie. Demander aux étudiants d'ouvrir le site sur leur téléphone pendant la démonstration.",
-  essentiel="Le site remplace un polycopié : tout y est (objectifs, textes, devoirs, audio, présentation). Studium reste la plateforme officielle de l'université pour déposer les productions et trouver les textes intégraux. Le site est public et mis à jour chaque semaine ; les notes de l'enseignant sont visibles si on coche la case, ce qui est voulu : les étudiants peuvent relire les réponses après la séance.",
+  essentiel="Le site remplace un polycopié : tout y est (objectifs, textes, devoirs, audio, présentation). Google Classroom est l'espace de la classe : chaque semaine l'enseignant y dépose la présentation et le dossier de textes en PDF (utile en cas de panne de réseau), les étudiants y déposent leurs productions. Le lien d'invitation et son QR code sont sur la page d'accueil du site et sur la diapositive Mode d'emploi. Le site est public et mis à jour chaque semaine ; les notes de l'enseignant sont visibles si on coche la case, ce qui est voulu : les étudiants peuvent relire les réponses après la séance.",
   qr=[("Où trouve-t-on ce qu'il faut lire pour la semaine prochaine ?",
        "Sur la page de la semaine, carte Avant la semaine 2 (et sur la dernière diapositive, Bilan et suite)."),
       ("Où dépose-t-on la production de la semaine ?",
-       "Sur Studium, pas sur le site. Le site dit seulement quoi produire (carte Ma production)."),
+       "Sur Classroom, pas sur le site. Le site dit seulement quoi produire (carte Ma production)."),
       ("Le site remplace-t-il la lecture des œuvres ?",
        "Non. Il donne des extraits, des repères et des méthodes. Les œuvres de la liste A.1 doivent être lues en entier dans une édition imprimée ou sur Wikisource."),
       ("Peut-on utiliser le site sur téléphone ?",
@@ -38,7 +38,7 @@ NOTES[1] = {
   piege="Les étudiants confondent souvent A.1 et A.2. Le dire deux fois et l'écrire au tableau."),
 
 "seances": N("3 min",
-  "Présenter le rythme fixe de chaque semaine : séance A, contexte (énigme, frise, auteurs, outil) ; séance B, atelier du texte (lecture à voix haute, analyse, traduction, étape de méthode) ; séance C, nouvelle et labo IA. Chaque semaine se termine par une petite production déposée sur Studium : une trace de travail qui prépare l'écrit.",
+  "Présenter le rythme fixe de chaque semaine : séance A, contexte (énigme, frise, auteurs, outil) ; séance B, atelier du texte (lecture à voix haute, analyse, traduction, étape de méthode) ; séance C, nouvelle et labo IA. Chaque semaine se termine par une petite production déposée sur Classroom : une trace de travail qui prépare l'écrit.",
   qr=[("Pourquoi lire à voix haute à l'université ?",
        "Parce que l'oral de l'examen comporte une lecture expressive, et parce que la voix révèle le rythme, la ponctuation et la syntaxe : on comprend mieux un texte qu'on a dit.")]),
 
@@ -70,7 +70,7 @@ NOTES[1] = {
   source=f"Viallaneix (dir.), 1975 ; Van Tieghem, chap. I ; {STAL}, « Prélude au Romantisme »."),
 
 "auteurs": N("25 min",
-  "Quatre groupes, un auteur par groupe : 5 minutes de lecture de la fiche (Studium), 1 minute de présentation par groupe. L'enseignant complète avec une idée par auteur, pas plus.",
+  "Quatre groupes, un auteur par groupe : 5 minutes de lecture de la fiche (Classroom), 1 minute de présentation par groupe. L'enseignant complète avec une idée par auteur, pas plus.",
   essentiel="Rousseau (1712-1778) : Genevois, auteur de La Nouvelle Héloïse (1761, immense succès sentimental), des Confessions et des Rêveries ; il fait de l'intimité un sujet littéraire. Bernardin de Saint-Pierre (1737-1814) : disciple de Rousseau, Paul et Virginie (1788) raconte l'amour de deux enfants élevés dans la nature à l'île de France (aujourd'hui Maurice), colonie où travaillent des esclaves. Chateaubriand (1768-1848) : petit noble breton, voyage en Amérique (1791), émigré, puis grand écrivain et homme politique (ministre sous la Restauration) ; René est son héros mélancolique. Germaine de Staël (1766-1817) : fille de Necker, ministre de Louis XVI ; elle tient un salon, s'oppose à Napoléon, voyage en Allemagne et en Italie (Corinne ou l'Italie, 1807) et fait connaître les littératures du Nord.",
   qr=[("Pour Paul et Virginie : qui travaille dans ce paradis ?",
        "Des esclaves noirs, en particulier Domingue et Marie, les serviteurs des deux familles. L'idylle repose sur une société esclavagiste que le roman montre sans la remettre en cause : c'est ce que la sociocritique appelle le non-dit du texte."),
@@ -190,11 +190,11 @@ NOTES[1] = {
        "Ortis souffre d'une patrie blessée (la question politique est centrale) et se suicide ; René souffre d'un vague des passions sans objet politique et ne se suicide pas. Deux douleurs, deux patries : l'une politique, l'autre existentielle et religieuse.")]),
 
 "bilan": N("10 min",
-  "Revenir à la photo du tableau de l'énigme et lire la citation de Van Tieghem sur la mélancolie, puis celle de Musset sur les deux blessures. Rappeler la fiche de lecture sur René à déposer sur Studium et les deux extraits pour l'anthologie A.2. Annoncer la bataille d'Hernani et répartir les deux camps dès maintenant.",
+  "Revenir à la photo du tableau de l'énigme et lire la citation de Van Tieghem sur la mélancolie, puis celle de Musset sur les deux blessures. Rappeler la fiche de lecture sur René à déposer sur Classroom et les deux extraits pour l'anthologie A.2. Annoncer la bataille d'Hernani et répartir les deux camps dès maintenant.",
   qr=[("Quelle est la réponse à l'énigme de la semaine ?",
        "Une jeunesse sans place après la Révolution et l'Empire (Musset), et une sensibilité importée du Nord qui donne une forme à cette souffrance (Van Tieghem). Les deux explications se complètent : l'histoire et la littérature."),
       ("Que faut-il lire pour la semaine 2 ?",
-       "Le Lac de Lamartine (Studium) et Mateo Falcone de Mérimée (une dizaine de pages).")]),
+       "Le Lac de Lamartine (Classroom) et Mateo Falcone de Mérimée (une dizaine de pages).")]),
 }
 
 # =====================================================================  S2
@@ -312,7 +312,7 @@ NOTES[2] = {
   plus="Comparer avec un manifeste italien connu des étudiants : Giovanni Berchet, Lettera semiseria di Grisostomo al suo figliuolo (1816)."),
 
 "methode": N("30 min",
-  "Scansion collective du premier vers du Lac, au tableau, syllabe par syllabe. Puis distribuer la fiche de versification (Studium) et faire scander deux vers en binômes.",
+  "Scansion collective du premier vers du Lac, au tableau, syllabe par syllabe. Puis distribuer la fiche de versification (Classroom) et faire scander deux vers en binômes.",
   essentiel="Trois règles suffisent. 1. Le e muet compte devant une consonne, ne compte pas devant une voyelle (élision) ni en fin de vers. 2. Diérèse et synérèse : deux voyelles qui se suivent forment deux syllabes (li-on, diérèse) ou une seule (pied, synérèse) ; l'usage dépend souvent de l'étymologie. 3. L'alexandrin classique se coupe en deux moitiés de six syllabes (hémistiches) à la césure.",
   qr=[("Scander le premier vers du Lac.",
        "Ain / si / tou / jours / pous / sés // vers / de / nou / veaux / ri / va(ges) = 12. Le e final de rivages ne compte pas (fin de vers). Césure après poussés."),
@@ -337,7 +337,7 @@ NOTES[2] = {
   piege="Ne pas lire le récit comme un document ethnographique sur la Corse."),
 
 "labo": N("30 min",
-  "Faire scander par l'IA une strophe du Lac (ou la strophe Ô temps), puis recompter syllabe par syllabe. Chaque groupe note la règle que l'IA a oubliée et la dépose sur Studium.",
+  "Faire scander par l'IA une strophe du Lac (ou la strophe Ô temps), puis recompter syllabe par syllabe. Chaque groupe note la règle que l'IA a oubliée et la dépose sur Classroom.",
   qr=[("Quelles erreurs l'IA fait-elle le plus souvent ?",
        "Elle compte le e muet final des rimes féminines, oublie les élisions (éternelle emportés), applique le compte italien ou anglais, place mal la césure, ou affirme que le vers fait douze syllabes sans le montrer."),
       ("Comment savoir si l'IA a raison ?",
@@ -413,7 +413,7 @@ NOTES[3] = {
   piege="Ne pas transformer Bourdieu en grille mécanique : l'intérêt est la conversion d'un capital en un autre."),
 
 "texte1": N("30 min, séance A",
-  "Lire la phrase, puis le passage complet du livre II, chapitre 19 (Studium) : le romancier se défend contre l'accusation d'immoralité. La suite oppose l'azur des cieux et la fange des bourbiers de la route.",
+  "Lire la phrase, puis le passage complet du livre II, chapitre 19 (Classroom) : le romancier se défend contre l'accusation d'immoralité. La suite oppose l'azur des cieux et la fange des bourbiers de la route.",
   essentiel="Le Rouge et le Noir (1830), sous-titré Chronique de 1830, raconte l'ascension et la chute de Julien Sorel, fils de charpentier, précepteur chez M. de Rênal, séminariste, puis secrétaire du marquis de La Mole à Paris ; il finit guillotiné après avoir tiré sur Mme de Rênal. Stendhal s'inspire d'un fait divers réel (l'affaire Berthet, 1827-1828). Le rouge et le noir : l'armée et l'Église, les deux voies d'ascension pour un jeune homme pauvre après Napoléon.",
   qr=[("Image : que reflète le miroir ? Qui le porte ?",
        "Il reflète la route, c'est-à-dire la société avec sa beauté (l'azur) et sa saleté (la boue). Le romancier le porte, comme un voyageur."),
@@ -428,7 +428,7 @@ NOTES[3] = {
   plus="Stendhal avait déjà placé au chapitre 13 du livre I une épigraphe sur le miroir attribuée à Saint-Réal, très probablement inventée : une fausse attribution au XIXe siècle, bon lien avec la vérification des sources en labo IA."),
 
 "texte2": N("30 min, séance B",
-  "Lire la dernière page entière (Studium). Montrer une carte de Paris : pension Vauquer (rue Neuve-Sainte-Geneviève, quartier pauvre du Quartier latin), faubourg Saint-Germain (vieille noblesse, Mme de Beauséant), Chaussée-d'Antin (banquiers, les Nucingen), Père-Lachaise.",
+  "Lire la dernière page entière (Classroom). Montrer une carte de Paris : pension Vauquer (rue Neuve-Sainte-Geneviève, quartier pauvre du Quartier latin), faubourg Saint-Germain (vieille noblesse, Mme de Beauséant), Chaussée-d'Antin (banquiers, les Nucingen), Père-Lachaise.",
   essentiel="Le Père Goriot (1835) : à la pension Vauquer vivent le père Goriot, ancien commerçant qui s'est ruiné pour ses deux filles mariées dans le grand monde, l'étudiant Eugène de Rastignac et le mystérieux Vautrin (un forçat évadé). Goriot meurt abandonné par ses filles ; seul Rastignac l'enterre au Père-Lachaise. Le roman commence par une formule anglaise, All is true, pour affirmer sa vérité.",
   qr=[("Lieu : que voit Rastignac depuis la colline ?",
        "Paris, et précisément le quartier entre la colonne de la place Vendôme et le dôme des Invalides : le beau monde, là où vit la haute société qu'il veut conquérir."),
@@ -485,7 +485,7 @@ NOTES[3] = {
 "bilan": N("10 min",
   "Annoncer la semaine 4 et le premier texte A.1 en prose : Le Spleen de Paris. Distribuer les rôles du tribunal de 1857 (procureur Pinard, avocat Senard, Flaubert, Baudelaire, juges).",
   qr=[("Que faut-il lire ?",
-       "L'Étranger et Enivrez-vous de Baudelaire (Studium), et le chapitre I d'Un cœur simple de Flaubert.")]),
+       "L'Étranger et Enivrez-vous de Baudelaire (Classroom), et le chapitre I d'Un cœur simple de Flaubert.")]),
 }
 
 # =====================================================================  S4

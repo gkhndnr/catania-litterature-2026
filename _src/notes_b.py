@@ -324,7 +324,7 @@ NOTES[6] = {
        "Deux romans de l'esthète décadent, qui fait de sa vie une œuvre d'art et méprise la vie ordinaire, en 1884 et en 1889.")]),
 
 "bilan": N("10 min",
-  "Distribuer les rôles d'Ubu et de Salomé pour la lecture jouée de la semaine 7. Les textes sont sur Studium.",
+  "Distribuer les rôles d'Ubu et de Salomé pour la lecture jouée de la semaine 7. Les textes sont sur Classroom.",
   qr=[("Que faut-il lire ?",
        "Ubu Roi, acte I, scène 1 ; la première page de Salomé ; Les Nourritures terrestres, Livre I (extraits).")]),
 }
@@ -409,7 +409,7 @@ NOTES[7] = {
              ("PÈRE UBU. — Merdre. / MÈRE UBU. — Oh ! voilà du joli, Père Ubu, vous estes un fort grand voyou.","Jarry, Ubu Roi, I, 1")]),
 
 "texte2": N("40 min, séance B",
-  "Faire repérer l'impératif, le futur, le tutoiement : une prose qui enseigne. Lire ensuite un sonnet de Vivien (Studium) et comparer deux libertés de 1900.",
+  "Faire repérer l'impératif, le futur, le tutoiement : une prose qui enseigne. Lire ensuite un sonnet de Vivien (Classroom) et comparer deux libertés de 1900.",
   essentiel="Les Nourritures terrestres (1897) sont un livre en prose poétique, adressé à un disciple imaginaire, Nathanaël : Gide lui enseigne la ferveur, le désir, la disponibilité, le refus des attaches (famille, maison, morale). Le livre se termine en demandant à Nathanaël de jeter le livre.",
   qr=[("Destinataire : qui est Nathanaël ? Pourquoi le tutoiement ?",
        "Un disciple imaginaire, jeune lecteur idéal ; le tutoiement crée l'intimité d'un maître et d'un élève, et fait du lecteur réel le destinataire."),
