@@ -3,6 +3,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 from content_a import W as WA
 from content_b import W as WB
 from articles import ARTICLES
+from biblio import BIB, BIB_WEEK
+from prof import PROF
+from guide import GUIDE
 from notes_a import NOTES as NA
 from notes_b import NOTES as NB
 NOTES = {**NA, **NB}
@@ -20,8 +23,11 @@ APP = "https://claude.ai/artifact/CFbd252hSjfJVZJkZSWaEU"
 SITE = "https://gkhndnr.github.io/catania-litterature-2026/"
 COURSE = "Letteratura francese dal Preromanticismo a Les années folles"
 
+def nb(t):
+    t = re.sub(r" ([?!;:»])", "\u00a0\\1", t)
+    return t.replace("« ", "«\u00a0")
 def e(s):
-    t = html.escape(s, quote=False)
+    t = nb(html.escape(s, quote=False))
     return t.replace("&lt;i&gt;", "<i>").replace("&lt;/i&gt;", "</i>")
 def a(s): return html.escape(s, quote=True)
 
@@ -164,6 +170,20 @@ def s_bilan(w):
       f'<p style="font-size:24px; color:#BDB3C4; margin-top:auto">Rappel de la fiche : la liste A.2 ne reprend pas les œuvres A.1 ni les nouvelles de la partie B.</p></div></div>')
     return slide("bilan", INK, PAPER, inner, extra="gap:36px", foot=footer(w))
 
+def s_site(w):
+    cols = [("Avant la séance", WINE, [("Page de la semaine","S1 … S8 : objectifs, textes, séances, devoirs"),("Résumé audio","moins de 2 min, avec la transcription"),("Bibliographie","les lectures critiques de chaque semaine")]),
+            ("En classe", BLUE, [("Présentation","flèches du clavier, clic ou balayage"),("Plein écran","bouton sous la présentation"),("Numéro","#5 dans l'adresse ouvre la 5e diapositive")]),
+            ("Après la séance", INK, [("Production","à déposer sur Studium chaque semaine"),("Atelier du siècle","l'IA propose, vous vérifiez dans le texte"),("Anthologie A.2","deux ou trois extraits par semaine")])]
+    cards = "".join(card(f'<p style="font-size:24px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{c}">{e(t)}</p>' +
+                         "".join(f'<div style="display:flex; flex-direction:column; gap:2px; padding:12px 0; border-bottom:1px solid {LINE}"><p style="font-family:{SERIF}; font-size:34px; font-weight:700">{e(k)}</p><p style="font-size:26px; line-height:1.3; color:{SOFT}">{e(v)}</p></div>' for k,v in items),
+                         top=c, pad="30px 34px") for t,c,items in cols)
+    inner = head("Mode d'emploi", "Le site du cours : qui trouve quoi, où ?") + (
+      f'<div style="display:flex; gap:28px; flex:1">{cards}</div>'
+      f'<div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px">'
+      f'<p style="font-family:{SERIF}; font-size:38px; font-weight:700; color:{WINE}">gkhndnr.github.io/catania-litterature-2026</p>'
+      f'<p style="font-size:26px; color:{SOFT}">Page Mode d\'emploi : tout le détail, étudiants et enseignants</p></div>')
+    return slide("site", PAPER, INK, inner, extra="gap:30px", foot=footer(w))
+
 # ------------------------------------------------------------------ raw slides from old site
 def old_slides(n):
     h = open(os.path.join(OLD, f"s{n}.html"), encoding="utf-8").read()
@@ -173,7 +193,8 @@ def old_slides(n):
 
 def s_critique(w, ar):
     ids = "".join(f'<div style="display:flex; gap:24px; align-items:baseline; padding:14px 0; border-bottom:1px solid {LINE}"><p style="flex:none; width:200px; font-size:24px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{BLUE}">{e(k)}</p><p style="font-size:28px; line-height:1.38">{e(v)}</p></div>' for k,v in ar["idees"])
-    cits = "".join(f'<div style="display:flex; flex-direction:column; gap:8px"><p style="font-family:{SERIF}; font-style:italic; font-size:34px; line-height:1.3">« {e(c)} »</p><p style="font-size:22px; color:{MUTE}">{e(ar["auteur"])}, {e(p)}</p></div>' for c,p in ar["citations"])
+    csz = 34 if sum(len(c) for c,_ in ar["citations"]) < 170 else 30
+    cits = "".join(f'<div style="display:flex; flex-direction:column; gap:8px"><p style="font-family:{SERIF}; font-style:italic; font-size:{csz}px; line-height:1.3">« {e(c)} »</p><p style="font-size:22px; color:{MUTE}">{e(p)}</p></div>' for c,p in ar["citations"])
     inner = head(f"Lecture critique · {ar['auteur']}", ar["titre"]) + (
       f'<div style="display:flex; gap:48px; flex:1">'
       f'<div style="flex:1.25">{ids}</div>'
@@ -210,14 +231,17 @@ def deck(w):
     old = old_slides(n) if (w.get("raw_after_cover") or w.get("raw_after_outil")) else {}
     if w.get("raw_after_cover"):
         for j, sid in enumerate(w["raw_after_cover"]):
-            sec, nt = old[sid]; s.insert(1+j, sec); notes.insert(1+j, nt)
+            sec, nt = old[sid]; s.insert(1+j, sec); notes.insert(1+j, nd.get(sid) or nt); ids.insert(1+j, sid)
+    if w.get("site_slide"):
+        pos = 1 + len(w.get("raw_after_cover", []))
+        s.insert(pos, s_site(w)); notes.insert(pos, nd["site"]); ids.insert(pos, "site")
     if w.get("raw_after_outil"):
-        pos = 7 + len(w.get("raw_after_cover", [])) + len(crit_s)
+        pos = ids.index("outil") + 1 + len(crit_s)
         for j, sid in enumerate(w["raw_after_outil"]):
             sec, nt = old[sid]
             sec = re.sub(r"Semaine 8 · [^<]*· UniCT 2026", e(footer(w)), sec)
-            s.insert(pos+j, sec); notes.insert(pos+j, nt)
-    return s, notes
+            s.insert(pos+j, sec); notes.insert(pos+j, nd.get(sid) or nt); ids.insert(pos+j, sid)
+    return s, notes, ids
 
 # ------------------------------------------------------------------ page shell
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -225,18 +249,22 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="
 def shell(title, desc, active, body):
     nav = (f'<a href="index.html"{" aria-current=page" if active=="home" else ""}>Accueil</a>'
            f'<a href="s1.html"{" aria-current=page" if active=="week" else ""}>Semaines</a>'
-           f'<a href="carnet.html"{" aria-current=page" if active=="carnet" else ""}>Carnet</a>'
+           f'<a href="guide.html"{" aria-current=page" if active=="guide" else ""}>Mode d\'emploi</a>'
+           f'<a href="biblio.html"{" aria-current=page" if active=="biblio" else ""}>Bibliographie</a>'
+           f'<a href="carnet.html"{" aria-current=page" if active=="carnet" else ""}>Enseignant</a>'
            f'<a href="{APP}" target=_blank rel=noopener>Atelier du siècle ↗</a>')
     return (f'<!doctype html>\n<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
             f'<title>{e(title)}</title><meta name="description" content="{a(desc)}">{FONTS}\n<link rel="stylesheet" href="site.css"></head><body>'
             f'<header class="bar"><a class="logo" href="index.html">Catania · <i>Lettres 1780–1930</i></a><nav>{nav}</nav></header>{body}'
             f'<footer class="foot">Gökhan Dinar · Visiting Professor, DISUM, Università di Catania · automne 2026 · {e(COURSE)} (L-LIN/03)</footer></body></html>')
 
-JS = """<script>
+JS = r"""<script>
 const NOTES=%s;
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/ ([?!;:»])/g,'\u00a0$1').replace(/« /g,'«\u00a0')}
+function fmt(t){if(!t)return '<p>Pas de note pour cette diapositive.</p>';return t.split(/\n\n+/).map(b=>{b=esc(b);const m=b.match(/^([A-ZÀ-ÝŒ'’ ]{4,}) · ([\s\S]*)$/);let lab='',body=b;if(m){lab='<h4>'+m[1]+'</h4>';body=m[2]}return '<section>'+lab+body.split('\n').map(l=>l.startsWith('Q. ')?'<p class="q"><b>Q.</b> '+l.slice(3)+'</p>':l.startsWith('R. ')?'<p class="r"><b>R.</b> '+l.slice(3)+'</p>':l.startsWith('« ')?'<p class="cit">'+l+'</p>':l.startsWith('– ')?'<p class="li">'+l+'</p>':l?'<p>'+l+'</p>':'').join('')+'</section>'}).join('')}
 const frames=[...document.querySelectorAll('.frame')];let i=0;
 function fit(){const w=document.getElementById('stage').clientWidth;document.querySelectorAll('.scaler').forEach(s=>s.style.transform='scale('+(w/1920)+')');document.getElementById('stage').style.height=(w*1080/1920)+'px';}
-function show(k){i=Math.max(0,Math.min(frames.length-1,k));frames.forEach((f,j)=>f.hidden=j!==i);document.getElementById('count').textContent=(i+1)+' / '+frames.length;const n=document.getElementById('notes');n.textContent=NOTES[i]||'Pas de note pour cette diapositive.';try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
+function show(k){i=Math.max(0,Math.min(frames.length-1,k));frames.forEach((f,j)=>f.hidden=j!==i);document.getElementById('count').textContent=(i+1)+' / '+frames.length;const n=document.getElementById('notes');n.innerHTML=fmt(NOTES[i]);try{history.replaceState(null,'','#'+(i+1))}catch(e){}}
 document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
 document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'||e.target.tagName==='SUMMARY')return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}});
 document.getElementById('stage').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();show(e.clientX-r.left>r.width/3?i+1:i-1)});
@@ -262,11 +290,12 @@ def route(w):
       f'<div class="rc"><h2>{e(nxt)}</h2><ul>{av}</ul><p class="prod"><b>Ma production :</b> {e(w["production"])}</p></div>'
       f'<div class="rc"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
       f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>'
-      + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Cairn ↗</a></p></div>' for ar in ARTICLES.get(w["n"], []))
+      + (f'<div class="rc"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver la feuille de route, l\'audio, la présentation, la bibliographie et l\'Atelier du siècle, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
+      + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
       + f'</section>')
 
 def week_page(w):
-    slides, notes = deck(w)
+    slides, notes, ids = deck(w)
     frames = "".join(f'<div class="frame" data-i="{i}"{" hidden" if i else ""}><div class="scaler">{s}</div></div>' for i, s in enumerate(slides))
     tabs = "".join(f'<a href="s{x["n"]}.html"{" aria-current=page" if x["n"]==w["n"] else ""} title="{a(x["title"])}">S{x["n"]}</a>' for x in WEEKS)
     aud = "".join(f"<p>{e(p)}</p>" for p in w["audio"])
@@ -275,15 +304,15 @@ def week_page(w):
     body = (f'<main class="deckpage"><div class="weektabs" aria-label="Semaines">{tabs}</div>'
       f'<div class="deckhead"><p class="eyebrow">Semaine {w["n"]} · {e(w["dates"])} 2026 · {e(w["period"])}</p><h1>{e(w["title"])}</h1><p class="sub">{e(w["sub"])}</p></div>'
       + route(w) +
-      f'<section class="audio" aria-label="Résumé audio de la semaine {w["n"]}"><div class="audio-head"><p class="eyebrow">Résumé audio · environ 1 min 30</p><audio controls preload="none" src="audio/s{w["n"]}.mp3">Votre navigateur ne lit pas l\'audio : <a href="audio/s{w["n"]}.mp3">télécharger le MP3</a>.</audio></div><details><summary>Lire la transcription</summary>{aud}</details><p class="audio-note">Voix de synthèse : en cas de doute sur une prononciation, le texte écrit fait foi.</p></section>'
+      f'<section class="audio" id="audio" aria-label="Résumé audio de la semaine {w["n"]}"><div class="audio-head"><p class="eyebrow">Résumé audio · moins de 2 minutes</p><audio controls preload="none" src="audio/s{w["n"]}.mp3">Votre navigateur ne lit pas l\'audio : <a href="audio/s{w["n"]}.mp3">télécharger le MP3</a>.</audio></div><details><summary>Lire la transcription</summary>{aud}</details><p class="audio-note">Voix de synthèse : en cas de doute sur une prononciation, le texte écrit fait foi.</p></section>'
       f'<h2 class="deckt">La présentation</h2>'
       f'<div class="stage" id="stage" tabindex="0" aria-label="Présentation, flèches pour naviguer">{frames}</div>'
-      '<div class="controls"><button id="prev" aria-label="Diapositive précédente">←</button><span id="count" class="count"></span><button id="next" aria-label="Diapositive suivante">→</button><span class="spacer"></span><label class="tog"><input type="checkbox" id="shownotes"> Notes de l\'enseignant</label><button id="fs">Plein écran</button></div>'
+      '<div class="controls"><button id="prev" aria-label="Diapositive précédente">←</button><span id="count" class="count"></span><button id="next" aria-label="Diapositive suivante">→</button><span class="spacer"></span><label class="tog"><input type="checkbox" id="shownotes"> Notes de l\'enseignant</label><a class="btn" href="prof-s'+str(w["n"])+'.html">Guide imprimable</a><button id="fs">Plein écran</button></div>'
       f'<div class="notes" id="notes" hidden></div><div class="pager">{prev}{nxt}</div></main>'
       + JS % json.dumps(notes, ensure_ascii=False))
     page = shell(f"S{w['n']} · {w['title']} · Catania 2026", f"Semaine {w['n']} du cours de littérature française, Université de Catane : {w['title']}.", "week", body)
     open(os.path.join(OUT, f"s{w['n']}.html"), "w", encoding="utf-8").write(page)
-    return len(slides)
+    return slides, notes, ids
 
 # ------------------------------------------------------------------ A.1 / B map
 A1 = [("1","Recueil de poèmes","Lamartine, Méditations poétiques (1820)",2,"René Vivien, Études et préludes",7),
@@ -321,14 +350,17 @@ def index_page():
       '<div><b>Chaque semaine</b>Des objectifs clairs, les textes de la fiche du cours, trois séances (contexte, texte, nouvelle et IA) et une petite production à déposer sur Studium.</div>'
       '<div><b>La fiche du cours</b>Les six paires de la liste A.1, les nouvelles de la partie B et des extraits pour votre anthologie A.2 sont tous travaillés en classe, par extraits.</div>'
       '<div><b>L\'examen</b>Je ne fais pas passer l\'examen. Le cours vous y prépare : commentaire écrit en huit étapes, lecture expressive, traduction, contexte.</div>'
-      '<div><b>Pour réviser</b>Un résumé audio d\'une minute et demie par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
+      '<div><b>Pour réviser</b>Un résumé audio d\'moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
+      '<div><b>Première visite ?</b>Lisez le <a href="guide.html">mode d\'emploi du site</a> : cinq minutes pour savoir où tout se trouve.</div>'
       '</div></section>'
       f'<h2>Les semaines</h2><div class="weeks">{cards}</div>'
       f'<h2>Le programme dans le cours</h2><p class="lead small">Pour la liste A.1, vous choisissez une œuvre dans chaque paire et vous la lisez en entier. En classe, nous lisons les deux par extraits.</p>'
       f'<div class="prose wide">{a1_table()}{b_table()}<p class="small">Liste A.2 : chaque semaine propose deux ou trois extraits (rubrique Pour mon anthologie) pour construire votre liste personnelle de 50 extraits, à faire valider avant l\'examen.</p></div>'
-      + (f'<h2>Lectures critiques</h2><div class="prose wide"><ul>' + "".join(f'<li><a href="s{n}.html">Semaine {n}</a> · {e(ar["ref"])}</li>' for n in sorted(ARTICLES) for ar in ARTICLES[n]) + '</ul></div>' if ARTICLES else '')
+      + (f'<h2>Lectures critiques</h2><p class="lead small">Toutes les références, semaine par semaine : <a href="biblio.html">la bibliographie du cours</a>.</p><div class="prose wide"><ul>' + "".join(f'<li><a href="s{n}.html">Semaine {n}</a> · {e(ar["ref"])}</li>' for n in sorted(ARTICLES) for ar in ARTICLES[n]) + '</ul></div>' if ARTICLES else '')
       + '<h2>Outils du cours</h2><div class="toolgrid">'
       f'<a class="tool" href="{APP}" target=_blank rel=noopener><b>L\'Atelier du siècle ↗</b><span>Dialoguer avec des écrivains de 1802 à 1924 et faire relire son commentaire selon la grille du cours. Fonctionne sur claude.ai ou dans l\'application Claude, connecté à son compte.</span></a>'
+      '<a class="tool" href="guide.html"><b>Mode d\'emploi du site</b><span>Où trouver quoi, comment suivre une présentation, écouter l\'audio, utiliser l\'Atelier : pour les étudiants et pour les enseignants.</span></a>'
+      '<a class="tool" href="biblio.html"><b>Bibliographie</b><span>Œuvres, lectures critiques et ressources en ligne, semaine par semaine.</span></a>'
       '<a class="tool" href="carnet.html"><b>Carnet de l\'enseignant</b><span>Déroulé des 24 séances avec les durées, correspondance avec la fiche du cours, points à confirmer.</span></a></div>'
       '<div class="charte"><div><b>Déclarer</b>Tout travail rendu indique ce que l\'IA a fait et ce que vous avez fait.</div><div><b>Vérifier</b>Chaque date, chaque citation, chaque attribution se contrôle dans l\'édition.</div><div><b>Écrire soi-même</b>Aucun texte généré n\'est rendu tel quel. Votre lecture reste la vôtre.</div><div><b>Rester critique</b>Les auteurs simulés sont des hypothèses de lecture, pas des témoins.</div></div>'
       '</main>')
@@ -344,12 +376,12 @@ def carnet_page():
     for w in WEEKS:
         c = w["carnet"]
         weeks += (f'<h2 id="s{w["n"]}">Semaine {w["n"]} · {e(w["title"])} ({e(w["dates"])})</h2>'
-          f'<p><strong>Objectif :</strong> {e(c["objectif"])} <a href="s{w["n"]}.html">Présentation S{w["n"]}</a></p>'
+          f'<p><strong>Objectif :</strong> {e(c["objectif"])} <a href="s{w["n"]}.html">Présentation S{w["n"]}</a> · <a href="prof-s{w["n"]}.html"><b>Guide de l\'enseignant S{w["n"]} (imprimable)</b></a></p>'
           f'<p><strong>Séance A.</strong> {e(c["A"])}</p><p><strong>Séance B.</strong> {e(c["B"])}</p><p><strong>Séance C.</strong> {e(c["C"])}</p>'
           f'<p><strong>À anticiper.</strong> {e(c["anticiper"])}</p>'
           f'<p><strong>Production des étudiants.</strong> {e(w["production"])}</p>'
           + "".join(f'<p><strong>Lecture critique.</strong> {e(ar["ref"])} Idées utilisées en classe : ' + "; ".join(e(k)+" ("+e(v)+")" for k,v in ar["idees"]) + f'. À discuter : {e(ar["debat"])}</p>' for ar in ARTICLES.get(w["n"], [])))
-    body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 5 octobre 2026</p>'
+    body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 6 octobre 2026 · <a href="prof-s1.html">Guides imprimables S1</a> à <a href="prof-s8.html">S8</a> · <a href="biblio.html">Bibliographie</a></p>'
       '<h2>Architecture du cours</h2>'
       '<p>48 heures en 8 semaines, du 12 octobre au 5 décembre 2026, en trois séances de 2 heures par semaine. Le cours suit la fiche de Carminella Sipala (Laurea L11, L-LIN/03) : partie A, fondements du XIXe siècle et des vingt premières années du XXe, avec les six paires de la liste A.1 ; partie B, la nouvelle au XIXe siècle. La méthode est la mienne : la sociocritique comme lecture, l\'IA comme outil vérifié, une production par semaine.</p>'
       '<p><strong>Examen.</strong> Je ne fais pas passer l\'examen (écrit de commentaire puis oral, en français, selon la fiche). Le cours y prépare : méthode du commentaire en huit étapes, lecture expressive, traduction italienne, contexte, fiches A.1 et anthologie A.2. Deux ateliers de commentaire (semaines 5 et 8) reçoivent un retour écrit, sans note.</p>'
@@ -376,8 +408,114 @@ def carnet_page():
       '</main>')
     open(os.path.join(OUT, "carnet.html"), "w", encoding="utf-8").write(shell("Carnet de l'enseignant · Catania 2026", "Carnet de l'enseignant : déroulé des séances, calendrier et correspondance avec la fiche du cours.", "carnet", body))
 
+
+# ------------------------------------------------------------------ notes as HTML (same rules as the JS fmt)
+def fmt_note(t):
+    out = []
+    for b in re.split(r"\n\n+", t or ""):
+        b = nb(html.escape(b, quote=False))
+        m = re.match(r"^([A-ZÀ-ÝŒ'’ ]{4,}) · ([\s\S]*)$", b)
+        lab, body = ("", b)
+        if m: lab, body = f"<h4>{m.group(1)}</h4>", m.group(2)
+        ps = []
+        for l in body.split("\n"):
+            if l.startswith("Q. "): ps.append(f'<p class="q"><b>Q.</b> {l[3:]}</p>')
+            elif l.startswith("R. "): ps.append(f'<p class="r"><b>R.</b> {l[3:]}</p>')
+            elif l.startswith("« "): ps.append(f'<p class="cit">{l}</p>')
+            elif l.startswith("– "): ps.append(f'<p class="li">{l}</p>')
+            elif l: ps.append(f"<p>{l}</p>")
+        out.append(f"<section>{lab}{''.join(ps)}</section>")
+    return "".join(out)
+
+LABELS = {"cover":"Couverture","objectifs":"Objectifs de la semaine","seances":"Les trois séances","frise":"Frise","auteurs":"Les voix de la semaine",
+          "italia":"Ponte con l'Italia","bilan":"Bilan et suite","site":"Mode d'emploi du site","moi":"Présentation de l'enseignant",
+          "universite":"L'université d'origine","istanbul":"Istanbul et les écrivains français","vous":"Et vous ?","envers":"L'envers de la fête"}
+def slide_label(w, sid):
+    arts = {ar["id"]: ar for ar in ARTICLES.get(w["n"], [])}
+    if sid.startswith("critique-"):
+        k = sid[9:]
+        if k.endswith("-frise"): return f"Lecture critique · {arts[k[:-6]]['frise_titre']}"
+        return f"Lecture critique · {arts[k]['auteur']} : {arts[k]['titre']}"
+    if sid.startswith("texte"): return f"Texte à la loupe {sid[5:]} · {w['textes'][int(sid[5:])-1]['title']}"
+    if sid == "enigme": return f"L'énigme · {w['enigme'][0]}"
+    if sid == "outil": return f"Boîte à outils · {w['outil'][0]}"
+    if sid == "methode": return f"Méthode, étape {w['methode'][0]} · {w['methode'][1]}"
+    if sid == "nouvelle": return f"{w['nouvelle']['label']} · {w['nouvelle']['title']}"
+    if sid == "labo": return f"Labo IA · {w['labo']['title']}"
+    return LABELS.get(sid, sid)
+
+PRINT_CSS = "<style>@media print{.bar,.foot,.noprint{display:none!important}body{background:#fff;font-size:12pt}.prose{max-width:none;padding:0}.pnote{break-inside:avoid-page}}</style>"
+
+def prof_page(w, slides, notes, ids):
+    P = PROF.get(w["n"], {})
+    ess = "".join(f"<li>{e(x)}</li>" for x in P.get("essentiel", []))
+    glo = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k,v in P.get("glossaire", []))
+    noms = "".join(f"<tr><td>{e(k)}</td><td>{e(v)}</td></tr>" for k,v in P.get("noms", []))
+    faq = "".join(f'<div class="faq"><p class="q"><b>Q.</b> {e(q)}</p><p class="r"><b>R.</b> {e(r)}</p></div>' for q,r in P.get("faq", []))
+    c = w["carnet"]
+    toc = "".join(f'<li><a href="#d{k+1}">{k+1}. {e(slide_label(w,sid))}</a></li>' for k,sid in enumerate(ids))
+    body_notes = "".join(f'<article class="pnote" id="d{k+1}"><h3><span class="pn">{k+1}</span> {e(slide_label(w,sid))} <a class="noprint small" href="s{w["n"]}.html#{k+1}">voir la diapositive ↗</a></h3><div class="notes">{fmt_note(nt)}</div></article>' for k,(sid,nt) in enumerate(zip(ids,notes)))
+    crit = "".join(f"<li>{e(ar['ref'])}</li>" for ar in ARTICLES.get(w["n"], []))
+    body = (f'<main class="prose prof"><p class="eyebrow">Guide de l\'enseignant · semaine {w["n"]} · {e(w["dates"])} 2026</p><h1>{e(w["title"])}</h1>'
+      f'<p class="sub">{e(w["sub"])} · {e(w["period"])}</p>'
+      f'<p class="noprint"><a href="s{w["n"]}.html">← Page de la semaine</a> · <a href="carnet.html#s{w["n"]}">Carnet</a> · <button class="btn" onclick="window.print()">Imprimer ce guide</button></p>'
+      '<div class="callout"><b>Comment utiliser ce guide.</b> Il est écrit pour un enseignant qui découvre la période. Lisez d\'abord L\'essentiel (10 minutes), puis les notes diapositive par diapositive : chaque question posée en classe y a sa réponse (Q. / R.). Les mêmes notes s\'affichent sous la présentation si l\'on coche Notes de l\'enseignant.</div>'
+      f'<h2>L\'essentiel avant d\'entrer en classe</h2><ol class="ess">{ess}</ol>'
+      f'<h2>Le plan des trois séances</h2><table><tbody><tr><th>Objectif</th><td>{e(c["objectif"])}</td></tr><tr><th>Séance A</th><td>{e(c["A"])}</td></tr><tr><th>Séance B</th><td>{e(c["B"])}</td></tr><tr><th>Séance C</th><td>{e(c["C"])}</td></tr><tr><th>À anticiper</th><td>{e(c["anticiper"])}</td></tr><tr><th>Production</th><td>{e(w["production"])}</td></tr></tbody></table>'
+      + (f'<h2>Mots à maîtriser</h2><dl class="glo">{glo}</dl>' if glo else '')
+      + (f'<h2>Prononcer les noms propres</h2><table><thead><tr><th>Nom</th><th>Prononciation conseillée</th></tr></thead><tbody>{noms}</tbody></table>' if noms else '')
+      + (f'<h2>Questions fréquentes des étudiants</h2>{faq}' if faq else '')
+      + (f'<h2>Lectures critiques de la semaine</h2><ul>{crit}</ul>' if crit else '')
+      + f'<h2>Notes diapositive par diapositive</h2><ol class="toc noprint">{toc}</ol>{body_notes}'
+      '</main>')
+    page = shell(f"Guide de l'enseignant S{w['n']} · Catania 2026", f"Guide imprimable de l'enseignant, semaine {w['n']} : {w['title']}.", "carnet", PRINT_CSS + body)
+    open(os.path.join(OUT, f"prof-s{w['n']}.html"), "w", encoding="utf-8").write(page)
+
+def biblio_page():
+    weeks = ""
+    for w in WEEKS:
+        n = w["n"]
+        crit = "".join(f'<li class="crit"><b>Lecture critique.</b> {e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>lien ↗</a></li>' for ar in ARTICLES.get(n, []))
+        refs = "".join(f"<li>{e(x)}</li>" for x in BIB_WEEK.get(n, []))
+        weeks += f'<h3 id="s{n}">Semaine {n} · <a href="s{n}.html">{e(w["title"])}</a> <span class="small">({e(w["period"])})</span></h3><ul>{crit}{refs}</ul>'
+    gen = ""
+    for title, items in BIB:
+        lis = "".join(f'<li>{e(t)}' + (f' <a href="{a(l)}"{" target=_blank rel=noopener" if l.startswith("http") else ""}>{"lien ↗" if l.startswith("http") else "voir"}</a>' if l else "") + '</li>' for t,l in items)
+        gen += f"<h3>{e(title)}</h3><ul>{lis}</ul>"
+    body = (f'<main class="prose"><p class="eyebrow">Bibliographie · Catania 2026</p><h1>Bibliographie du cours</h1>'
+      '<p class="sub">Œuvres, critique et outils, semaine par semaine puis par rubriques. Mise à jour chaque semaine avec les nouvelles lectures.</p>'
+      '<div class="callout"><b>Comment lire cette page.</b> Presque toutes les œuvres du programme sont dans le domaine public : on les trouve gratuitement sur Wikisource et Gallica. Pour Cendrars, Breton, Maran ou Morand, utiliser une édition imprimée. Les lectures critiques marquées en bleu sont celles qu\'on discute en classe (diapositive Lecture critique). Les articles de Cairn sont accessibles par le réseau de l\'université.</div>'
+      '<div class="callout warn"><b>Deux sources, deux statuts.</b> Le manuel de Stalloni est une synthèse récente, claire, mais qui contient quelques erreurs de date (manifeste de Moréas daté de 1866 au lieu de 1886, La Morte amoureuse datée de 1844 au lieu de 1836, Jack de Daudet daté de 1896 au lieu de 1876) : on les corrige en classe, c\'est un bon exercice de vérification. Les articles de Bainville (1900-1913) sont des documents d\'époque, écrits par un critique de combat : on les lit comme des prises de position, pas comme des vérités.</div>'
+      f'<h2>Semaine par semaine</h2>{weeks}<h2>Bibliographie générale</h2>{gen}</main>')
+    open(os.path.join(OUT, "biblio.html"), "w", encoding="utf-8").write(shell("Bibliographie · Catania 2026", "Bibliographie du cours de littérature française, Université de Catane, automne 2026.", "biblio", body))
+
+def guide_page():
+    G = GUIDE
+    def shot(sh):
+        pins = "".join(f'<span class="pin" style="left:{x:.2f}%; top:{y:.2f}%">{k}</span>' for k,(x,y) in enumerate(sh.get("pins", []), 1))
+        return f'<figure class="shot{" mobile" if sh.get("mobile") else ""}"><div class="shotwrap"><img src="{sh["src"]}" alt="{a(sh["alt"])}" loading="lazy" width="{sh["w"]}" height="{sh["h"]}">{pins}</div><figcaption>{e(sh["cap"])}</figcaption></figure>'
+    def legend(items): return '<ol class="legend">' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in items) + "</ol>"
+    sec = ""
+    for part in G["parts"]:
+        sec += f'<h2 id="{part["id"]}">{e(part["title"])}</h2>' + (f'<p class="lead small">{e(part["intro"])}</p>' if part.get("intro") else "")
+        for blk in part["blocks"]:
+            sec += f'<h3>{e(blk["title"])}</h3>'
+            if blk.get("text"): sec += "".join(f"<p>{e(t)}</p>" for t in blk["text"])
+            if blk.get("shot"): sec += shot(blk["shot"])
+            if blk.get("legend"): sec += legend(blk["legend"])
+            if blk.get("steps"): sec += '<ol class="steps">' + "".join(f"<li>{e(t)}</li>" for t in blk["steps"]) + "</ol>"
+            if blk.get("table"): sec += "<table><thead><tr>" + "".join(f"<th>{e(h)}</th>" for h in blk["table"][0]) + "</tr></thead><tbody>" + "".join("<tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in blk["table"][1:]) + "</tbody></table>"
+    quick = "".join(f'<a class="qk" href="{a(h)}"><b>{e(t)}</b><span>{e(d)}</span></a>' for t,d,h in G["quick"])
+    faq = "".join(f'<div class="faq"><p class="q"><b>Q.</b> {e(q)}</p><p class="r"><b>R.</b> {e(r)}</p></div>' for q,r in G["faq"])
+    body = (f'<main class="prose guide"><p class="eyebrow">Mode d\'emploi · Catania 2026</p><h1>Mode d\'emploi du site</h1>'
+      f'<p class="sub">{e(G["sub"])}</p><div class="quick">{quick}</div>'
+      '<nav class="gtoc"><a href="#etudiants">Pour les étudiants</a><a href="#enseignants">Pour les enseignants</a><a href="#raccourcis">Raccourcis</a><a href="#faq">Questions fréquentes</a></nav>'
+      f'{sec}<h2 id="faq">Questions fréquentes</h2>{faq}</main>')
+    open(os.path.join(OUT, "guide.html"), "w", encoding="utf-8").write(shell("Mode d'emploi · Catania 2026", "Mode d'emploi du site du cours : où trouver quoi, pour les étudiants et pour les enseignants.", "guide", body))
+
 if __name__ == "__main__":
-    counts = [week_page(w) for w in WEEKS]
-    index_page(); carnet_page()
+    decks = {w["n"]: week_page(w) for w in WEEKS}
+    index_page(); carnet_page(); biblio_page(); guide_page()
+    for w in WEEKS: prof_page(w, *decks[w["n"]])
     json.dump({str(w["n"]): w["audio"] for w in WEEKS}, open(os.path.join(OUT, "_audio.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print("slides per week:", counts)
+    print("slides per week:", [len(decks[n][0]) for n in sorted(decks)])

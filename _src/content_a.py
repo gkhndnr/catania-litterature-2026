@@ -97,6 +97,7 @@ audio=[
  "Pour la semaine prochaine, lisez Le Lac de Lamartine et Mateo Falcone de Mérimée.",
 ],
 raw_after_cover=["moi","universite","istanbul","vous"],
+site_slide=True,
 ))
 
 # ---------------------------------------------------------------- S2
@@ -189,6 +190,7 @@ audio=[
  "Le vingt-cinq février mille huit cent trente, à la Comédie-Française, la première d'Hernani, de Victor Hugo, se transforme en bagarre. Pourquoi ? Parce qu'une nouvelle génération veut prendre la place des classiques.",
  "Quatre romantiques occupent quatre positions. Lamartine renouvelle la poésie intime. Hugo est le chef de file. Vigny est le poète solitaire. Musset, le plus jeune, nomme le mal d'une génération.",
  "Notre outil vient de Pierre Bourdieu : le champ littéraire. C'est un jeu où chacun occupe une position, et où chaque œuvre, chaque préface, est une prise de position.",
+ "Nous lisons aussi le manuel d'Yves Stalloni. Pour lui, le mot bataille n'est pas trop fort : le romantisme naît dans des salons, des cénacles et des revues, avant d'avoir une doctrine.",
  "Le texte du programme est Le Lac de Lamartine : Ô temps, suspends ton vol. Nous apprenons à compter les syllabes : le e muet, la diérèse, la césure au milieu de l'alexandrin. Écoutez l'alternance des vers longs et des vers courts.",
  "La nouvelle de la semaine est Mateo Falcone, de Mérimée. En Corse, un père tue son fils qui a trahi un bandit pour une montre. Des phrases courtes, un narrateur impassible.",
  "Au labo, l'IA scande une strophe du Lac. Elle se trompe souvent. À vous de trouver ses erreurs.",
@@ -384,6 +386,7 @@ audio=[
  "Cette année-là, deux écrivains passent au tribunal. Flaubert, pour Madame Bovary, est acquitté en février. Baudelaire, pour Les Fleurs du mal, est condamné en août : six poèmes sont retirés.",
  "Pourquoi juger des livres ? Parce que le Second Empire surveille la presse et la morale. Mais les écrivains veulent une autre règle : l'art pour l'art, défendue par Gautier. Le beau n'a pas à être utile.",
  "Notre outil est le monde à l'envers, selon Bourdieu : perdre au tribunal ou en argent peut faire gagner en prestige. Aujourd'hui, Baudelaire est au programme.",
+ "Avec le manuel de Stalloni, nous distinguons trois refus : l'art pour l'art de Gautier, le Parnasse, et le réalisme. Flaubert, lui, refuse toutes les étiquettes.",
  "Le texte du programme est Le Spleen de Paris, des poèmes en prose. Dans L'Étranger, un homme refuse famille, patrie et argent, et n'aime que les nuages. Dans Enivrez-vous, Baudelaire écrit : il faut être toujours ivre.",
  "En méthode, nous construisons un plan en deux ou trois axes.",
  "La nouvelle de la semaine est Un cœur simple, de Flaubert : la vie d'une servante, Félicité, et de son perroquet Loulou.",
