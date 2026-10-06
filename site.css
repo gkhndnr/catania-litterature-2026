@@ -159,3 +159,15 @@ ol.legend li::before{content:counter(lg);position:absolute;left:0;top:0;display:
 ol.steps li{margin:6px 0}
 @media (max-width:600px){figure.shot .pin{width:22px;height:22px;font-size:12px}}
 .guide figure.shot:not(.mobile){width:min(1100px,calc(100vw - 32px));position:relative;left:50%;transform:translateX(-50%)}
+/* accès rapide : QR codes (Classroom, site) */
+.access{margin:28px 0 8px}
+.access h2{margin:0 0 6px}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.qcard{display:flex;gap:18px;align-items:center;padding:18px;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--gold)}
+.qcard .qimg{flex:none;display:block;width:150px;height:150px;background:#fff;padding:4px;border:1px solid var(--line)}
+.qcard svg.qr{display:block;width:100%;height:100%}
+.qcard h3{margin:0 0 6px;font-size:22px}
+.qcard ul{margin:0 0 10px;padding-left:1.1em;color:var(--soft);font-size:15px}
+.qcard p{margin:0}
+@media (max-width:420px){.qcard{flex-direction:column;align-items:flex-start}.qcard .qimg{width:180px;height:180px}}
+.pdfs{margin:4px 0 14px;padding:10px 14px;background:var(--card);border:1px dashed var(--line);font-size:15px;color:var(--soft)}
