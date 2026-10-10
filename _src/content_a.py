@@ -53,7 +53,7 @@ nouvelle=dict(label="Fil rouge · la nouvelle", title="Qu'est-ce qu'une nouvelle
           ("Genre","Nouvelle, conte, récit : des frontières discutées (Grojnowski, Schaeffer).")],
   bas="Notre parcours : Mérimée, Gautier, Flaubert, Maupassant, Daudet, Barbey d'Aurevilly, Villiers de l'Isle-Adam."),
 labo=dict(title="Prise en main de l'Atelier du siècle",
-  steps=[("Demander","Chaque binôme pose une question à René sur ses orages désirés."),
+  steps=[("Demander","Chaque binôme propose une question à René sur ses orages désirés, posée en classe sur l'écran commun."),
          ("Vérifier","Retrouver dans le texte une affirmation de l'IA : vraie, fausse ou inventée ?"),
          ("Améliorer","Réécrire la réponse en trois phrases personnelles.")],
   produit="Première ligne du carnet de vérification IA, déposée sur Classroom."),

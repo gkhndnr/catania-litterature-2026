@@ -170,7 +170,7 @@ NOTES[1] = {
   source="Grojnowski, Lire la nouvelle, Dunod, 1993 ; Schaeffer, Qu'est-ce qu'un genre littéraire ?, Seuil, 1989 ; Stalloni, « Le Romantisme », Les formes et les œuvres."),
 
 "labo": N("40 min, séance C",
-  "Vérifier que chacun ouvre le lien de l'Atelier du siècle (claude.ai, connecté à son compte) ; sinon projeter depuis le poste de l'enseignant et travailler en grand groupe. Binômes. Prompt modèle : René, pourquoi appelles-tu les orages ? Puis chaque binôme remplit la première ligne du carnet de vérification IA : question posée, affirmation de l'IA, vérification (page de l'édition), verdict (vrai, faux, inventé).",
+  "L'Atelier du siècle est projeté depuis le poste de l'enseignant : aucun étudiant n'a besoin d'un compte. Binômes. Chaque binôme écrit une question sur papier ; l'enseignant en choisit 4 ou 5 et les pose à René sur l'écran commun. Prompt modèle : René, pourquoi appelles-tu les orages ? Puis chaque binôme remplit la première ligne du carnet de vérification IA : question posée, affirmation de l'IA, vérification (page de l'édition), verdict (vrai, faux, inventé).",
   essentiel="L'Atelier du siècle simule des écrivains : ce sont des hypothèses de lecture, pas des témoins. La charte du cours tient en quatre verbes : déclarer (dire ce que l'IA a fait), vérifier (dates, citations, attributions dans l'édition), écrire soi-même, rester critique. On suit les trois gestes du labo : demander, vérifier, améliorer.",
   qr=[("Quelle affirmation de l'IA avez-vous pu vérifier dans le texte ?",
        "Par exemple : René est le frère d'Amélie (vrai) ; René raconte son histoire à Chactas et au père Souël (vrai) ; René se suicide à la fin (faux : il meurt plus tard, massacré chez les Natchez, ce que le récit annonce seulement)."),

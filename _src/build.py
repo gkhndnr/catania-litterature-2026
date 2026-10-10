@@ -379,7 +379,7 @@ def index_page():
       '<div><b>Chaque semaine</b>Des objectifs clairs, les textes de la fiche du cours, trois séances (contexte, texte, nouvelle et IA) et une petite production à déposer sur Classroom.</div>'
       '<div><b>La fiche du cours</b>Les six paires de la liste A.1, les nouvelles de la partie B et des extraits pour votre anthologie A.2 sont tous travaillés en classe, par extraits.</div>'
       '<div><b>L\'examen</b>Je ne fais pas passer l\'examen. Le cours vous y prépare : commentaire écrit en huit étapes, lecture expressive, traduction, contexte.</div>'
-      '<div><b>Pour réviser</b>Un résumé audio d\'moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
+      '<div><b>Pour réviser</b>Un résumé audio de moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
       '<div><b>Première visite ?</b>Lisez le <a href="guide.html">mode d\'emploi du site</a> : cinq minutes pour savoir où tout se trouve.</div>'
       '</div></section>'
       f'<h2>Les semaines</h2><div class="weeks">{cards}</div>'
@@ -387,7 +387,7 @@ def index_page():
       f'<div class="prose wide">{a1_table()}{b_table()}<p class="small">Liste A.2 : chaque semaine propose deux ou trois extraits (rubrique Pour mon anthologie) pour construire votre liste personnelle de 50 extraits, à faire valider avant l\'examen.</p></div>'
       + (f'<h2>Lectures critiques</h2><p class="lead small">Toutes les références, semaine par semaine : <a href="biblio.html">la bibliographie du cours</a>.</p><div class="prose wide"><ul>' + "".join(f'<li><a href="s{n}.html">Semaine {n}</a> · {e(ar["ref"])}</li>' for n in sorted(ARTICLES) for ar in ARTICLES[n]) + '</ul></div>' if ARTICLES else '')
       + '<h2>Outils du cours</h2><div class="toolgrid">'
-      f'<a class="tool" href="{APP}" target=_blank rel=noopener><b>L\'Atelier du siècle ↗</b><span>Dialoguer avec des écrivains de 1802 à 1924 et faire relire son commentaire selon la grille du cours. Fonctionne sur claude.ai ou dans l\'application Claude, connecté à son compte.</span></a>'
+      f'<a class="tool" href="{APP}" target=_blank rel=noopener><b>L\'Atelier du siècle ↗</b><span>Dialoguer avec des écrivains de 1802 à 1924 et faire relire son commentaire selon la grille du cours. En classe, il est projeté sur l\'écran commun ; chez soi, on peut s\'y entraîner avec son propre compte claude.ai.</span></a>'
       '<a class="tool" href="guide.html"><b>Mode d\'emploi du site</b><span>Où trouver quoi, comment suivre une présentation, écouter l\'audio, utiliser l\'Atelier : pour les étudiants et pour les enseignants.</span></a>'
       '<a class="tool" href="biblio.html"><b>Bibliographie</b><span>Œuvres, lectures critiques et ressources en ligne, semaine par semaine.</span></a>'
       '<a class="tool" href="carnet.html"><b>Carnet de l\'enseignant</b><span>Déroulé des 24 séances avec les durées, correspondance avec la fiche du cours, points à confirmer.</span></a></div>'
