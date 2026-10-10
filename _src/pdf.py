@@ -13,6 +13,7 @@ from articles import ARTICLES
 from notes_a import NOTES as NA
 from notes_b import NOTES as NB
 from biblio import BIB_WEEK
+from passages import PASSAGES, SANS_PASSAGE
 
 SITE, OUT = os.path.abspath(sys.argv[1]), sys.argv[2]
 FONTS = sys.argv[3] if len(sys.argv) > 3 else ""
@@ -61,6 +62,21 @@ def cits_from_notes(n):
                 seen.add(mm.group(1)); out.append((mm.group(1), mm.group(2)))
     return out
 
+def passage_html(pa):
+    if pa["vers"]:
+        body, k = "", 0
+        for strophe in pa["texte"].split("\n\n"):
+            body += '<div class="st">'
+            for l in strophe.split("\n"):
+                k += 1
+                body += f'<div class="v{" ind" if len(l) < 30 else ""}"><span class="ln">{k if k % 5 == 0 else ""}</span>{e(l)}</div>'
+            body += '</div>'
+    else:
+        body = "".join(f'<p class="pp"><span class="ln">§{i}</span>{e(p)}</p>' for i, p in enumerate(pa["texte"].split("\n\n"), 1))
+    qs = "".join(f"<li><b>{e(a)}</b> {e(b)}</li>" for a, b in pa["questions"])
+    return (f'<section class="pa"><p class="eb2">{e(pa["fiche"])}</p><h3>{e(pa["titre"])}</h3><div class="ptxt{" vers" if pa["vers"] else ""}">{body}</div>'
+            f'<p class="src">{e(pa["source"])}. {e(pa["edition"])}</p><p class="lab">Pour le commentaire</p><ul>{qs}</ul></section>')
+
 def textes_html(w):
     n = w["n"]
     qb = lambda q, src: f'<blockquote><p>«\u00a0{e(q)}\u00a0»</p><cite>{e(src)}</cite></blockquote>'
@@ -69,6 +85,8 @@ def textes_html(w):
         quotes = "".join(qb(" / ".join(l), s) for l, s in t["quotes"])
         qs = "".join(f"<li><b>{e(a)}</b> {e(b)}</li>" for a, b in t["questions"])
         txt += f'<section class="t"><h3>Texte {k} · {e(t["title"])}</h3>{quotes}<p class="lab">Pour lire le texte</p><ul>{qs}</ul></section>'
+    pas = "".join(passage_html(pa) for pa in PASSAGES.get(n, []))
+    pas += "".join(f'<div class="box"><b>{e(t)}</b><br>{e(x)}</div>' for t, x in SANS_PASSAGE.get(n, []))
     nv = w["nouvelle"]
     nvq = qb(" / ".join(nv["quote"][0]), nv["quote"][1]) if nv["quote"] else ""
     nvp = "".join(f"<li><b>{e(a)}</b> {e(b)}</li>" for a, b in nv["points"])
@@ -99,7 +117,13 @@ ul{margin:1mm 0 2mm;padding-left:5mm}li{margin:.7mm 0}
 .box{border:1pt solid #E2D8C6;background:#FBF8F2;padding:3mm 4mm;margin:3mm 0;break-inside:avoid}
 .t{break-inside:auto}.small{font-size:8.5pt;color:#7A7282}
 .head{display:flex;justify-content:space-between;align-items:flex-start;gap:6mm}
-.head .qr{flex:none;text-align:center;font-size:7pt;color:#7A7282}"""
+.head .qr{flex:none;text-align:center;font-size:7pt;color:#7A7282}
+.pa{break-before:page}.pa h3{font-size:14pt;margin-top:0}.eb2{font:700 8pt 'Source Sans 3';letter-spacing:1.5pt;text-transform:uppercase;color:#2E6A8E;margin:0}
+.ptxt{font:11pt/1.55 'Playfair Display',Georgia,serif;margin:2mm 0 3mm}
+.ptxt .pp{margin:0 0 2.2mm;padding-left:9mm;position:relative;text-align:justify}
+.ptxt .st{margin:0 0 3mm;break-inside:avoid}.ptxt .v{padding-left:12mm;position:relative}.ptxt .v.ind{padding-left:24mm}
+.ln{position:absolute;left:0;margin-left:0;width:8mm;text-align:right;font:8pt 'Source Sans 3';color:#7A7282;top:.35em}
+.src{font-size:8.5pt;color:#7A7282;margin:1mm 0}"""
     import qrcode, qrcode.image.svg
     def qrsvg(url):
         q = qrcode.QRCode(border=1, image_factory=qrcode.image.svg.SvgPathImage); q.add_data(url); q.make(fit=True)
@@ -111,6 +135,7 @@ ul{margin:1mm 0 2mm;padding-left:5mm}li{margin:.7mm 0}
 <div class="qr">{qrsvg(SITEURL + f's{n}.html')}<br>page de la semaine</div></div>
 <div class="box"><b>À la fin de la semaine, je peux…</b><ul>{obj}</ul><b>Dans la fiche du cours</b><ul>{prog}</ul></div>
 <h2>Textes à la loupe</h2>{txt}
+{('<h2>Passages pour le commentaire</h2><p class="small">Textes longs pour l\'analyse en classe et chez soi. Poésie : numérotation des vers ; prose : numérotation des paragraphes (§).</p>' + pas) if pas else ''}
 <h2>{e(nv['label'])} · {e(nv['title'])}</h2>{nvq}<ul>{nvp}</ul><p class="small">{e(nv['bas'])}</p>
 <h2>Citations de la semaine</h2><p class="small">Citations utilisées en classe (œuvres, préfaces, critique), avec leur source.</p>{cits}
 {('<h2>Lecture critique</h2>' + crit) if crit else ''}
@@ -144,6 +169,14 @@ async def main():
                          display_header_footer=True, header_template="<span></span>",
                          footer_template=f'<div style="font-size:7pt;color:#7A7282;width:100%;text-align:center">Guide de l\'enseignant · semaine {n} · page <span class="pageNumber"></span>/<span class="totalPages"></span></div>')
             print("ok", n, cnt, "diapositives")
+        if not ONLY or 0 in ONLY:
+            for page, name, label in [("lecture.html", "plan-de-lecture.pdf", "Plan de lecture"), ("prof-oeuvres.html", "fiches-oeuvres-enseignant.pdf", "Fiches des œuvres · enseignant")]:
+                await pg.goto(f"file://{SITE}/{page}"); await pg.wait_for_timeout(400)
+                await pg.add_style_tag(content=font_css() + "@page{size:A4;margin:14mm} .bar,.foot,.noprint{display:none!important} .fiche,.work{break-inside:avoid-page}")
+                await pg.wait_for_timeout(300)
+                await pg.pdf(path=os.path.join(OUT, name), format="A4", print_background=True, display_header_footer=True, header_template="<span></span>",
+                             footer_template=f'<div style="font-size:7pt;color:#7A7282;width:100%;text-align:center">{label} · page <span class="pageNumber"></span>/<span class="totalPages"></span></div>')
+                print("ok", name)
         await b.close()
 
 asyncio.run(main())

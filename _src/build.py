@@ -8,6 +8,9 @@ from prof import PROF
 from guide import GUIDE
 from notes_a import NOTES as NA
 from notes_b import NOTES as NB
+from passages import PASSAGES, SANS_PASSAGE
+from oeuvres import OEUVRES, CALENDRIER, GROUPES, FICHE_OEUVRE, JOURNAL
+OEUV = {o['id']: o for o in OEUVRES}
 NOTES = {**NA, **NB}
 WEEKS = WA + WB
 OLD = sys.argv[1]   # old site dir (for raw slides)
@@ -257,7 +260,60 @@ def deck(w):
             sec, nt = old[sid]
             sec = re.sub(r"Semaine 8 · [^<]*· UniCT 2026", e(footer(w)), sec)
             s.insert(pos+j, sec); notes.insert(pos+j, nd.get(sid) or nt); ids.insert(pos+j, sid)
+    k = ids.index("bilan")
+    s.insert(k, s_lecture(w)); notes.insert(k, note_lecture(w)); ids.insert(k, "lecture")
     return s, notes, ids
+
+# ------------------------------------------------------------------ plan de lecture : diapositive et note
+def week_works(n): return [o for o in OEUVRES if o["semaine"] == n]
+def hfmt(h):
+    if h < 1: return "30 min"
+    return (f"{int(h)} h" if h == int(h) else f"{int(h)} h 30")
+def s_lecture(w):
+    n = w["n"]
+    if n == 1:
+        rows = [("Liste A.1", "six œuvres, une par paire", "21 à 25 h selon les choix"),
+                ("Partie B", "nouvelles et deux recueils", "environ 30 h"),
+                ("Au total", "sur 16 semaines, jusqu'à fin janvier", "3 à 4 h par semaine")]
+        tab = "".join(f'<div style="display:flex; gap:28px; align-items:baseline; padding:20px 0; border-bottom:1px solid {LINE}"><p style="flex:none; width:300px; font-family:{SERIF}; font-size:40px; font-weight:700; color:{WINE}">{e(a_)}</p><p style="flex:1; font-size:30px">{e(b_)}</p><p style="flex:none; width:460px; font-size:32px; font-weight:700; color:{BLUE}">{e(c_)}</p></div>' for a_,b_,c_ in rows)
+        side = card(f'<p style="font-size:24px; font-weight:700; color:{BLUE}">COMMENT</p>'
+                    '<p style="font-size:28px; line-height:1.4">En classe : les passages clés de chaque œuvre.</p>'
+                    '<p style="font-size:28px; line-height:1.4">En groupe : une fiche d\'œuvre par groupe, partagée sur Classroom.</p>'
+                    '<p style="font-size:28px; line-height:1.4">Seul : un calendrier de 16 semaines et un journal de lecture de deux minutes.</p>', top=BLUE, pad="32px", flex="flex:none; width:560px")
+        inner = head("Plan de lecture", "Tout lire, sans se noyer") + f'<div style="display:flex; gap:48px; flex:1"><div style="flex:1">{tab}</div>{side}</div>' + f'<p style="font-family:{HAND}; font-size:44px; color:{WINE}">Le cours donne les clés ; la lecture intégrale est votre voyage.</p>'
+        return slide("lecture", PAPER, INK, inner, extra="gap:36px", foot=footer(w))
+    ws = week_works(n)
+    cards = "".join(card(
+        f'<p style="font-size:20px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{WINE}">{e(o["fiche"])}</p>'
+        f'<h3 style="font-family:{SERIF}; font-size:{34 if len(o["titre"])<34 else 28}px; line-height:1.1">{e(o["titre"])}</h3>'
+        f'<p style="font-size:22px; color:{SOFT}">{e(o["auteur"].split(",")[0])} · {e(o["date"])}</p>'
+        f'<p style="font-size:24px; font-weight:700; color:{BLUE}">{e(o["pages"].split(" (")[0])} · {hfmt(o["heures"])}</p>'
+        f'<p style="font-size:23px; line-height:1.35">{e(o["cles"][0])}</p>', top=WINE, pad="26px 28px") for o in ws)
+    inner = head("Lire l'œuvre en entier", "Les œuvres de la semaine", size=60) + f'<div style="display:flex; gap:24px; flex:1">{cards}</div>' + (
+        f'<p style="font-size:26px; color:{BLUE}; font-weight:600">Calendrier de 16 semaines, fiches de groupe et journal de lecture : page Plan de lecture du site.</p>')
+    return slide("lecture", PAPER, INK, inner, extra="gap:32px", foot=footer(w))
+
+def lab(t):
+    t = re.sub(r"\(.*?\)", "", t).upper()
+    return re.sub(r"[^A-ZÀ-ÝŒ'’ ]", " ", t).strip()
+def note_lecture(w):
+    n = w["n"]
+    if n == 1:
+        return ("DURÉE · 10 min, en fin de séance A.\n\n"
+          "L'ESSENTIEL POUR L'ENSEIGNANT · La fiche du cours demande de lire en entier six œuvres A.1 et toute la partie B. Le cours ne peut pas tout lire en classe : il donne les passages clés, la méthode et un plan. La lecture intégrale se fait sur 16 semaines, jusqu'à fin janvier, à raison de 3 à 4 heures par semaine.\n\n"
+          "DÉROULÉ · Montrer le tableau, puis ouvrir la page Plan de lecture du site. Annoncer les 8 groupes de 5 et leur fiche d'œuvre (une œuvre A.1 et une nouvelle des recueils B par groupe). Annoncer le journal de lecture sur Classroom : deux minutes par semaine.\n\n"
+          "QUESTIONS ET RÉPONSES · Q. Faut-il vraiment lire les deux œuvres de chaque paire ?\nR. Non : une par paire. En classe, on lit les deux par extraits, ce qui aide à choisir.\n"
+          "Q. Peut-on lire en traduction italienne ?\nR. La fiche demande une édition intégrale en français. La traduction peut aider à côté, pour les passages difficiles.\n"
+          "Q. Quelles œuvres sont les plus courtes ?\nR. Le Bateau ivre, les deux manifestes, Salomé ou Ubu Roi, et Études et préludes. Le roman de la paire 6 et Les Diaboliques sont les lectures les plus longues : le calendrier les place après la fin du cours.\n\n"
+          "À ÉVITER · Ne pas promettre que les fiches de groupe remplacent la lecture : elles sont une carte, pas le voyage.")
+    ws = week_works(n)
+    out = ["DURÉE · 5 min, en fin de séance (A ou C).",
+           "DÉROULÉ · Présenter les œuvres à lire en entier : volume, temps de lecture, une clé. Rappeler le calendrier de lecture et le journal sur Classroom. Si un groupe a une fiche d'œuvre à rendre cette semaine, lui donner la parole deux minutes."]
+    for o in ws:
+        p = o["prof"]
+        qr_ = "\n".join(f"Q. {q}\nR. {r}" for q, r in o["verif"])
+        out.append(f"{lab(o['titre'])} · {p['resume']}\n{qr_}")
+    return "\n\n".join(out)
 
 # ------------------------------------------------------------------ page shell
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
@@ -266,6 +322,7 @@ def shell(title, desc, active, body):
     nav = (f'<a href="index.html"{" aria-current=page" if active=="home" else ""}>Accueil</a>'
            f'<a href="s1.html"{" aria-current=page" if active=="week" else ""}>Semaines</a>'
            f'<a href="guide.html"{" aria-current=page" if active=="guide" else ""}>Mode d\'emploi</a>'
+           f'<a href="lecture.html"{" aria-current=page" if active=="lecture" else ""}>Plan de lecture</a>'
            f'<a href="biblio.html"{" aria-current=page" if active=="biblio" else ""}>Bibliographie</a>'
            f'<a href="carnet.html"{" aria-current=page" if active=="carnet" else ""}>Enseignant</a>'
            f'<a href="{CLASSROOM}" target=_blank rel=noopener>Classroom ↗</a>'
@@ -308,6 +365,7 @@ def route(w):
       f'<div class="rc"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
       f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>'
       + (f'<div class="rc"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver la feuille de route, l\'audio, la présentation, la bibliographie et l\'Atelier du siècle, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
+      + route_lecture(w)
       + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
       + f'</section>')
 
@@ -388,6 +446,7 @@ def index_page():
       + (f'<h2>Lectures critiques</h2><p class="lead small">Toutes les références, semaine par semaine : <a href="biblio.html">la bibliographie du cours</a>.</p><div class="prose wide"><ul>' + "".join(f'<li><a href="s{n}.html">Semaine {n}</a> · {e(ar["ref"])}</li>' for n in sorted(ARTICLES) for ar in ARTICLES[n]) + '</ul></div>' if ARTICLES else '')
       + '<h2>Outils du cours</h2><div class="toolgrid">'
       f'<a class="tool" href="{APP}" target=_blank rel=noopener><b>L\'Atelier du siècle ↗</b><span>Dialoguer avec des écrivains de 1802 à 1924 et faire relire son commentaire selon la grille du cours. En classe, il est projeté sur l\'écran commun ; chez soi, on peut s\'y entraîner avec son propre compte claude.ai.</span></a>'
+      '<a class="tool" href="lecture.html"><b>Plan de lecture</b><span>Les œuvres à lire en entier : volume, temps de lecture, calendrier sur 16 semaines, fiches de groupe et journal de lecture.</span></a>'
       '<a class="tool" href="guide.html"><b>Mode d\'emploi du site</b><span>Où trouver quoi, comment suivre une présentation, écouter l\'audio, utiliser l\'Atelier : pour les étudiants et pour les enseignants.</span></a>'
       '<a class="tool" href="biblio.html"><b>Bibliographie</b><span>Œuvres, lectures critiques et ressources en ligne, semaine par semaine.</span></a>'
       '<a class="tool" href="carnet.html"><b>Carnet de l\'enseignant</b><span>Déroulé des 24 séances avec les durées, correspondance avec la fiche du cours, points à confirmer.</span></a></div>'
@@ -410,7 +469,7 @@ def carnet_page():
           f'<p><strong>À anticiper.</strong> {e(c["anticiper"])}</p>'
           f'<p><strong>Production des étudiants.</strong> {e(w["production"])}</p>'
           + "".join(f'<p><strong>Lecture critique.</strong> {e(ar["ref"])} Idées utilisées en classe : ' + "; ".join(e(k)+" ("+e(v)+")" for k,v in ar["idees"]) + f'. À discuter : {e(ar["debat"])}</p>' for ar in ARTICLES.get(w["n"], [])))
-    body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 6 octobre 2026 · <a href="prof-s1.html">Guides imprimables S1</a> à <a href="prof-s8.html">S8</a> · <a href="biblio.html">Bibliographie</a></p>'
+    body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 11 octobre 2026 · <a href="prof-s1.html">Guides imprimables S1</a> à <a href="prof-s8.html">S8</a> · <a href="prof-oeuvres.html">Fiches des œuvres</a> · <a href="lecture.html">Plan de lecture</a> · <a href="biblio.html">Bibliographie</a></p>'
       '<h2>Architecture du cours</h2>'
       '<p>48 heures en 8 semaines, du 12 octobre au 5 décembre 2026, en trois séances de 2 heures par semaine. Le cours suit la fiche de Carminella Sipala (Laurea L11, L-LIN/03) : partie A, fondements du XIXe siècle et des vingt premières années du XXe, avec les six paires de la liste A.1 ; partie B, la nouvelle au XIXe siècle. La méthode est la mienne : la sociocritique comme lecture, l\'IA comme outil vérifié, une production par semaine.</p>'
       '<p><strong>Examen.</strong> Je ne fais pas passer l\'examen (écrit de commentaire puis oral, en français, selon la fiche). Le cours y prépare : méthode du commentaire en huit étapes, lecture expressive, traduction italienne, contexte, fiches A.1 et anthologie A.2. Deux ateliers de commentaire (semaines 5 et 8) reçoivent un retour écrit, sans note.</p>'
@@ -458,7 +517,7 @@ def fmt_note(t):
 
 LABELS = {"cover":"Couverture","objectifs":"Objectifs de la semaine","seances":"Les trois séances","frise":"Frise","auteurs":"Les voix de la semaine",
           "italia":"Ponte con l'Italia","bilan":"Bilan et suite","site":"Mode d'emploi du site","moi":"Présentation de l'enseignant",
-          "universite":"L'université d'origine","istanbul":"Istanbul et les écrivains français","vous":"Et vous ?","envers":"L'envers de la fête"}
+          "universite":"L'université d'origine","istanbul":"Istanbul et les écrivains français","vous":"Et vous ?","envers":"L'envers de la fête","lecture":"Lire l'œuvre en entier"}
 def slide_label(w, sid):
     arts = {ar["id"]: ar for ar in ARTICLES.get(w["n"], [])}
     if sid.startswith("critique-"):
@@ -495,9 +554,10 @@ def prof_page(w, slides, notes, ids):
       + (f'<h2>Prononcer les noms propres</h2><table><thead><tr><th>Nom</th><th>Prononciation conseillée</th></tr></thead><tbody>{noms}</tbody></table>' if noms else '')
       + (f'<h2>Questions fréquentes des étudiants</h2>{faq}' if faq else '')
       + (f'<h2>Lectures critiques de la semaine</h2><ul>{crit}</ul>' if crit else '')
+      + prof_oeuvres_section(w)
       + f'<h2>Notes diapositive par diapositive</h2><ol class="toc noprint">{toc}</ol>{body_notes}'
       '</main>')
-    page = shell(f"Guide de l'enseignant S{w['n']} · Catania 2026", f"Guide imprimable de l'enseignant, semaine {w['n']} : {w['title']}.", "carnet", PRINT_CSS + body)
+    page = shell(f"Guide de l'enseignant S{w['n']} · Catania 2026", f"Guide imprimable de l'enseignant, semaine {w['n']} : {w['title']}.", "carnet", PRINT_CSS + LEC_CSS + body)
     open(os.path.join(OUT, f"prof-s{w['n']}.html"), "w", encoding="utf-8").write(page)
 
 def biblio_page():
@@ -542,9 +602,132 @@ def guide_page():
       f'{sec}<h2 id="faq">Questions fréquentes</h2>{faq}</main>')
     open(os.path.join(OUT, "guide.html"), "w", encoding="utf-8").write(shell("Mode d'emploi · Catania 2026", "Mode d'emploi du site du cours : où trouver quoi, pour les étudiants et pour les enseignants.", "guide", body))
 
+# ------------------------------------------------------------------ plan de lecture : pages
+LEC_CSS = ("<style>.lec .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:12px 0}"
+  ".lec .box{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--wine);padding:14px 18px}"
+  ".lec .box h3{margin:0 0 4px;font-size:21px}.lec .box p{margin:6px 0;font-size:15.5px}.lec .box ul{margin:6px 0;padding-left:1.2em;font-size:15.5px}"
+  ".lec .tag{font:700 12px var(--sans,sans-serif);letter-spacing:1.5px;text-transform:uppercase;color:var(--wine)}"
+  ".lec .meta{color:var(--blue);font-weight:700}.lec tr.light td:first-child::before{content:'● ';color:var(--blue)}"
+  ".lec .work{border-top:2px solid var(--ink);padding-top:10px;margin-top:28px}.lec .work h3{font-size:24px;margin:4px 0}"
+  ".fiche{border:1px solid var(--line);background:var(--card);padding:14px 18px;margin:14px 0;break-inside:avoid-page}"
+  ".fiche h3{margin:0 0 6px}.fiche dl{margin:0}.fiche dt{font-weight:700;margin-top:8px}.fiche dd{margin:2px 0 0 0}"
+  ".pass{white-space:pre-line;font-family:'Playfair Display',Georgia,serif;font-size:15.5px;line-height:1.5;border-left:3px solid var(--wine);padding-left:12px;margin:8px 0}"
+  "</style>")
+
+def route_lecture(w):
+    n = w["n"]
+    ws = week_works(n)
+    if n == 1:
+        body = ('<p>La fiche demande de lire en entier six œuvres A.1 et toute la partie B. En classe, nous lisons les passages clés ; '
+                'la lecture intégrale se fait sur 16 semaines, à raison de 3 à 4 heures par semaine.</p>'
+                '<p><a href="lecture.html">Ouvrir le plan de lecture</a> · <a href="lecture.html#calendrier">calendrier</a> · <a href="lecture.html#groupes">groupes</a></p>')
+    else:
+        lis = "".join(f'<li><a href="lecture.html#{o["id"]}">{e(o["auteur"].split(",")[0])}, {e(o["titre"])}</a> · {e(o["pages"].split(" (")[0])}, {hfmt(o["heures"])}</li>' for o in ws)
+        body = f'<ul>{lis}</ul><p>Les passages longs sont dans le <a href="pdf/s{n}-textes.pdf">dossier de textes</a>. <a href="lecture.html#calendrier">Calendrier de lecture</a>.</p>'
+    return f'<div class="rc"><h2>Lire en entier</h2>{body}</div>'
+
+def fiche_prof_html(o):
+    p = o["prof"]
+    sav = "".join(f"<li>{e(x)}</li>" for x in p["savoir"])
+    pas = "".join(f"<li>{e(x)}</li>" for x in p["passages"])
+    qr_ = "".join(f'<p class="q"><b>Q.</b> {e(q)}</p><p class="r"><b>R.</b> {e(r)}</p>' for q, r in o["verif"])
+    return (f'<article class="fiche" id="f-{o["id"]}"><p class="eyebrow">{e(o["fiche"])} · {e(o["genre"])} · {e(o["pages"])} · lecture : {hfmt(o["heures"])}</p>'
+      f'<h3>{e(o["auteur"])}, {e(o["titre"])} ({e(o["date"])})</h3><dl>'
+      f'<dt>Ce qui se passe</dt><dd>{e(p["resume"])}</dd>'
+      f'<dt>Structure</dt><dd>{e(p["structure"])}</dd>'
+      f'<dt>À savoir</dt><dd><ul>{sav}</ul></dd>'
+      f'<dt>Lecture sociocritique</dt><dd>{e(p["angle"])}</dd>'
+      f'<dt>Passages clés</dt><dd><ul>{pas}</ul></dd>'
+      f'<dt>Contrôle de lecture (5 min en début de séance)</dt><dd>{qr_}</dd>'
+      f'<dt>Piège</dt><dd>{e(p["piege"])}</dd></dl></article>')
+
+def passage_prof_html(pa):
+    qs = "".join(f"<li><b>{e(a_)}</b> {e(b_)}</li>" for a_, b_ in pa["questions"])
+    return (f'<article class="fiche" id="p-{pa["id"]}"><p class="eyebrow">{e(pa["fiche"])} · dossier de textes</p><h3>{e(pa["titre"])}</h3>'
+            f'<p class="small">{e(pa["source"])}. {e(pa["edition"])}</p><p><b>Questions du dossier</b></p><ul>{qs}</ul>'
+            f'<p><b>Pistes pour l\'enseignant</b></p><p>{e(pa["pistes"])}</p></article>')
+
+def prof_oeuvres_section(w):
+    n = w["n"]
+    ws, ps = week_works(n), PASSAGES.get(n, [])
+    out = ""
+    if ps:
+        out += ('<h2>Passages du dossier : pistes de lecture</h2><p>Les passages ci-dessous sont reproduits en entier, avec numérotation des lignes, '
+                f'dans le <a href="pdf/s{n}-textes.pdf">dossier de textes de la semaine</a>. Chaque question posée aux étudiants a ici ses pistes de réponse.</p>'
+                + "".join(passage_prof_html(pa) for pa in ps))
+    if ws:
+        out += ('<h2>Les œuvres de la semaine : fiches de l\'enseignant</h2><p>Pour présenter une œuvre entière sans l\'avoir relue la veille : '
+                'résumé, structure, contexte, angle sociocritique, passages clés et contrôle de lecture avec les réponses. '
+                'Toutes les fiches sont réunies dans <a href="prof-oeuvres.html">Fiches des œuvres</a>.</p>' + "".join(fiche_prof_html(o) for o in ws))
+    return out
+
+def lecture_page():
+    light_tot = {}
+    for o in OEUVRES:
+        if o["fiche"].startswith("A.1"):
+            k = o["fiche"]; light_tot[k] = min(light_tot.get(k, 99), o["heures"])
+    heavy_tot = {}
+    for o in OEUVRES:
+        if o["fiche"].startswith("A.1"):
+            k = o["fiche"]; heavy_tot[k] = max(heavy_tot.get(k, 0), o["heures"])
+    b_tot = sum(o["heures"] for o in OEUVRES if not o["fiche"].startswith("A.1"))
+    rows = "".join(f'<tr class="{"light" if o["leger"] else ""}"><td>{e(o["fiche"])}</td><td><a href="#{o["id"]}">{e(o["auteur"].split(",")[0])}, {e(o["titre"])}</a> ({e(o["date"])})</td><td>{e(o["pages"])}</td><td>{hfmt(o["heures"])}</td><td>S{o["semaine"]}</td></tr>' for o in OEUVRES)
+    cal = "".join(f'<tr><td><b>{e(a_)}</b></td><td>{e(d_)}</td><td>{e(t_)}</td><td>{hfmt(h_)}</td></tr>' for a_, d_, t_, h_ in CALENDRIER)
+    grp = "".join(f'<tr><td><b>{e(g)}</b></td><td>{e(a1)}</td><td>{e(b_)}</td><td>{e(s_)}</td></tr>' for g, a1, b_, s_ in GROUPES)
+    fic = "".join(f'<li><b>{e(k)}.</b> {e(v)}</li>' for k, v in FICHE_OEUVRE)
+    jou = "".join(f'<li><b>{e(k)}</b> ({e(v)})</li>' for k, v in JOURNAL)
+    works = ""
+    for o in OEUVRES:
+        cl = "".join(f"<li>{e(c)}</li>" for c in o["cles"])
+        vq = "".join(f"<li>{e(q)}</li>" for q, _ in o["verif"])
+        pas = ", ".join(f'<a href="pdf/s{o["semaine"]}-textes.pdf">{e(next(pa["titre"] for n_ in PASSAGES for pa in PASSAGES[n_] if pa["id"]==pid))}</a>' for pid in o["passages"])
+        works += (f'<section class="work" id="{o["id"]}"><p class="tag">{e(o["fiche"])} · {e(o["genre"])} · en classe : <a href="s{o["semaine"]}.html">semaine {o["semaine"]}</a></p>'
+          f'<h3>{e(o["auteur"])}, {e(o["titre"])} ({e(o["date"])})</h3>'
+          f'<p class="meta">{e(o["pages"])} · environ {hfmt(o["heures"])} de lecture</p>'
+          f'<p><b>Où le lire :</b> {e(o["acces"])}</p>'
+          f'<p><b>Trois clés pour lire</b></p><ul>{cl}</ul>'
+          + (f'<p><b>Dans le dossier de textes :</b> {pas}</p>' if pas else '')
+          + f'<p><b>Ai-je bien lu ?</b> Trois questions pour vérifier sa lecture (réponses en classe ou dans l\'Atelier) :</p><ul>{vq}</ul></section>')
+    body = (f'<main class="prose lec">{LEC_CSS}<p class="eyebrow">Plan de lecture · automne 2026 – janvier 2027</p><h1>Tout lire, sans se noyer</h1>'
+      '<p class="sub">Les œuvres que la fiche du cours demande de lire en entier, le temps qu\'il faut, et un chemin sur 16 semaines.</p>'
+      '<div class="grid2">'
+      '<div class="box"><h3>En classe</h3><p>Nous lisons les passages clés de chaque œuvre, avec la méthode du commentaire. Vous savez où regarder quand vous lisez seul.</p></div>'
+      '<div class="box" style="border-top-color:var(--blue)"><h3>En groupe</h3><p>Chaque groupe de cinq prépare une fiche d\'œuvre partagée sur Classroom : une carte pour toute la classe.</p></div>'
+      '<div class="box" style="border-top-color:var(--ink)"><h3>Seul</h3><p>Un calendrier de 16 semaines (3 à 4 heures par semaine) et un journal de lecture de deux minutes sur Classroom.</p></div></div>'
+      f'<h2 id="volume">Combien de lecture ?</h2><p>Une œuvre par paire pour la liste A.1, toute la partie B. Les durées sont indicatives (lecteur de niveau B1-B2, environ 25 pages par heure). '
+      f'Avec les œuvres les plus courtes de chaque paire, la liste A.1 demande environ {hfmt(sum(light_tot.values()))} ; avec les plus longues, environ {hfmt(sum(heavy_tot.values()))}. La partie B demande environ {hfmt(b_tot)}. '
+      '<span class="meta">●</span> signale l\'œuvre la plus courte de la paire ou une lecture brève.</p>'
+      f'<table><thead><tr><th>Fiche</th><th>Œuvre</th><th>Volume</th><th>Lecture</th><th>En classe</th></tr></thead><tbody>{rows}</tbody></table>'
+      f'<h2 id="calendrier">Le calendrier sur 16 semaines</h2><p>Les cours finissent le 5 décembre ; la lecture continue jusqu\'à fin janvier. Les lectures longues (le roman de la paire 6, Les Diaboliques) sont placées après les cours, quand vous avez déjà les clés. La date de l\'examen est à confirmer : la liste A.2 doit être envoyée au moins 30 jours avant.</p>'
+      f'<table><thead><tr><th>Semaine</th><th>Dates</th><th>À lire</th><th>Temps</th></tr></thead><tbody>{cal}</tbody></table>'
+      f'<h2 id="groupes">Les fiches d\'œuvre en groupe</h2><p>Huit groupes de cinq. Chaque groupe prépare deux fiches d\'une page : une œuvre A.1 et une nouvelle des recueils de la partie B. Les fiches sont déposées sur Classroom et présentées en deux minutes la semaine indiquée. Une fiche aide toute la classe à lire ; elle ne remplace la lecture de personne.</p>'
+      f'<table><thead><tr><th>Groupe</th><th>Œuvre A.1</th><th>Nouvelle(s) de la partie B</th><th>Présentation</th></tr></thead><tbody>{grp}</tbody></table>'
+      f'<p><b>Le modèle de fiche (une page)</b></p><ol>{fic}</ol>'
+      f'<h2 id="journal">Le journal de lecture</h2><p>Chaque dimanche, deux minutes sur le formulaire de Classroom. Il sert à vous situer et à me montrer où la classe a besoin d\'aide ; il n\'est pas noté.</p><ul>{jou}</ul>'
+      '<h2 id="aides">Pour lire plus facilement</h2><ul>'
+      '<li><b>Écouter en lisant.</b> Beaucoup d\'œuvres du domaine public existent en livre audio gratuit en français (site Littérature audio). Suivre le texte des yeux en écoutant aide aussi pour la lecture expressive de l\'examen.</li>'
+      '<li><b>La traduction à côté, pas à la place.</b> La fiche demande une édition intégrale en français. Une traduction italienne peut aider pour un passage difficile, après une première lecture en français.</li>'
+      '<li><b>Wikisource et Gallica.</b> Les textes du domaine public y sont gratuits ; la plupart des liens sont dans la <a href="biblio.html">bibliographie</a>.</li>'
+      f'<li><b>L\'Atelier du siècle.</b> Après une lecture, posez à l\'auteur simulé les questions Ai-je bien lu ? ci-dessous et vérifiez ses réponses dans le texte. L\'IA ne lit pas à votre place : elle vous aide à vérifier ce que vous avez lu. <a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier ↗</a></li></ul>'
+      f'<h2 id="oeuvres">Œuvre par œuvre</h2>{works}'
+      '<p class="small" style="margin-top:28px">PDF de cette page pour Classroom : <a href="pdf/plan-de-lecture.pdf">plan de lecture</a>.</p></main>')
+    open(os.path.join(OUT, "lecture.html"), "w", encoding="utf-8").write(shell("Plan de lecture · Catania 2026", "Plan de lecture du cours : œuvres à lire en entier, durées, calendrier sur 16 semaines, fiches de groupe et journal de lecture.", "lecture", body))
+
+def prof_oeuvres_page():
+    toc = "".join(f'<li><a href="#f-{o["id"]}">{e(o["auteur"].split(",")[0])}, {e(o["titre"])}</a> · S{o["semaine"]}</li>' for o in OEUVRES)
+    body = (f'<main class="prose prof">{LEC_CSS}<p class="eyebrow">Guide de l\'enseignant · toutes les œuvres de la fiche</p><h1>Fiches des œuvres</h1>'
+      '<p class="sub">Les vingt œuvres à lire en entier (A.1 et partie B), pour l\'enseignant.</p>'
+      '<p class="noprint"><a href="carnet.html">← Carnet</a> · <a href="lecture.html">Plan de lecture (étudiants)</a> · <button class="btn" onclick="window.print()">Imprimer</button></p>'
+      '<div class="callout"><b>Comment utiliser ces fiches.</b> Elles permettent de présenter une œuvre entière avec assurance : ce qui se passe, comment le livre est construit, ce qu\'il faut savoir du contexte, une lecture sociocritique, trois passages clés et un contrôle de lecture de cinq minutes avec les réponses. '
+      'Les faits ont été vérifiés sur les textes de Wikisource quand ils sont disponibles ; pour Cendrars et Les Caves du Vatican, contrôler les passages cités sur l\'édition de la classe. '
+      'Le contrôle de lecture se fait à l\'oral, en début de séance, ou dans l\'Atelier du siècle projeté.</div>'
+      f'<ol class="toc noprint">{toc}</ol>' + "".join(fiche_prof_html(o) for o in OEUVRES) + '</main>')
+    open(os.path.join(OUT, "prof-oeuvres.html"), "w", encoding="utf-8").write(shell("Fiches des œuvres · Catania 2026", "Fiches de l'enseignant pour les œuvres à lire en entier : résumé, structure, contexte, lecture sociocritique, passages clés, contrôle de lecture.", "carnet", PRINT_CSS + body))
+
+
 if __name__ == "__main__":
     decks = {w["n"]: week_page(w) for w in WEEKS}
-    index_page(); carnet_page(); biblio_page(); guide_page()
+    index_page(); carnet_page(); biblio_page(); guide_page(); lecture_page(); prof_oeuvres_page()
     for w in WEEKS: prof_page(w, *decks[w["n"]])
     json.dump({str(w["n"]): w["audio"] for w in WEEKS}, open(os.path.join(OUT, "_audio.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("slides per week:", [len(decks[n][0]) for n in sorted(decks)])
