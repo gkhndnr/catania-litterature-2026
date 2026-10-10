@@ -9,6 +9,8 @@ from guide import GUIDE
 from notes_a import NOTES as NA
 from notes_b import NOTES as NB
 from passages import PASSAGES, SANS_PASSAGE
+from questions import QUESTIONS
+COMPAGNON = "https://compagnon-oral.ai.studio/"  # lien public de l'application Compagnon oral (Google AI Studio)
 from oeuvres import OEUVRES, CALENDRIER, GROUPES, FICHE_OEUVRE, JOURNAL
 OEUV = {o['id']: o for o in OEUVRES}
 NOTES = {**NA, **NB}
@@ -326,7 +328,8 @@ def shell(title, desc, active, body):
            f'<a href="biblio.html"{" aria-current=page" if active=="biblio" else ""}>Bibliographie</a>'
            f'<a href="carnet.html"{" aria-current=page" if active=="carnet" else ""}>Enseignant</a>'
            f'<a href="{CLASSROOM}" target=_blank rel=noopener>Classroom ↗</a>'
-           f'<a href="{APP}" target=_blank rel=noopener>Atelier du siècle ↗</a>')
+           f'<a href="{APP}" target=_blank rel=noopener>Atelier du siècle ↗</a>'
+           f'<a href="{COMPAGNON}" target=_blank rel=noopener>Compagnon oral ↗</a>')
     return (f'<!doctype html>\n<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
             f'<title>{e(title)}</title><meta name="description" content="{a(desc)}">{FONTS}\n<link rel="stylesheet" href="site.css"></head><body>'
             f'<header class="bar"><a class="logo" href="index.html">Catania · <i>Lettres 1780–1930</i></a><nav>{nav}</nav></header>{body}'
@@ -365,7 +368,7 @@ def route(w):
       f'<div class="rc"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
       f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>'
       + (f'<div class="rc"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver la feuille de route, l\'audio, la présentation, la bibliographie et l\'Atelier du siècle, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
-      + route_lecture(w)
+      + route_lecture(w) + route_parler(w)
       + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
       + f'</section>')
 
@@ -422,6 +425,7 @@ def access_block():
                 f'<div><h3>{e(title)}</h3><ul>{lis}</ul><p><a class="btn" href="{a(url)}" target=_blank rel=noopener>{e(label)} ↗</a></p></div></div>')
     return ('<section class="access" aria-label="Accès rapide"><h2>Accès rapide</h2><p class="lead small">Scannez avec l\'appareil photo du téléphone, ou cliquez.</p><div class="qgrid">'
       + card_(CLASSROOM, "Google Classroom du cours", ["Rejoindre la classe : code " + CLASS_CODE + ".", "Chaque semaine : la présentation et le dossier de textes en PDF.", "Dépôt des productions et annonces."], "Rejoindre la classe")
+      + card_(COMPAGNON, "Compagnon oral", ["Chatbot vocal du cours : il vous pose les questions de la semaine.", "Répondez en français, à l'écrit ou à voix haute.", "Pour préparer l'oral : présenter, lire, argumenter."], "Ouvrir le Compagnon")
       + card_(SITE, "Ce site sur votre téléphone", ["Feuilles de route, résumés audio, présentations.", "À garder dans les favoris pour toute la durée du cours.", "Première visite : lisez le Mode d'emploi."], "Ouvrir le site")
       + '</div></section>')
 
@@ -440,6 +444,7 @@ def index_page():
       '<div><b>Pour réviser</b>Un résumé audio de moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
       '<div><b>Première visite ?</b>Lisez le <a href="guide.html">mode d\'emploi du site</a> : cinq minutes pour savoir où tout se trouve.</div>'
       '</div></section>'
+      + parler_block() +
       f'<h2>Les semaines</h2><div class="weeks">{cards}</div>'
       f'<h2>Le programme dans le cours</h2><p class="lead small">Pour la liste A.1, vous choisissez une œuvre dans chaque paire et vous la lisez en entier. En classe, nous lisons les deux par extraits.</p>'
       f'<div class="prose wide">{a1_table()}{b_table()}<p class="small">Liste A.2 : chaque semaine propose deux ou trois extraits (rubrique Pour mon anthologie) pour construire votre liste personnelle de 50 extraits, à faire valider avant l\'examen.</p></div>'
@@ -555,6 +560,7 @@ def prof_page(w, slides, notes, ids):
       + (f'<h2>Questions fréquentes des étudiants</h2>{faq}' if faq else '')
       + (f'<h2>Lectures critiques de la semaine</h2><ul>{crit}</ul>' if crit else '')
       + prof_oeuvres_section(w)
+      + '<h2>Faire parler la classe</h2><p>Questions de la semaine (aussi sur la page de la semaine et dans le Compagnon oral). Une question par binôme, deux minutes de préparation, une minute de réponse à voix haute.</p><ol>' + "".join(f"<li>{e(q)}</li>" for q in QUESTIONS.get(w["n"], [])) + '</ol>'
       + f'<h2>Notes diapositive par diapositive</h2><ol class="toc noprint">{toc}</ol>{body_notes}'
       '</main>')
     page = shell(f"Guide de l'enseignant S{w['n']} · Catania 2026", f"Guide imprimable de l'enseignant, semaine {w['n']} : {w['title']}.", "carnet", PRINT_CSS + LEC_CSS + body)
@@ -601,6 +607,27 @@ def guide_page():
       '<nav class="gtoc"><a href="#etudiants">Pour les étudiants</a><a href="#enseignants">Pour les enseignants</a><a href="#raccourcis">Raccourcis</a><a href="#faq">Questions fréquentes</a></nav>'
       f'{sec}<h2 id="faq">Questions fréquentes</h2>{faq}</main>')
     open(os.path.join(OUT, "guide.html"), "w", encoding="utf-8").write(shell("Mode d'emploi · Catania 2026", "Mode d'emploi du site du cours : où trouver quoi, pour les étudiants et pour les enseignants.", "guide", body))
+
+
+def compagnon_link(label="Ouvrir le Compagnon oral"):
+    return f'<a class="btn" href="{a(COMPAGNON)}" target=_blank rel=noopener>{e(label)} ↗</a>' if COMPAGNON else '<span class="small">Lien du Compagnon oral : bientôt sur Classroom.</span>'
+
+def qlink(q, n):
+    if not COMPAGNON: return e(q)
+    from urllib.parse import quote
+    return f'<a href="{a(COMPAGNON)}?s={n}&amp;q={quote(q)}" target=_blank rel=noopener>{e(q)}</a>'
+
+def route_parler(w):
+    qs = "".join(f"<li>{qlink(q, w['n'])}</li>" for q in QUESTIONS.get(w["n"], []))
+    return (f'<div class="rc"><h2>Parler de la semaine</h2><p>Préparez votre réponse, puis cliquez : le Compagnon oral vous pose la question et commente votre réponse.</p><ol>{qs}</ol>'
+            f'<p>{compagnon_link()} · <a href="index.html#parler">questions générales</a></p></div>')
+
+def parler_block():
+    qs = "".join(f"<li>{qlink(q, 0)}</li>" for q in QUESTIONS["general"])
+    return ('<section class="how" id="parler"><h2>Parler du cours : le Compagnon oral</h2>'
+      '<p class="lead small">Un chatbot vocal qui connaît le contenu de ce site : il vous pose des questions, vous répondez en français, à l\'écrit ou à voix haute. '
+      'Il sert à préparer l\'oral (présenter un texte, lire, traduire, argumenter) et à revoir chaque semaine. Il ne remplace ni la lecture ni l\'édition : vérifiez ce qu\'il affirme.</p>'
+      f'<p>{compagnon_link()}</p><div class="prose wide"><p><b>Questions générales pour s\'entraîner</b> (les questions de chaque semaine sont sur sa page)</p><ol>{qs}</ol></div></section>')
 
 # ------------------------------------------------------------------ plan de lecture : pages
 LEC_CSS = ("<style>.lec .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:12px 0}"
