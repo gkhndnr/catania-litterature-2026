@@ -21,6 +21,8 @@ ONLY = [int(x) for x in sys.argv[4:]]
 os.makedirs(OUT, exist_ok=True)
 WEEKS = WA + WB
 NOTES = {**NA, **NB}
+import loupe as LP
+LP.apply(WEEKS, NOTES, BIB_WEEK)
 CLASSROOM = "https://classroom.google.com/c/ODg5MzMzMTU4ODc4?cjc=rxdffgje"
 SITEURL = "https://gkhndnr.github.io/catania-litterature-2026/"
 
@@ -136,6 +138,7 @@ ul{margin:1mm 0 2mm;padding-left:5mm}li{margin:.7mm 0}
 <div class="box"><b>À la fin de la semaine, je peux…</b><ul>{obj}</ul><b>Dans la fiche du cours</b><ul>{prog}</ul></div>
 <h2>Textes à la loupe</h2>{txt}
 {('<h2>Passages pour le commentaire</h2><p class="small">Textes longs pour l\'analyse en classe et chez soi. Poésie : numérotation des vers ; prose : numérotation des paragraphes (§).</p>' + pas) if pas else ''}
+{LP.loupe_box_pdf(n, e)}
 <h2>{e(nv['label'])} · {e(nv['title'])}</h2>{nvq}<ul>{nvp}</ul><p class="small">{e(nv['bas'])}</p>
 <h2>Citations de la semaine</h2><p class="small">Citations utilisées en classe (œuvres, préfaces, critique), avec leur source.</p>{cits}
 {('<h2>Lecture critique</h2>' + crit) if crit else ''}

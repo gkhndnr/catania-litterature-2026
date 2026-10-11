@@ -13,9 +13,11 @@ from questions import QUESTIONS
 from videos import VIDEOS, ARTE_REF, CONSEIL, yt
 COMPAGNON = "https://compagnon-oral.ai.studio/"  # lien public de l'application Compagnon oral (Google AI Studio)
 from oeuvres import OEUVRES, CALENDRIER, GROUPES, FICHE_OEUVRE, JOURNAL
+import loupe as LP
 OEUV = {o['id']: o for o in OEUVRES}
 NOTES = {**NA, **NB}
 WEEKS = WA + WB
+LP.apply(WEEKS, NOTES, BIB_WEEK)
 OLD = sys.argv[1]   # old site dir (for raw slides)
 OUT = sys.argv[2]
 os.makedirs(OUT, exist_ok=True)
@@ -83,7 +85,7 @@ def s_objectifs(w):
     tags = "".join(f'<div style="display:flex; flex-direction:column; gap:4px; padding:14px 0; border-bottom:1px solid {LINE}"><p style="font-size:20px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{BLUE}">{e(t)}</p><p style="font-size:24px; line-height:1.3">{e(x)}</p></div>' for t,x in w["prog"])
     inner = head("Objectifs de la semaine", "À la fin de la semaine, je peux…") + (
       f'<div style="display:flex; gap:56px; flex:1">'
-      f'<ul style="flex:1.35; list-style:none; padding:0; display:flex; flex-direction:column; gap:28px; font-size:32px; line-height:1.35">{lis}</ul>'
+      f'<ul style="flex:1.35; list-style:none; padding:0; display:flex; flex-direction:column; gap:{20 if len(w["objectifs"])>4 else 28}px; font-size:{28 if len(w["objectifs"])>4 else 32}px; line-height:1.32">{lis}</ul>'
       f'<div style="flex:1; background:{CARD}; border-radius:12px; padding:28px 32px; border-left:8px solid {BLUE}"><p style="font-size:24px; font-weight:700; color:{BLUE}; margin-bottom:6px">Dans la fiche du cours</p>{tags}</div></div>')
     return slide("objectifs", PAPER, INK, inner, foot=footer(w))
 
@@ -171,6 +173,19 @@ def s_labo(w):
       f'<p style="font-family:{HAND}; font-size:44px; color:#F2D9A8">L\'IA propose, le lecteur vérifie, l\'auteur, c\'est vous.</p>'
       + (f'<p style="font-size:26px; line-height:1.4; color:#D8CFDD"><i>IT · {e(lb["it"])}</i></p>' if lb.get("it") else ''))
     return slide("labo", INK, PAPER, inner, extra="gap:28px" if lb.get("it") else "gap:40px", foot=footer(w))
+
+def s_loupe(w):
+    L = LP.LOUPE[w["n"]]
+    cols = [WINE, BLUE, INK, "#9A6B12", WINE]
+    rows = "".join(f'<div style="display:flex; gap:26px; align-items:baseline; padding:13px 0; border-bottom:1px solid {LINE}"><p style="flex:none; width:250px; font-size:22px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{c}">{e(k)}</p><p style="font-size:25px; line-height:1.34">{e(v)}</p></div>' for (k,v),c in zip(L["grille"], cols))
+    inner = head("La langue à la loupe · isotopies, lexique, morpho-syntaxe", L["titre"], size=56) + (
+      f'<p style="font-size:24px; color:{MUTE}">{e(L["texte"])}</p>'
+      f'<div style="display:flex; gap:40px; flex:1">'
+      f'<div style="flex:1.7">{rows}</div>'
+      f'<div style="flex:1; display:flex; flex-direction:column; gap:20px; background:{CARD}; border-top:8px solid {BLUE}; border-radius:12px; padding:28px">'
+      f'<p style="font-size:22px; font-weight:700; color:{BLUE}">À FAIRE EN GROUPE</p><p style="font-size:25px; line-height:1.38">{e(L["consigne"])}</p>'
+      f'<p style="font-size:22px; font-weight:700; color:{WINE}; margin-top:auto">AVEC L\'IA</p><p style="font-size:22px; line-height:1.35">{e(L["ia"])}</p></div></div>')
+    return slide("loupe", PAPER2, INK, inner, pad="96px 112px 140px", extra="gap:22px", foot=footer(w))
 
 def s_italia(w):
     rows = "".join(f'<div style="display:flex; gap:36px; align-items:baseline; padding:26px 0; border-bottom:1px solid {LINE}"><p style="flex:none; width:300px; font-family:{SERIF}; font-size:44px; font-weight:700; color:{BLUE}">{e(k)}</p><p style="font-size:32px; line-height:1.4">{e(v)}</p></div>' for k,v in w["italia"])
@@ -264,6 +279,9 @@ def deck(w):
             sec, nt = old[sid]
             sec = re.sub(r"Semaine 8 · [^<]*· UniCT 2026", e(footer(w)), sec)
             s.insert(pos+j, sec); notes.insert(pos+j, nd.get(sid) or nt); ids.insert(pos+j, sid)
+    if w["n"] in LP.LOUPE:
+        k = ids.index("methode") + 1
+        s.insert(k, s_loupe(w)); notes.insert(k, nd["loupe"]); ids.insert(k, "loupe")
     k = ids.index("bilan")
     s.insert(k, s_lecture(w)); notes.insert(k, note_lecture(w)); ids.insert(k, "lecture")
     return s, notes, ids
@@ -395,11 +413,16 @@ def route(w):
             + (f'<p><b>À déposer :</b> {e(w["labo"]["produit"])}</p>' if w["labo"].get("depot_carte") else '')
             + f'<p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p>'
             + (f'<p><i>IT · {e(w["labo"]["it"])}</i></p>' if w["labo"].get("it") else '') + '</div>')
+    L = LP.LOUPE.get(w["n"])
+    loupe = (f'<div class="rc rc-loupe"><h2>La langue à la loupe</h2><p><b>{e(L["titre"])}</b> · {e(L["texte"])}</p><p><b>À faire :</b> {e(L["consigne"])}</p>'
+             '<details><summary>La grille : isotopie, lexique, morpho-syntaxe, rythme, voix et codes</summary><ul>'
+             + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in L["grille"]) + '</ul></details>'
+             '<p class="small">Isotopie : série de mots qui portent le même trait de sens (Greimas). La fiche du cours demande l\'analyse du texte du métrique au lexical et au morpho-syntaxique, et le repérage des séries isotopiques.</p></div>') if L else ''
     site = (f'<div class="rc rc-site"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver chaque chose, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
     lire = cls(route_lecture(w), "rc-lire")
     parler = cls(route_parler(w), "rc-parler")
     crit = "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
-    groups = [[je, avant, lire], [seances, fiche, labo, site], [antho, parler, crit, route_video(w)]]
+    groups = [[je, avant, lire], [seances, loupe, fiche, labo, site], [antho, parler, crit, route_video(w)]]
     out = ""
     for (c, t, sub), cards in zip(TIERS, groups):
         out += f'<div class="tier {c}"><h2 class="tierh"><span>{e(t)}</span> {e(sub)}</h2><div class="tgrid">{"".join(cards)}</div></div>'
@@ -493,6 +516,15 @@ def index_page():
       f'<h2>Les semaines</h2><div class="weeks">{cards}</div>'
       f'<h2>Le programme dans le cours</h2><p class="lead small">Pour la liste A.1, vous choisissez une œuvre dans chaque paire et vous la lisez en entier. En classe, nous lisons les deux par extraits.</p>'
       f'<div class="prose wide">{a1_table()}{b_table()}<p class="small">Liste A.2 : chaque semaine propose deux ou trois extraits (rubrique Pour mon anthologie) pour construire votre liste personnelle de 50 extraits, à faire valider avant l\'examen.</p></div>'
+      + '<h2 id="objectifs-fiche">Les objectifs de la fiche, point par point</h2><p class="lead small">La fiche du cours (Learning Objectives) fixe cinq attentes. Voici où chacune est travaillée.</p>'
+      '<div class="prose wide"><table><thead><tr><th>Ce que demande la fiche</th><th>Où nous le travaillons</th></tr></thead><tbody>'
+      + "".join(f'<tr><td>{e(k)}</td><td>{e(v)}</td></tr>' for k, v in [
+        ("Connaître la littérature française comme patrimoine et comme ensemble de modèles idéologiques, thématiques et linguistiques, utilisables dans l'espace européen.", "L'énigme et la frise de chaque semaine ; la boîte à outils (sociocritique, champ littéraire de Bourdieu) ; la rubrique Ponte con l'Italia."),
+        ("Étudier les langues mises à l'épreuve par les écrivains selon le genre, le public, les buts et la situation historique.", "Les voix de la semaine, le fil rouge de la nouvelle (née dans la presse), les lectures critiques, la question du semestre : qui a le pouvoir de dire ce qu'est la bonne littérature ?"),
+        ("Lire une anthologie ou des œuvres complètes.", "Listes A.1 et B lues en entier (plan de lecture sur 16 semaines) ; anthologie personnelle A.2 de 50 extraits construite semaine après semaine."),
+        ("Analyser la langue du texte, du métrique-prosodique au lexical et au morpho-syntaxique ; repérer les séries isotopiques, la signification globale, la dialectique entre individualité et codes supra-personnels.", "Textes à la loupe ; La langue à la loupe chaque semaine (isotopie, lexique, morpho-syntaxe, rythme ou métrique, voix et codes) ; méthode, étape 2 : compter les syllabes."),
+        ("Analyser et synthétiser par écrit lors d'une épreuve en cours de semestre, préparatoire à l'oral.", "La méthode du commentaire en huit étapes, jusqu'au commentaire complet de la semaine 8 ; productions hebdomadaires sur Classroom ; Compagnon oral pour s'entraîner à parler."),
+      ]) + '</tbody></table></div>'
       + (f'<h2>Lectures critiques</h2><p class="lead small">Toutes les références, semaine par semaine : <a href="biblio.html">la bibliographie du cours</a>.</p><div class="prose wide"><ul>' + "".join(f'<li><a href="s{n}.html">Semaine {n}</a> · {e(ar["ref"])}</li>' for n in sorted(ARTICLES) for ar in ARTICLES[n]) + '</ul></div>' if ARTICLES else '')
       + '<h2>Outils du cours</h2><div class="toolgrid">'
       f'<a class="tool" href="{APP}" target=_blank rel=noopener><b>L\'Atelier du siècle ↗</b><span>Dialoguer avec des écrivains de 1802 à 1924 et faire relire son commentaire selon la grille du cours. En classe, il est projeté sur l\'écran commun ; chez soi, on peut s\'y entraîner avec son propre compte claude.ai.</span></a>'
@@ -582,6 +614,7 @@ def slide_label(w, sid):
     if sid == "methode": return f"Méthode, étape {w['methode'][0]} · {w['methode'][1]}"
     if sid == "nouvelle": return f"{w['nouvelle']['label']} · {w['nouvelle']['title']}"
     if sid == "labo": return f"Labo IA · {w['labo']['title']}"
+    if sid == "loupe": return f"La langue à la loupe · {LP.LOUPE[w['n']]['titre']}"
     return LABELS.get(sid, sid)
 
 PRINT_CSS = "<style>@media print{.bar,.foot,.noprint{display:none!important}body{background:#fff;font-size:12pt}.prose{max-width:none;padding:0}.pnote{break-inside:avoid-page}}</style>"
@@ -589,7 +622,7 @@ PRINT_CSS = "<style>@media print{.bar,.foot,.noprint{display:none!important}body
 def prof_page(w, slides, notes, ids):
     P = PROF.get(w["n"], {})
     ess = "".join(f"<li>{e(x)}</li>" for x in P.get("essentiel", []))
-    glo = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k,v in P.get("glossaire", []))
+    glo = "".join(f"<dt>{e(k)}</dt><dd>{e(v)}</dd>" for k,v in list(P.get("glossaire", [])) + LP.glossaire(w["n"]))
     noms = "".join(f"<tr><td>{e(k)}</td><td>{e(v)}</td></tr>" for k,v in P.get("noms", []))
     faq = "".join(f'<div class="faq"><p class="q"><b>Q.</b> {e(q)}</p><p class="r"><b>R.</b> {e(r)}</p></div>' for q,r in P.get("faq", []))
     c = w["carnet"]

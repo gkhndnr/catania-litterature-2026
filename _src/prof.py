@@ -6,6 +6,7 @@ PROF = {
  essentiel=[
   "La Révolution détruit le système qui faisait vivre et consacrait les écrivains : les académies sont supprimées le 8 août 1793, les pensions royales disparaissent. L'écrivain doit trouver un public.",
   "Beaucoup d'œuvres de 1790-1815 sont écrites hors de France : Chateaubriand émigré à Londres (1793-1800), Staël exilée par Napoléon à Coppet (Suisse). La censure impériale pilonne De l'Allemagne en 1810.",
+  "Nuance utile : l'aide aux écrivains ne disparaît pas, elle change de forme. Sous l'Empire puis la Restauration, un mécénat d'État répond à des demandes de pension argumentées, examinées selon l'utilité, le talent ou l'allégeance au régime (Glinoer et Laisney, 2019, d'après Chappey et Lilti, 2010).",
   "Une sensibilité nouvelle vient d'Angleterre et d'Allemagne (Young, Ossian, Werther) : mélancolie, nature sauvage, ruines, confidence du moi. On l'appelle après coup préromantisme.",
   "Le mal du siècle (Musset, 1836) : la tristesse d'une jeunesse sans place après la Révolution et l'Empire. René (1802) en est le modèle français, Werther (1774) et Jacopo Ortis (1802) les modèles allemand et italien.",
   "La sociocritique lit la société dans le texte : ce qu'il dit, comment il le dit, ce qu'il tait (Paul et Virginie tait le travail des esclaves).",

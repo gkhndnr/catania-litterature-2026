@@ -9,6 +9,7 @@ Ce dossier commence par `_` : GitHub Pages (Jekyll) ne le publie pas. Il contien
 | `notes_lib.py` | Format des notes de l'enseignant (rubriques, lignes Q. / R., citations) |
 | `notes_a.py`, `notes_b.py` | Notes de l'enseignant développées, par identifiant de diapositive : chaque question posée a sa réponse |
 | `prof.py` | Guide imprimable de chaque semaine : l'essentiel, glossaire, prononciation des noms, questions fréquentes |
+| `loupe.py` | La langue à la loupe (11 octobre 2026) : grille hebdomadaire isotopie, lexique, morpho-syntaxe, rythme ou métrique, voix et codes, pour répondre aux Learning Objectives de la fiche ; diapositive après la méthode, carte En classe, objectif Je peux, glossaire, carnet, encadré du dossier de textes PDF, références Cairn de la semaine 1 |
 | `biblio.py` | Bibliographie : références par semaine et bibliographie générale |
 | `guide.py`, `shots.py`, `shots.json` | Page Mode d'emploi et captures d'écran annotées (Playwright) |
 | `build.py` | Générateur : `python3 build.py <ancien_site> <sortie>` (l'ancien site sert à récupérer les diapositives conservées telles quelles : S1 présentation, S8 envers de la fête) |
@@ -33,6 +34,8 @@ Ce dossier commence par `_` : GitHub Pages (Jekyll) ne le publie pas. Il contien
 Ne jamais déposer les PDF des articles dans ce dépôt public : seulement la référence, le lien et des citations courtes.
 
 ## Notes sur les sources (octobre 2026)
+
+- Ajout du 11 octobre 2026 (La langue à la loupe) : lectures Cairn consultées : Fontanille 1999 (isotopie), Glinoer et Laisney 2019 (mécénat d'État après la Révolution), Gutermann 2007 (mal du siècle), Lits 2001 (nouvelle et presse), Mayeur 2025 (IA générative comme média éducatif). Les grilles s'appuient sur les passages du dossier (passages.py).
 
 - Stalloni, Écoles et courants littéraires (Armand Colin, Cursus) : erreurs de date relevées et signalées en classe (manifeste de Moréas daté de 1866 pour 1886 ; La Morte amoureuse datée de 1844 pour 1836 ; Jack de Daudet daté de 1896 pour 1876).
 - Bainville, Au seuil du siècle (1927, domaine public) : critique d'Action française ; l'article sur Zola contient un passage raciste, traité dans les notes comme document de combat.
