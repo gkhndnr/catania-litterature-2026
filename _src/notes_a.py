@@ -44,7 +44,7 @@ NOTES[1] = {
   qr=[("Pourquoi lire à voix haute à l'université ?",
        "Parce que l'oral de l'examen comporte une lecture expressive, et parce que la voix révèle le rythme, la ponctuation et la syntaxe : on comprend mieux un texte qu'on a dit.")]),
 
-"enigme": N("15 min",
+"enigme": N("13 min, séance A",
   "Lire la question, laisser 3 minutes de réponses spontanées (l'italien est accepté pour démarrer). Noter les mots au tableau et photographier le tableau : on y reviendra en fin de semaine avec Van Tieghem et Musset. Puis donner les trois exemples : Werther (Goethe, 1774), René (Chateaubriand, 1802), Jacopo Ortis (Foscolo, 1802).",
   essentiel="Le mal du siècle est une expression qu'on doit surtout à Musset (La Confession d'un enfant du siècle, 1836) pour désigner la tristesse sans objet d'une génération née pendant la Révolution et l'Empire. On l'emploie aussi, par extension, pour les héros mélancoliques d'avant 1820. Trois causes sont classiques : 1. l'effondrement des repères (Révolution, Terreur, guerres) ; 2. la fin des carrières glorieuses après 1815 (plus d'épopée napoléonienne pour la jeunesse) ; 3. une sensibilité nouvelle venue d'Angleterre et d'Allemagne (Young, Ossian, Werther), qui valorise la mélancolie.",
   qr=[("Pourquoi toute une jeunesse européenne souffre-t-elle du même mal vers 1800 ?",
@@ -58,7 +58,7 @@ NOTES[1] = {
              ("La mélancolie devient le mal du siècle.","Van Tieghem, Le Préromantisme, p. 10")],
   piege="93 renvoie à la Terreur (1793), 1814 à la chute de Napoléon et à l'invasion de la France. Le préciser, sinon la citation reste opaque."),
 
-"frise": N("15 min",
+"frise": N("18 min, séance A",
   "Lire la frise de gauche à droite, en racontant. Idée clé à écrire au tableau : le préromantisme n'est pas une école, c'est une étiquette posée après coup. Montrer que la politique déplace la littérature : les académies supprimées, les écrivains émigrés ou exilés, la censure impériale.",
   essentiel="Les repères à connaître : Rêveries de Rousseau (écrites en 1776-1778, publiées en 1782, quatre ans après sa mort). Paul et Virginie (1788), à la veille de la Révolution. Le 8 août 1793, la Convention supprime toutes les académies, dont l'Académie française ; l'Institut les remplace en 1795. Chateaubriand émigre et vit à Londres de 1793 à 1800 ; il publie le Génie du christianisme en avril 1802, quelques jours avant la célébration du Concordat entre Bonaparte et l'Église. Napoléon devient empereur en 1804 et contrôle la presse et les livres. De l'Allemagne de Staël est saisi et pilonné par la police en 1810, puis publié à Londres en 1813.",
   qr=[("Pourquoi tant d'œuvres françaises sont-elles écrites hors de France ?",
@@ -71,8 +71,9 @@ NOTES[1] = {
   plus="Le mot préromantisme est discuté depuis le colloque de Clermont-Ferrand (1972) : Le Préromantisme, hypothèque ou hypothèse ?, dir. Paul Viallaneix (Klincksieck, 1975). Stalloni parle d'un entre-deux littéraire (1790-1820).",
   source=f"Viallaneix (dir.), 1975 ; Van Tieghem, chap. I ; {STAL}, « Prélude au Romantisme »."),
 
-"auteurs": N("25 min",
-  "Huit groupes de cinq, deux groupes par auteur. 5 minutes de lecture de la fiche (Fiches des quatre voix, sur Classroom), 10 minutes pour la partie 1 du Dossier, puis les deux groupes d'un même auteur présentent à tour de rôle : l'un présente, l'autre ajoute une seule information. L'enseignant complète avec une idée par auteur, pas plus.\n"
+"auteurs": N("27 min, séance A · Dossier du mal du siècle, partie 1",
+  "Huit groupes de cinq, deux groupes par auteur : G1-G2 Rousseau, G3-G4 Bernardin de Saint-Pierre, G5-G6 Chateaubriand, G7-G8 Staël. 5 minutes de lecture de la fiche (Fiches des quatre voix, sur Classroom), 10 minutes pour la partie 1 du Dossier, puis les deux groupes d'un même auteur présentent à tour de rôle : l'un présente, l'autre ajoute une seule information. L'enseignant complète avec une idée par auteur, pas plus.\n"
+  "IT (à dire) · Cinque minuti per leggere la scheda, dieci per scrivere. Una frase per casella, in francese.\n"
   "TR · Biyografiye dönüştürme: yazar başına tek fikir. Sınıf susarsa önce İtalyanca konuşturup sonra Fransızca tek cümle iste.",
   essentiel="Rousseau (1712-1778) : Genevois, auteur de La Nouvelle Héloïse (1761, immense succès sentimental), des Confessions et des Rêveries ; il fait de l'intimité un sujet littéraire. Bernardin de Saint-Pierre (1737-1814) : disciple de Rousseau, Paul et Virginie (1788) raconte l'amour de deux enfants élevés dans la nature à l'île de France (aujourd'hui Maurice), colonie où travaillent des esclaves. Chateaubriand (1768-1848) : petit noble breton, voyage en Amérique (1791), émigré, puis grand écrivain et homme politique (ministre sous la Restauration) ; René est son héros mélancolique. Germaine de Staël (1766-1817) : fille de Necker, ministre de Louis XVI ; elle tient un salon, s'oppose à Napoléon, voyage en Allemagne et en Italie (Corinne ou l'Italie, 1807) et fait connaître les littératures du Nord.",
   qr=[("Pour Paul et Virginie : qui travaille dans ce paradis ?",
@@ -84,19 +85,23 @@ NOTES[1] = {
   citations=[("Elle avait lu Paul et Virginie et elle avait rêvé la maisonnette de bambous, le nègre Domingo, le chien Fidèle…","Flaubert, Madame Bovary, 1857, I, 6 (le mot nègre est celui de 1857 ; le dire et l'expliquer)")],
   piege="Ne pas transformer la séance en biographies : une idée par auteur suffit. La citation de Madame Bovary annonce la semaine 4 : Emma est une lectrice formée par les livres de cette semaine."),
 
-"outil": N("15 min",
-  "Présenter les trois questions comme un outil de lecture, pas comme une théorie : Dire (que dit le texte de sa société ?), Former (comment le dit-il : genre, langue, figures ?), Taire (que tait-il ?). Les appliquer tout de suite à Paul et Virginie : société de référence (une colonie), forme (une idylle pastorale), non-dit (le travail servile).",
+"outil": N("15 min, séance B · Dossier du mal du siècle, partie 2 en fin de séance",
+  "Présenter les trois questions comme un outil de lecture, pas comme une théorie : Dire (que dit le texte de sa société ?), Former (comment le dit-il : genre, langue, figures ?), Taire (que tait-il ?). Les appliquer tout de suite à Paul et Virginie : société de référence (une colonie), forme (une idylle pastorale), non-dit (le travail servile).\n"
+  "Fin de séance B (15 min), partie 2 du Dossier : les groupes de lundi appliquent Dire, Former, Taire à leur auteur (8 min) ; les groupes jumeaux comparent leur Taire et l'écrivent dans la dernière ligne (4 min) ; l'enseignant lit la réponse Taire de chaque auteur (3 min).\n"
+  "IT (à dire) · Dire: che cosa dice. Former: come lo dice. Taire: che cosa tace.",
   essentiel="La sociocritique est une méthode née autour de 1970 (Claude Duchet) : elle lit la société dans le texte lui-même, dans sa langue, ses formes et ses silences, et non dans la biographie de l'auteur. Pierre Zima y ajoute l'étude des langages sociaux (sociolectes, semaine 6) ; Pierre Bourdieu, sociologue, étudie le champ littéraire (semaine 2). Le modèle de lecture de l'enseignant comporte quatre niveaux : contextuel (le moment historique), socio-idéologique (les valeurs et les discours), socio-historique (les institutions, la presse, les tribunaux), socio-identitaire (qui parle, depuis quelle place, quelle identité) ; les trois questions de la diapositive en sont la version simple.",
   qr=[("Quelle différence entre la sociocritique et la biographie ?",
        "La biographie explique le texte par la vie de l'auteur. La sociocritique part du texte (sa langue, ses formes, ses silences) et y lit la société ; l'auteur n'est qu'un élément du contexte."),
       ("Que tait Paul et Virginie ?",
        "Le travail des esclaves et la violence coloniale qui rendent possible le bonheur des deux familles."),
+      ("Que tait chacun des quatre auteurs ? (partie 2 du Dossier)",
+       "Rousseau : sa propre part dans les conflits. Bernardin de Saint-Pierre : l'esclavage et la violence coloniale. Chateaubriand : la Révolution elle-même ; l'histoire de René se passe avant 1789, mais son malaise est celui des jeunes nobles de 1800 (pont vers l'angle 6 du labo IA). Staël : sa propre position sociale ; elle parle depuis un salon aristocratique et dit peu de chose des gens ordinaires."),
       ("Peut-on appliquer ces trois questions à un poème ?",
        "Oui, c'est ce qu'on fera avec Le Lac (semaine 2) : la forme (alexandrins et vers courts) dit aussi quelque chose du rapport au temps d'une société.")],
   piege="Sociocritique ne veut pas dire sociologie de la littérature : on lit d'abord le texte.",
   source="Claude Duchet, « Pour une socio-critique ou variations sur un incipit », Littérature, n° 1, 1971 ; G. Dinar, thèse de doctorat, Université Pamukkale, 2025 (modèle à quatre niveaux)."),
 
-"critique-vantieghem": N("20 min, séance A ou C",
+"critique-vantieghem": N("20 min, séance C",
   "Lire les deux citations à voix haute. Expliquer la thèse en trois temps : 1. le préromantisme est une transition (de 1750 environ au début de la Restauration, 1815) ; 2. il change d'abord la sensibilité, ensuite seulement le goût et les formes ; 3. Rousseau en est le type, Staël et Chateaubriand les maîtres immédiats du romantisme. Insister sur la page 7 : La Nouvelle Héloïse fait passer en littérature ce qui restait dans les journaux intimes et les lettres privées.",
   essentiel="Philippe Van Tieghem (1898-1990) est un historien de la littérature de l'après-guerre ; son Que sais-je ? est une synthèse claire et commode. Sa méthode est celle de l'histoire des idées et de la sensibilité : il explique la littérature par une évolution psychologique de la civilisation. La sociocritique ne rejette pas cette explication, elle la complète par les institutions (académies, presse, censure), le public et le marché du livre.",
   qr=[("Une histoire de la sensibilité suffit-elle à expliquer une littérature ?",
@@ -149,7 +154,7 @@ NOTES[1] = {
   piege="Ne pas confondre René et Chateaubriand : l'auteur a pris ses distances avec son héros, comme le montre la citation des Mémoires d'outre-tombe.",
   source="Chateaubriand, René, 1802 ; Van Tieghem, p. 10 (vagues passions, ardentes chez Chateaubriand)."),
 
-"methode": N("20 min",
+"methode": N("20 min, séance B · individuel",
   "Chacun écrit son hypothèse sur une feuille selon le modèle Ce texte montre…, grâce à… Lire cinq hypothèses, les améliorer ensemble au tableau. Annoncer la progression du semestre : huit étapes jusqu'au commentaire complet de la semaine 8. Les hypothèses sont écrites individuellement, avec le nom, et ramassées : elles donnent une première image du niveau écrit de la classe.\n"
   "IT (à dire) · Una frase sola, individuale: Ce texte montre…, grâce à… Il grâce à è obbligatorio.",
   essentiel="Le commentaire littéraire à la française (épreuve écrite de l'examen) suit un ordre fixe : introduction (amorce, présentation du passage, problématique, annonce du plan), deux ou trois parties argumentées, conclusion (réponse et ouverture). Tout part d'une hypothèse de lecture : une phrase qui dit ce que fait le texte et par quels moyens.",
@@ -159,7 +164,7 @@ NOTES[1] = {
        "La première lecture donne le sens général et l'émotion ; la seconde, à voix haute, fait apparaître les procédés (rythme, ponctuation, répétitions). On évite ainsi de plaquer des idées toutes faites.")],
   piege="Les hypothèses trop générales (Ce texte parle de la tristesse) : demander toujours grâce à quoi."),
 
-"nouvelle": N("30 min, séance C",
+"nouvelle": N("25 min, séance C",
   "Définir simplement la nouvelle : brièveté, une seule action, unité d'effet, chute. Rappeler que la fiche du cours consacre toute la partie B à la nouvelle du XIXe siècle. Préciser le statut de René et présenter le parcours des huit semaines (bas de la diapositive).",
   essentiel="La nouvelle moderne se fixe au XIXe siècle grâce à la presse : journaux et revues ont besoin de textes courts, qui se lisent en une fois. Stalloni note que l'invention de la nouvelle dans sa forme moderne date de l'époque romantique, liée au récit fantastique (Nodier, Mérimée, Gautier). Au XIXe siècle, beaucoup de nouvelles paraissent d'abord dans un journal, puis sont réunies en recueil (Mosaïque de Mérimée, 1833 ; Contes du lundi de Daudet, 1873). Le parcours du semestre : Mérimée (S2), Gautier (S3), Flaubert (S4), Maupassant, Daudet, Barbey (S5), Villiers (S6).",
   qr=[("Nouvelle, conte, récit : quelle différence ?",
@@ -171,21 +176,24 @@ NOTES[1] = {
   piege="Les frontières entre genres sont discutées : un genre est un nom donné après coup, comme préromantisme. Le dire, sans entrer dans la théorie.",
   source="Grojnowski, Lire la nouvelle, Dunod, 1993 ; Schaeffer, Qu'est-ce qu'un genre littéraire ?, Seuil, 1989 ; Stalloni, « Le Romantisme », Les formes et les œuvres."),
 
-"labo": N("40 min, séance C",
-  "L'Atelier du siècle est projeté depuis le poste de l'enseignant : aucun étudiant n'a besoin d'un compte. Charte (5 min). Demander (12 min) : chaque groupe lit sa question, dans l'ordre de 1 à 8 ; les huit réponses passent à l'écran. Vérifier (15 min) : chaque groupe choisit une affirmation et la cherche dans le texte (paragraphe du dossier ou Wikisource, fonction Rechercher avec le mot de son angle). Améliorer et déclarer (8 min) : partie 3 du Dossier.\n"
-  "IT (à dire) · Trovare un errore dell'IA è una buona risposta.\n"
-  "TR · Bu akşam sekiz soruyu Atelier'de dene ve ekran görüntüsü al. Atelier açılmazsa görüntüleri göster ya da olası hataları sesli oku; sınıf metinden doğrular.",
+"labo": N("40 min, séance C · Dossier du mal du siècle, partie 3",
+  "L'Atelier du siècle est projeté depuis le poste de l'enseignant : aucun étudiant n'a besoin d'un compte. Charte (5 min) : déclarer, vérifier, écrire soi-même, rester critique. Demander (12 min) : chaque groupe lit sa question, dans l'ordre de 1 à 8 ; les huit réponses passent à l'écran. Vérifier (15 min) : chaque groupe choisit une affirmation et la cherche dans le texte (paragraphe du dossier ou Wikisource, fonction Rechercher avec le mot de son angle) ; verdict : vrai, faux ou inventé. Améliorer et déclarer (8 min) : trois phrases personnelles et une ligne de déclaration, partie 3 du Dossier.\n"
+  "Les huit angles : G1 les orages désirés · G2 Amélie · G3 la Bretagne et l'enfance · G4 Chactas et les Natchez · G5 le père Souël · G6 la Révolution · G7 les lectures du héros (Werther, Ossian) · G8 le couvent et la religion.\n"
+  "IT (à dire) · L'IA propone, voi verificate nel testo e scrivete con parole vostre. Trovare un errore dell'IA è una buona risposta.\n"
+  "TR · Ders öncesi sekiz soruyu Atelier'de dene ve ekran görüntüsü al. Atelier açılmazsa görüntüleri göster ya da olası hataları sesli oku; sınıf metinden doğrular.",
   essentiel="L'Atelier du siècle simule des écrivains : ce sont des hypothèses de lecture, pas des témoins. La charte du cours tient en quatre verbes : déclarer (dire ce que l'IA a fait), vérifier (dates, citations, attributions dans l'édition), écrire soi-même, rester critique. On suit les trois gestes du labo : demander, vérifier, améliorer.",
-  qr=[("Quelle affirmation de l'IA avez-vous pu vérifier dans le texte ?",
+  qr=[("Pour chaque angle, que dit le texte ?",
+       "G1 : une autre vie, un ailleurs (dossier, §1-2). G2 : Amélie est sa sœur ; elle entre au couvent et révèle une passion coupable pour son frère. G3 : sa mère meurt à sa naissance ; enfance au château du père, en Bretagne, avec Amélie. G4 : il raconte sa vie à Chactas, son père adoptif, et au père Souël, chez les Natchez. G5 : le père Souël le blâme sévèrement pour son orgueil et sa rêverie. G6 : le récit se passe avant 1789 et la Révolution n'est jamais nommée. G7 : Werther n'est pas nommé. G8 : Amélie entre au couvent pour fuir une passion coupable pour son frère."),
+      ("Quelle affirmation de l'IA avez-vous pu vérifier dans le texte ?",
        "Par exemple : René est le frère d'Amélie (vrai) ; René raconte son histoire à Chactas et au père Souël (vrai) ; René se suicide à la fin (faux : il meurt plus tard, massacré chez les Natchez, ce que le récit annonce seulement)."),
       ("Laquelle n'a pas de source ?",
        "Souvent une citation inventée qui ressemble au style de Chateaubriand, ou une date approximative. Toute citation sans page est suspecte."),
       ("Peut-on rendre un texte écrit par l'IA ?",
        "Non. On peut déclarer avoir utilisé l'IA pour chercher ou vérifier, mais le texte rendu est écrit par l'étudiant.")],
-  piege="Erreurs fréquentes de l'IA : citations inventées, dates approximatives, René confondu avec Les Natchez (où il réapparaît), Amélie présentée comme amante et non comme sœur. Saluer chaque erreur trouvée : on forme des lecteurs vigilants. L'angle La Révolution est un bon piège : l'histoire de René se passe avant 1789 et la Révolution n'y est pas nommée, mais l'IA l'introduit souvent. À relier à la question Taire de mardi. De même, Werther n'est pas nommé dans René.",
+  piege="Erreurs fréquentes de l'IA : citations inventées, dates approximatives, René confondu avec Atala ou Les Natchez (où il réapparaît), Amélie présentée comme amante et non comme sœur. Saluer chaque erreur trouvée : on forme des lecteurs vigilants. L'angle La Révolution est un bon piège : l'histoire de René se passe avant 1789 et la Révolution n'y est pas nommée, mais l'IA l'introduit souvent. À relier à la question Taire de mardi. De même, Werther n'est pas nommé dans René. René ne se suicide pas : il meurt plus tard avec Chactas et le père Souël, dans le massacre des Français et des Natchez.",
   plus="Rapprocher de la diapositive Ossian : un texte crédible n'est pas un texte vrai."),
 
-"italia": N("15 min",
+"italia": N("15 min, séance C",
   "Demander qui a lu Foscolo au lycée (souvent tous) : c'est un levier de motivation. Lire René et Ortis côte à côte.",
   essentiel="Ugo Foscolo (1778-1827), né à Zante, publie l'édition de 1802 des Ultime lettere di Jacopo Ortis, roman par lettres inspiré de Werther : Jacopo, patriote vénitien, voit sa patrie livrée à l'Autriche par Bonaparte (traité de Campoformio, 1797) et aime Teresa, promise à un autre ; il se suicide. En janvier 1816, Staël publie à Milan, dans la Biblioteca italiana, Sulla maniera e la utilità delle traduzioni : elle conseille aux Italiens de traduire les littératures étrangères. L'article déclenche la querelle entre classiques et romantiques (Berchet, Lettera semiseria, 1816).",
   qr=[("Qu'est-ce qui rapproche Ortis de René ?",
@@ -193,10 +201,11 @@ NOTES[1] = {
       ("Qu'est-ce qui les sépare ?",
        "Ortis souffre d'une patrie blessée (la question politique est centrale) et se suicide ; René souffre d'un vague des passions sans objet politique et ne se suicide pas. Deux douleurs, deux patries : l'une politique, l'autre existentielle et religieuse.")]),
 
-"bilan": N("10 min",
-  "Revenir à la photo du tableau de l'énigme et lire la citation de Van Tieghem sur la mélancolie, puis celle de Musset sur les deux blessures. Rappeler la fiche de lecture sur René à déposer sur Classroom et les deux extraits pour l'anthologie A.2. Annoncer la bataille d'Hernani et répartir les deux camps dès maintenant.",
+"bilan": N("20 min, séance C · Dossier du mal du siècle, bilan",
+  "Revenir à la photo du tableau de l'énigme et lire la citation de Van Tieghem sur la mélancolie, puis celle de Musset sur les deux blessures. Chaque groupe écrit sa réponse à l'énigme dans le bilan du Dossier (5 min) ; deux groupes la lisent. Rappeler : ce soir, un membre de chaque groupe dépose le Dossier sur Classroom (S1-Groupe-numéro) ; la fiche de lecture sur René est individuelle ; deux extraits pour l'anthologie A.2 ; choix des œuvres A.1 avant la fin de la semaine 2 ; dimanche, le journal de lecture. Annoncer la bataille d'Hernani et répartir les deux camps dès maintenant.\n"
+  "IT (à dire) · Stasera un membro del gruppo carica il Dossier su Classroom. La fiche su René è individuale.",
   qr=[("Quelle est la réponse à l'énigme de la semaine ?",
-       "Une jeunesse sans place après la Révolution et l'Empire (Musset), et une sensibilité importée du Nord qui donne une forme à cette souffrance (Van Tieghem). Les deux explications se complètent : l'histoire et la littérature."),
+       "Une jeunesse sans place après la Révolution et l'Empire (Musset), et une sensibilité importée du Nord qui donne une forme à cette souffrance (Van Tieghem). Les deux explications se complètent : l'histoire et la littérature. Nos textes ajoutent une troisième chose : cette tristesse est aussi une manière de se placer dans la société (Rousseau se présente en innocent exclu, René se met en scène en héros tragique)."),
       ("Que faut-il lire pour la semaine 2 ?",
        "Le Lac de Lamartine (Classroom) et Mateo Falcone de Mérimée (une dizaine de pages).")]),
 }
