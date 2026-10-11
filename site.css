@@ -195,3 +195,5 @@ ol.steps li{margin:6px 0}
 .t-cls .rc{border-top-color:var(--blue)}
 .t-ryt .rc{border-top-color:var(--gold)}
 .t-cls .rc.ia{border-color:var(--ink)}
+
+.rc.rc-loupe{border-top-color:var(--blue)}
