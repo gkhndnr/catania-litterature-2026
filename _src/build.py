@@ -303,9 +303,9 @@ def lab(t):
 def note_lecture(w):
     n = w["n"]
     if n == 1:
-        return ("DURÉE · 10 min, en fin de séance A.\n\n"
+        return ("DURÉE · 8 min, en fin de séance A.\n\n"
           "L'ESSENTIEL POUR L'ENSEIGNANT · La fiche du cours demande de lire en entier six œuvres A.1 et toute la partie B. Le cours ne peut pas tout lire en classe : il donne les passages clés, la méthode et un plan. La lecture intégrale se fait sur 16 semaines, jusqu'à fin janvier, à raison de 3 à 4 heures par semaine.\n\n"
-          "DÉROULÉ · Montrer le tableau, puis ouvrir la page Plan de lecture du site. Annoncer les 8 groupes de 5 et leur fiche d'œuvre (une œuvre A.1 et une nouvelle des recueils B par groupe). Annoncer le journal de lecture sur Classroom : deux minutes par semaine. Les huit groupes formés aujourd'hui travaillent ensemble toute la semaine, puis pour le plan de lecture.\n\n"
+          "DÉROULÉ · Montrer le tableau, puis ouvrir la page Plan de lecture du site. Annoncer les 8 groupes de 5 et leur fiche d'œuvre (une œuvre A.1 et une nouvelle des recueils B par groupe). Annoncer le journal de lecture sur Classroom : deux minutes par semaine. Les huit groupes formés aujourd'hui travaillent ensemble toute la semaine (Dossier du mal du siècle), puis pour le plan de lecture.\n\n"
           "QUESTIONS ET RÉPONSES · Q. Faut-il vraiment lire les deux œuvres de chaque paire ?\nR. Non : une par paire. En classe, on lit les deux par extraits, ce qui aide à choisir.\n"
           "Q. Peut-on lire en traduction italienne ?\nR. La fiche demande une édition intégrale en français. La traduction peut aider à côté, pour les passages difficiles.\n"
           "Q. Quelles œuvres sont les plus courtes ?\nR. Le Bateau ivre, les deux manifestes, Salomé ou Ubu Roi, et Études et préludes. Le roman de la paire 6 et Les Diaboliques sont les lectures les plus longues : le calendrier les place après la fin du cours.\n\n"
