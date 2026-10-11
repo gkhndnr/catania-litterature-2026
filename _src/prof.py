@@ -26,7 +26,10 @@ PROF = {
  faq=[("Faut-il lire René en entier ?","Oui, c'est court (une quarantaine de pages) et c'est l'extrait A.2 le plus utile de la semaine."),
   ("Peut-on écrire la fiche de lecture en italien ?","Non : les productions sont en français, comme l'examen. L'italien peut aider à comprendre un passage difficile."),
   ("Le préromantisme est-il au programme de l'examen ?","Le contexte socio-culturel du début du XIXe siècle fait partie de la partie A de la fiche : il faut savoir situer les œuvres."),
-  ("Doit-on payer pour utiliser l'Atelier du siècle ?","Non. En classe, l'Atelier est projeté depuis le poste de l'enseignant. Chez soi, il fonctionne avec un compte claude.ai, facultatif.")]),
+  ("Doit-on payer pour utiliser l'Atelier du siècle ?","Non. En classe, l'Atelier est projeté depuis le poste de l'enseignant. Chez soi, il fonctionne avec un compte claude.ai, facultatif."),
+  ("Qu'est-ce qu'une fiche de lecture ?","Une page : auteur, titre, date, genre ; ce qui se passe en quatre ou cinq phrases ; un passage marquant avec sa page ; une phrase Ce texte montre…, grâce à… Compter une heure."),
+  ("Quelle édition acheter ?","Rien cette semaine : les textes sont sur Classroom et sur Wikisource. Pour A.1, toute édition intégrale en français, en poche de préférence."),
+  ("Quand a lieu l'examen ?","La date est fixée par le département ; l'enseignant ne fait pas passer l'examen. À retenir : la liste A.2 doit être envoyée trente jours avant.")]),
 
 2: dict(
  essentiel=[
