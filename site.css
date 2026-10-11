@@ -90,9 +90,9 @@ h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.1}
 .audio-note{margin:8px 0 0;font-size:13px;color:var(--mute)}
 
 /* feuille de route (2026-10 refonte) */
-.route{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin:8px 0 20px}
+.route{margin:8px 0 20px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
 .rc{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--wine);padding:16px 20px}
-.rc:nth-child(2){border-top-color:var(--blue)}.rc:nth-child(3){border-top-color:var(--ink)}.rc:nth-child(4){border-top-color:var(--gold)}
 .rc h2{font-size:21px;margin:0 0 8px}
 .rc ul,.rc ol{margin:0;padding-left:1.2em;color:var(--soft);font-size:15.5px}
 .rc li{margin:4px 0}
@@ -177,3 +177,21 @@ ol.steps li{margin:6px 0}
 .qcard p{margin:0}
 @media (max-width:420px){.qcard{flex-direction:column;align-items:flex-start}.qcard .qimg{width:180px;height:180px}}
 .pdfs{margin:4px 0 14px;padding:10px 14px;background:var(--card);border:1px dashed var(--line);font-size:15px;color:var(--soft)}
+
+/* allègement : l'essentiel et trois niveaux (2026-10-11) */
+.essentiel{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--wine);padding:18px 22px;margin:14px 0 22px}
+.essentiel h2{font-size:24px;margin:0 0 8px}
+.essentiel ol{margin:0;padding-left:1.3em;font-size:17px;line-height:1.5}
+.essentiel li{margin:6px 0}
+.essentiel b{color:var(--wine)}
+.essentiel p{margin:10px 0 0;font-size:15px;color:var(--soft)}
+.essentiel p b{color:var(--ink)}
+.tier{margin:0 0 22px}
+.tierh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font:400 15px/1.4 var(--sans);color:var(--soft);margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.tierh span{font:700 13px/1 var(--sans);letter-spacing:2px;text-transform:uppercase;color:var(--paper);background:var(--wine);padding:6px 10px}
+.t-cls .tierh span{background:var(--blue)}
+.t-ryt .tierh span{background:#9A6B12}
+.t-ess .rc{border-top-color:var(--wine)}
+.t-cls .rc{border-top-color:var(--blue)}
+.t-ryt .rc{border-top-color:var(--gold)}
+.t-cls .rc.ia{border-color:var(--ink)}
