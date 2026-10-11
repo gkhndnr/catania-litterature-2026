@@ -270,7 +270,7 @@ OEUVRES = [
 
 # Calendrier de lecture sur 16 semaines : du début des cours à la fin janvier.
 CALENDRIER = [
- ("S1", "12–18 oct.", "Choisir ses six œuvres A.1 (une par paire). Lire Mateo Falcone.", 1),
+ ("S1", "12–18 oct.", "Parcourir le plan de lecture (choix des six œuvres A.1 avant la fin de la semaine 2). Lire Mateo Falcone.", 1),
  ("S2", "19–25 oct.", "Lamartine ou Vivien : la première moitié du recueil. Lire La Morte amoureuse.", 3.5),
  ("S3", "26 oct.–1er nov.", "Lamartine ou Vivien : la fin du recueil. Lire Un cœur simple.", 4),
  ("S4", "2–8 nov.", "Baudelaire ou Gide : la première moitié.", 2.5),
