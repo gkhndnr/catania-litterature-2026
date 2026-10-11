@@ -11,6 +11,7 @@ PROF = {
   "La sociocritique lit la société dans le texte : ce qu'il dit, comment il le dit, ce qu'il tait (Paul et Virginie tait le travail des esclaves).",
   "La nouvelle moderne naît avec la presse au XIXe siècle : brève, une seule action, une fin forte. Elle est le fil rouge de la partie B de la fiche.",
   "La charte IA du cours : déclarer, vérifier, écrire soi-même, rester critique. L'IA propose, le lecteur vérifie.",
+  "Fil de la semaine : huit groupes fixes de cinq remplissent un seul document, le Dossier du mal du siècle (lundi : une voix ; mardi : Dire, Former, Taire ; mercredi : labo IA et réponse à l'énigme).",
  ],
  glossaire=[("Préromantisme","Étiquette posée après coup sur la période 1760-1820 environ, où apparaissent des thèmes romantiques dans des formes encore classiques."),
   ("Mal du siècle","Tristesse sans objet d'une génération, décrite par Musset (1836) et incarnée par René."),
