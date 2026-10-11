@@ -10,6 +10,7 @@ from notes_a import NOTES as NA
 from notes_b import NOTES as NB
 from passages import PASSAGES, SANS_PASSAGE
 from questions import QUESTIONS
+from videos import VIDEOS, ARTE_REF, CONSEIL, yt
 COMPAGNON = "https://compagnon-oral.ai.studio/"  # lien public de l'application Compagnon oral (Google AI Studio)
 from oeuvres import OEUVRES, CALENDRIER, GROUPES, FICHE_OEUVRE, JOURNAL
 OEUV = {o['id']: o for o in OEUVRES}
@@ -369,8 +370,21 @@ def route(w):
       f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>'
       + (f'<div class="rc"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver la feuille de route, l\'audio, la présentation, la bibliographie et l\'Atelier du siècle, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
       + route_lecture(w) + route_parler(w)
+      + route_video(w)
       + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
       + f'</section>')
+
+def tc(sec):
+    h, r = divmod(sec, 3600); m, s_ = divmod(r, 60)
+    return f"{h}:{m:02d}:{s_:02d}" if h else f"{m}:{s_:02d}"
+def route_video(w):
+    out = ""
+    for v in VIDEOS.get(w["n"], []):
+        eps = "".join(f'<li><a href="{a(yt(d))}" target=_blank rel=noopener>{e(t)} ↗</a> <span class="small">{tc(d)} – {tc(f)} · {(f-d)//60} min</span></li>' for t, d, f in v["episodes"])
+        qs = "".join(f"<li>{e(q)}</li>" for q in v["questions"])
+        out += (f'<div class="rc vid"><h2>Regarder</h2><p><b>{e(v["serie"])}</b></p><ul>{eps}</ul><p>{e(v["pourquoi"])}</p>'
+                f'<details><summary>Guide de visionnage</summary><ol>{qs}</ol><p><b>Question sociocritique.</b> {e(v["socio"])}</p><p class="small">{e(CONSEIL)}</p></details></div>')
+    return out
 
 def week_page(w):
     slides, notes, ids = deck(w)
@@ -572,6 +586,7 @@ def biblio_page():
         n = w["n"]
         crit = "".join(f'<li class="crit"><b>Lecture critique.</b> {e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>lien ↗</a></li>' for ar in ARTICLES.get(n, []))
         refs = "".join(f"<li>{e(x)}</li>" for x in BIB_WEEK.get(n, []))
+        refs += "".join(f'<li><b>À regarder.</b> {e(ARTE_REF)} ' + " · ".join(f'<a href="{a(yt(d))}" target=_blank rel=noopener>{e(t.split(" · ")[0])} ↗</a>' for t, d, f in v["episodes"]) + '</li>' for v in VIDEOS.get(n, []))
         weeks += f'<h3 id="s{n}">Semaine {n} · <a href="s{n}.html">{e(w["title"])}</a> <span class="small">({e(w["period"])})</span></h3><ul>{crit}{refs}</ul>'
     gen = ""
     for title, items in BIB:
