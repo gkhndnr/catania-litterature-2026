@@ -72,7 +72,8 @@ NOTES[1] = {
   source=f"Viallaneix (dir.), 1975 ; Van Tieghem, chap. I ; {STAL}, « Prélude au Romantisme »."),
 
 "auteurs": N("25 min",
-  "Quatre groupes, un auteur par groupe : 5 minutes de lecture de la fiche (Classroom), 1 minute de présentation par groupe. L'enseignant complète avec une idée par auteur, pas plus.",
+  "Huit groupes de cinq, deux groupes par auteur. 5 minutes de lecture de la fiche (Fiches des quatre voix, sur Classroom), 10 minutes pour la partie 1 du Dossier, puis les deux groupes d'un même auteur présentent à tour de rôle : l'un présente, l'autre ajoute une seule information. L'enseignant complète avec une idée par auteur, pas plus.\n"
+  "TR · Biyografiye dönüştürme: yazar başına tek fikir. Sınıf susarsa önce İtalyanca konuşturup sonra Fransızca tek cümle iste.",
   essentiel="Rousseau (1712-1778) : Genevois, auteur de La Nouvelle Héloïse (1761, immense succès sentimental), des Confessions et des Rêveries ; il fait de l'intimité un sujet littéraire. Bernardin de Saint-Pierre (1737-1814) : disciple de Rousseau, Paul et Virginie (1788) raconte l'amour de deux enfants élevés dans la nature à l'île de France (aujourd'hui Maurice), colonie où travaillent des esclaves. Chateaubriand (1768-1848) : petit noble breton, voyage en Amérique (1791), émigré, puis grand écrivain et homme politique (ministre sous la Restauration) ; René est son héros mélancolique. Germaine de Staël (1766-1817) : fille de Necker, ministre de Louis XVI ; elle tient un salon, s'oppose à Napoléon, voyage en Allemagne et en Italie (Corinne ou l'Italie, 1807) et fait connaître les littératures du Nord.",
   qr=[("Pour Paul et Virginie : qui travaille dans ce paradis ?",
        "Des esclaves noirs, en particulier Domingue et Marie, les serviteurs des deux familles. L'idylle repose sur une société esclavagiste que le roman montre sans la remettre en cause : c'est ce que la sociocritique appelle le non-dit du texte."),
@@ -149,7 +150,8 @@ NOTES[1] = {
   source="Chateaubriand, René, 1802 ; Van Tieghem, p. 10 (vagues passions, ardentes chez Chateaubriand)."),
 
 "methode": N("20 min",
-  "Chacun écrit son hypothèse sur une feuille selon le modèle Ce texte montre…, grâce à… Lire cinq hypothèses, les améliorer ensemble au tableau. Annoncer la progression du semestre : huit étapes jusqu'au commentaire complet de la semaine 8.",
+  "Chacun écrit son hypothèse sur une feuille selon le modèle Ce texte montre…, grâce à… Lire cinq hypothèses, les améliorer ensemble au tableau. Annoncer la progression du semestre : huit étapes jusqu'au commentaire complet de la semaine 8. Les hypothèses sont écrites individuellement, avec le nom, et ramassées : elles donnent une première image du niveau écrit de la classe.\n"
+  "IT (à dire) · Una frase sola, individuale: Ce texte montre…, grâce à… Il grâce à è obbligatorio.",
   essentiel="Le commentaire littéraire à la française (épreuve écrite de l'examen) suit un ordre fixe : introduction (amorce, présentation du passage, problématique, annonce du plan), deux ou trois parties argumentées, conclusion (réponse et ouverture). Tout part d'une hypothèse de lecture : une phrase qui dit ce que fait le texte et par quels moyens.",
   qr=[("Une phrase pour René : Ce texte montre…, grâce à…",
        "Exemple de bonne réponse : Ce texte montre un héros qui désire sa propre perte et se met en scène comme un personnage, grâce à l'apostrophe aux orages, à l'impératif et à la troisième personne."),
@@ -170,7 +172,9 @@ NOTES[1] = {
   source="Grojnowski, Lire la nouvelle, Dunod, 1993 ; Schaeffer, Qu'est-ce qu'un genre littéraire ?, Seuil, 1989 ; Stalloni, « Le Romantisme », Les formes et les œuvres."),
 
 "labo": N("40 min, séance C",
-  "L'Atelier du siècle est projeté depuis le poste de l'enseignant : aucun étudiant n'a besoin d'un compte. Binômes. Chaque binôme écrit une question sur papier ; l'enseignant en choisit 4 ou 5 et les pose à René sur l'écran commun. Prompt modèle : René, pourquoi appelles-tu les orages ? Puis chaque binôme remplit la première ligne du carnet de vérification IA : question posée, affirmation de l'IA, vérification (page de l'édition), verdict (vrai, faux, inventé).",
+  "L'Atelier du siècle est projeté depuis le poste de l'enseignant : aucun étudiant n'a besoin d'un compte. Charte (5 min). Demander (12 min) : chaque groupe lit sa question, dans l'ordre de 1 à 8 ; les huit réponses passent à l'écran. Vérifier (15 min) : chaque groupe choisit une affirmation et la cherche dans le texte (paragraphe du dossier ou Wikisource, fonction Rechercher avec le mot de son angle). Améliorer et déclarer (8 min) : partie 3 du Dossier.\n"
+  "IT (à dire) · Trovare un errore dell'IA è una buona risposta.\n"
+  "TR · Bu akşam sekiz soruyu Atelier'de dene ve ekran görüntüsü al. Atelier açılmazsa görüntüleri göster ya da olası hataları sesli oku; sınıf metinden doğrular.",
   essentiel="L'Atelier du siècle simule des écrivains : ce sont des hypothèses de lecture, pas des témoins. La charte du cours tient en quatre verbes : déclarer (dire ce que l'IA a fait), vérifier (dates, citations, attributions dans l'édition), écrire soi-même, rester critique. On suit les trois gestes du labo : demander, vérifier, améliorer.",
   qr=[("Quelle affirmation de l'IA avez-vous pu vérifier dans le texte ?",
        "Par exemple : René est le frère d'Amélie (vrai) ; René raconte son histoire à Chactas et au père Souël (vrai) ; René se suicide à la fin (faux : il meurt plus tard, massacré chez les Natchez, ce que le récit annonce seulement)."),
@@ -178,7 +182,7 @@ NOTES[1] = {
        "Souvent une citation inventée qui ressemble au style de Chateaubriand, ou une date approximative. Toute citation sans page est suspecte."),
       ("Peut-on rendre un texte écrit par l'IA ?",
        "Non. On peut déclarer avoir utilisé l'IA pour chercher ou vérifier, mais le texte rendu est écrit par l'étudiant.")],
-  piege="Erreurs fréquentes de l'IA : citations inventées, dates approximatives, René confondu avec Les Natchez (où il réapparaît), Amélie présentée comme amante et non comme sœur. Saluer chaque erreur trouvée : on forme des lecteurs vigilants.",
+  piege="Erreurs fréquentes de l'IA : citations inventées, dates approximatives, René confondu avec Les Natchez (où il réapparaît), Amélie présentée comme amante et non comme sœur. Saluer chaque erreur trouvée : on forme des lecteurs vigilants. L'angle La Révolution est un bon piège : l'histoire de René se passe avant 1789 et la Révolution n'y est pas nommée, mais l'IA l'introduit souvent. À relier à la question Taire de mardi. De même, Werther n'est pas nommé dans René.",
   plus="Rapprocher de la diapositive Ossian : un texte crédible n'est pas un texte vrai."),
 
 "italia": N("15 min",
