@@ -55,7 +55,7 @@ OEUVRES = [
    structure="25 quatrains d'alexandrins (100 vers). 1-4 : libération ; 5-7 : baptême et immersion ; 8-17 : visions (j'ai vu, je sais, j'ai rêvé) ; 18-25 : épuisement, regret, désir de mort, image de l'enfant.",
    savoir=["Écrit à Charleville en 1871 par un adolescent de 16-17 ans qui n'a jamais vu la mer ; Rimbaud l'apporte à Paris en septembre 1871 pour se présenter à Verlaine.",
            "Publié en 1883 par Verlaine dans la série Les Poètes maudits.",
-           "Vocabulaire rare et technique (marine, géographie, mots inventés) : ne pas tout traduire en classe, faire sentir le rythme."],
+           "Vocabulaire rare et technique (marine, géographie, mots inventés) : ne pas tout expliquer en classe, faire sentir le rythme."],
    angle="Sociocritique : un jeune provincial sans capital (ni argent, ni relations) fabrique sa carte d'entrée dans le champ parisien ; le poème est aussi un adieu aux formes reçues tout en restant en alexandrins réguliers. Le regret de l'Europe aux anciens parapets peut se lire comme le prix de la rupture.",
    passages=["Strophes 1-2 (libération)", "Strophe 8 : Et j'ai vu quelquefois ce que l'homme a cru voir", "Strophes 23-25 (retour à la flache)"],
    piege="Ne pas réduire le poème à une allégorie biographique : garder le double niveau, navire et poète.")),
@@ -319,4 +319,5 @@ JOURNAL = [
  ("En une phrase : ce qui se passe, ou ce que fait le texte", "paragraphe"),
  ("Ma difficulté principale", "cases : lexique, syntaxe, contexte historique, longueur, aucune"),
  ("Temps de lecture (en minutes)", "nombre"),
+ ("Ce que j'ai utilisé cette semaine, et combien de temps", "cases : présentation, résumé audio, Atelier du siècle, Compagnon oral, documentaire, lecture critique, rien d'autre ; puis minutes"),
 ]

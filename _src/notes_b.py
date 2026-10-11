@@ -203,7 +203,7 @@ NOTES[6] = {
   piege="Mallarmé peut décourager : un vers ou deux, jamais un poème entier."),
 
 "seances": N("3 min",
-  "A : voyants, décadents, symbolistes, lecture critique de Stalloni, Zima. B : Rimbaud et le paragraphe d'analyse. C : Véra, traductions, manifeste express.",
+  "A : voyants, décadents, symbolistes, lecture critique de Stalloni, Zima. B : Rimbaud et le paragraphe d'analyse. C : Véra, l'IA lit une strophe, manifeste express.",
   qr=[("Qu'est-ce que le manifeste express ?",
        "Un jeu d'écriture de 20 minutes : en groupes, inventer une école en -isme et écrire son manifeste en cinq phrases, avec les marques du genre repérées chez Moréas.")]),
 
@@ -308,9 +308,9 @@ NOTES[6] = {
              ("…c'était la clef du tombeau.","Véra, fin")]),
 
 "labo": N("35 min",
-  "Une strophe, trois versions italiennes : publiée, IA, étudiante. Critères : sens, rythme, images.",
-  qr=[("Que vérifier dans la traduction de l'IA ?",
-       "Le sens exact des mots rares (haleurs, flache, Léviathan), la conservation des images, le rythme (un endecasillabo ou un vers libre ?), et les ajouts : l'IA explique souvent au lieu de traduire."),
+  "Une strophe par groupe : l'IA l'explique, le groupe vérifie dans le texte et le dictionnaire, puis écrit sa propre lecture. Critères : sens, images, rythme.",
+  qr=[("Que vérifier dans l'explication de l'IA ?",
+       "Le sens exact des mots rares (haleurs, flache, Léviathan), le respect des images (l'IA les traduit souvent en idées abstraites), le compte des alexandrins, et les ajouts : l'IA invente parfois une biographie ou une intention."),
       ("Que vérifier dans la biographie que l'IA donne de Rimbaud ?",
        "L'âge (16 ans en 1871), la date du Bateau ivre (été 1871), la publication (1883), la mort (Marseille, 1891). Les erreurs de date sont fréquentes.")],
   piege="Faire aussi vérifier les dates biographiques de Rimbaud données par l'IA : âge, dates de publication."),
@@ -451,10 +451,10 @@ NOTES[7] = {
   piege="L'IA tend à rendre Ubu gentil ou moralisateur : excellent départ pour parler de la violence comique de Jarry."),
 
 "italia": N("15 min",
-  "D'Annunzio en français, la Salomé de Strauss, puis la traduction des mots d'Ubu.",
+  "D'Annunzio en français, la Salomé de Strauss, puis la fabrique des mots d'Ubu.",
   essentiel="D'Annunzio écrit en français Le Martyre de saint Sébastien (1911), musique de Debussy, avec Ida Rubinstein. La Salomé de Richard Strauss (Dresde, 1905) reprend la pièce de Wilde dans sa traduction allemande et fait le tour des opéras d'Europe.",
-  qr=[("Traduire en italien merdre, phynance, oneille.",
-       "Pas de solution unique ; on peut proposer : merdre, merdra (une lettre ajoutée au gros mot italien) ; phynance, phinanza ou fynanza (orthographe fantaisiste de finanza) ; oneille, onecchia (orecchia déformée). L'important est de garder la déformation, pas seulement le sens.")]),
+  qr=[("Comment Jarry fabrique-t-il merdre, phynance, oneille ?",
+       "Par déformation de mots connus : merdre ajoute une lettre au gros mot (le juron devient une marque de fabrique du personnage) ; phynance remplace f par ph, une orthographe savante et pseudo-grecque pour un mot d'argent ; oneille déforme oreille comme un parler enfantin. Le rire naît de l'écart avec le mot attendu.")]),
 
 "bilan": N("10 min",
   "Chacun annonce son roman bref (paire 6) pour la semaine 8 et relit les étapes de méthode avant l'atelier final.",
@@ -572,7 +572,7 @@ NOTES[8] = {
   qr=[("Contrôler dates, noms et citations : combien d'erreurs ?",
        "En général deux à cinq par fiche : date de parution, nom du narrateur (Seurel), lieu (Sainte-Agathe), nom de la victime de Lafcadio (Fleurissoire), citations inventées."),
       ("Quelles hallucinations avons-nous repérées ce semestre ?",
-       "Faire la liste au tableau et les classer : dates, attributions (Madame Bovary, c'est moi), citations inventées, confusions de personnages, scansion fausse, traduction qui explique au lieu de traduire. Conclusion : l'IA est utile pour proposer, jamais pour attester.")],
+       "Faire la liste au tableau et les classer : dates, attributions (Madame Bovary, c'est moi), citations inventées, confusions de personnages, scansion fausse, images réduites à des idées. Conclusion : l'IA est utile pour proposer, jamais pour attester.")],
   piege="Faire compter les erreurs de l'IA et les classer : dates, attributions, citations inventées."),
 
 "italia": N("15 min",

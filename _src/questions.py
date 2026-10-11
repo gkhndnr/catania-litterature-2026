@@ -10,7 +10,7 @@ QUESTIONS = {
   "Choisissez deux auteurs du programme et comparez leurs choix d'écriture.",
   "Quelle œuvre du programme a fait scandale ? Le scandale l'a-t-il aidée à être consacrée ?",
   "Quel texte italien pourriez-vous rapprocher d'un texte français du cours ?",
-  "Lisez à voix haute trois lignes d'un passage du dossier, puis traduisez-les en italien.",
+  "Lisez à voix haute trois lignes d'un passage du dossier, puis expliquez-les en français.",
  ],
  1: [
   "Pourquoi Rousseau commence-t-il par Me voici donc seul sur la terre ? Est-ce une plainte ou une stratégie ?",

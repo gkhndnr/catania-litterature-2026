@@ -23,7 +23,7 @@ PROF = {
  noms=[("Staël","Stal (le ë ne se prononce pas)"),("Chateaubriand","Cha-to-bri-an"),("Rousseau","Rou-sô"),("Bernardin de Saint-Pierre","Bèr-nar-din de Sin-Pierre"),
   ("Coppet","Co-pè"),("Ossian","O-si-an"),("Werther","Vèr-tèr"),("Goethe","Gueu-te (eu fermé)"),("Van Tieghem","Van Ti-gam ou Vann Ti-ghèm"),("Foscolo","comme en italien")],
  faq=[("Faut-il lire René en entier ?","Oui, c'est court (une quarantaine de pages) et c'est l'extrait A.2 le plus utile de la semaine."),
-  ("Peut-on écrire la fiche de lecture en italien ?","Non : les productions sont en français, comme l'examen. L'italien sert pour comprendre et traduire."),
+  ("Peut-on écrire la fiche de lecture en italien ?","Non : les productions sont en français, comme l'examen. L'italien peut aider à comprendre un passage difficile."),
   ("Le préromantisme est-il au programme de l'examen ?","Le contexte socio-culturel du début du XIXe siècle fait partie de la partie A de la fiche : il faut savoir situer les œuvres."),
   ("Doit-on payer pour utiliser l'Atelier du siècle ?","Non. En classe, l'Atelier est projeté depuis le poste de l'enseignant. Chez soi, il fonctionne avec un compte claude.ai, facultatif.")]),
 
@@ -164,7 +164,7 @@ PROF = {
   "Années folles : un chrononyme (Myriam Juan) ; deuil, reconstruction, refus du vote des femmes en 1922 (Jean-Yves Le Naour).",
   "René Maran, Batouala : premier Goncourt d'un écrivain noir (1921), préface anticoloniale.",
   "Bilan : le pouvoir de consacrer passe des académies au public, aux tribunaux, aux groupes, aux prix et à l'école.",
-  "Bilan IA : classer les erreurs de l'IA repérées au semestre (dates, attributions, citations, scansion, traduction).",
+  "Bilan IA : classer les erreurs de l'IA repérées au semestre (dates, attributions, citations, scansion, images réduites à des idées).",
  ],
  glossaire=[("Futurisme","Avant-garde fondée par Marinetti (1909) : vitesse, machine, rupture avec le passé."),
   ("Chrononyme","Nom d'une période (Années folles, Belle Époque)."),

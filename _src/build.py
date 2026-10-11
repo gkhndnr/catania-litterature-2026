@@ -189,7 +189,7 @@ def s_bilan(w):
     return slide("bilan", INK, PAPER, inner, extra="gap:36px", foot=footer(w))
 
 def s_site(w):
-    cols = [("Avant la séance", WINE, [("Page de la semaine","objectifs, textes, séances, devoirs"),("Résumé audio","moins de 2 min, avec la transcription"),("Classroom","présentation et textes en PDF")]),
+    cols = [("Avant la séance", WINE, [("L'essentiel","trois lignes en haut de chaque semaine : lire, produire, lecture intégrale"),("À votre rythme","résumé audio, Compagnon oral, documentaire : facultatif"),("Classroom","présentation et textes en PDF")]),
             ("En classe", BLUE, [("Présentation","flèches du clavier, clic ou balayage"),("Plein écran","bouton sous la présentation"),("Numéro","#5 dans l'adresse ouvre la 5e diapositive")]),
             ("Après la séance", INK, [("Production","à déposer sur Classroom chaque semaine"),("Atelier du siècle","l'IA propose, vous vérifiez dans le texte"),("Anthologie A.2","deux ou trois extraits par semaine")])]
     cards = "".join(card(f'<p style="font-size:22px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:{c}">{e(t)}</p>' +
@@ -354,6 +354,27 @@ document.addEventListener('fullscreenchange',()=>setTimeout(fit,50));
 window.addEventListener('resize',fit);fit();show((parseInt(location.hash.slice(1))||1)-1);
 </script>"""
 
+def cls(html_, c):
+    return html_.replace('<div class="rc', f'<div class="{c} rc', 1)
+
+def essentiel(w):
+    n = w["n"]
+    cal = next((c for c in CALENDRIER if c[0] == f"S{n}"), None)
+    lab_lire = "Après le cours" if n == 8 else f"Pour la semaine {n+1}"
+    items = [(lab_lire, " ".join(w["avant"])),
+             ("Produire", w["production"] + " À déposer sur Classroom.")]
+    if cal:
+        av = " ".join(w["avant"])
+        keep = [x for x in re.split(r"(?<=\.) ", cal[2]) if not (x.startswith("Lire ") and x[5:].rstrip(".").split(" et ")[0] in av)]
+        if keep: items.append(("Lecture intégrale", f"{' '.join(keep)} Environ {hfmt(cal[3])}."))
+    lis = "".join(f'<li><b>{e(k)}</b> {e(v)}</li>' for k, v in items)
+    return (f'<section class="essentiel" aria-label="L\'essentiel de la semaine {n}"><h2>Cette semaine, l\'essentiel</h2><ol>{lis}</ol>'
+            '<p>Le reste de la page vous aide : <b>En classe</b>, ce que nous faisons ensemble ; <b>À votre rythme</b>, pour réviser et approfondir, sans obligation.</p></section>')
+
+TIERS = [("t-ess", "Essentiel", "ce qu'il faut savoir faire, lire et produire"),
+         ("t-cls", "En classe", "ce que nous faisons ensemble pendant les trois séances"),
+         ("t-ryt", "À votre rythme", "pour réviser, approfondir, préparer l'oral : facultatif")]
+
 def route(w):
     ob = "".join(f"<li>{e(o)}</li>" for o in w["objectifs"])
     pr = "".join(f'<li><b>{e(t)}</b> {e(x)}</li>' for t,x in w["prog"])
@@ -361,18 +382,21 @@ def route(w):
     an = "".join(f"<li>{e(x)}</li>" for x in w["anthologie"])
     se = "".join(f'<li><b>Séance {k}</b> {e(t)} : {e(x)}</li>' for k,(t,x) in zip("ABC", w["seances"]))
     nxt = "Après le cours" if w["n"]==8 else f"Avant la semaine {w['n']+1}"
-    return (f'<section class="route" aria-label="Feuille de route de la semaine {w["n"]}">'
-      f'<div class="rc"><h2>Je peux…</h2><ul class="checks">{ob}</ul></div>'
-      f'<div class="rc"><h2>Dans la fiche du cours</h2><ul>{pr}</ul></div>'
-      f'<div class="rc"><h2>Les trois séances</h2><ul>{se}</ul></div>'
-      f'<div class="rc"><h2>{e(nxt)}</h2><ul>{av}</ul><p class="prod"><b>Ma production :</b> {e(w["production"])}</p></div>'
-      f'<div class="rc"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
-      f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>'
-      + (f'<div class="rc"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver la feuille de route, l\'audio, la présentation, la bibliographie et l\'Atelier du siècle, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
-      + route_lecture(w) + route_parler(w)
-      + route_video(w)
-      + "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
-      + f'</section>')
+    je = f'<div class="rc rc-je"><h2>Je peux…</h2><ul class="checks">{ob}</ul></div>'
+    fiche = f'<div class="rc rc-fiche"><h2>Dans la fiche du cours</h2><ul>{pr}</ul></div>'
+    seances = f'<div class="rc rc-seances"><h2>Les trois séances</h2><ul>{se}</ul></div>'
+    avant = f'<div class="rc rc-avant"><h2>{e(nxt)}</h2><ul>{av}</ul><p class="prod"><b>Ma production :</b> {e(w["production"])}</p></div>'
+    antho = f'<div class="rc rc-antho"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
+    labo = (f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>')
+    site = (f'<div class="rc rc-site"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver chaque chose, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
+    lire = cls(route_lecture(w), "rc-lire")
+    parler = cls(route_parler(w), "rc-parler")
+    crit = "".join(f'<div class="rc crit"><h2>Lecture critique</h2><p><b>{e(ar["court"])}</b></p><p>{e(ar["route"])}</p><p class="small">{e(ar["ref"])} <a href="{a(ar["lien"])}" target=_blank rel=noopener>Lire ↗</a> · <a href="biblio.html#s{w["n"]}">bibliographie</a></p></div>' for ar in ARTICLES.get(w["n"], []))
+    groups = [[je, avant, lire], [seances, fiche, labo, site], [antho, parler, crit, route_video(w)]]
+    out = ""
+    for (c, t, sub), cards in zip(TIERS, groups):
+        out += f'<div class="tier {c}"><h2 class="tierh"><span>{e(t)}</span> {e(sub)}</h2><div class="tgrid">{"".join(cards)}</div></div>'
+    return f'<section class="route" aria-label="Feuille de route de la semaine {w["n"]}">{out}</section>'
 
 def tc(sec):
     h, r = divmod(sec, 3600); m, s_ = divmod(r, 60)
@@ -395,9 +419,9 @@ def week_page(w):
     nxt = f'<a href="s{w["n"]+1}.html">Semaine {w["n"]+1} →</a>' if w["n"]<8 else '<a href="carnet.html">Carnet →</a>'
     body = (f'<main class="deckpage"><div class="weektabs" aria-label="Semaines">{tabs}</div>'
       f'<div class="deckhead"><p class="eyebrow">Semaine {w["n"]} · {e(w["dates"])} 2026 · {e(w["period"])}</p><h1>{e(w["title"])}</h1><p class="sub">{e(w["sub"])}</p></div>'
-      + route(w) +
+      + essentiel(w) + route(w) +
       f'<p class="pdfs"><b>PDF pour travailler hors ligne</b> (aussi déposés sur <a href="{CLASSROOM}" target=_blank rel=noopener>Classroom</a>) : <a href="pdf/s{w["n"]}-presentation.pdf">présentation</a> · <a href="pdf/s{w["n"]}-textes.pdf">dossier de textes</a> · <a href="pdf/s{w["n"]}-guide-enseignant.pdf">guide de l\'enseignant</a></p>'
-      f'<section class="audio" id="audio" aria-label="Résumé audio de la semaine {w["n"]}"><div class="audio-head"><p class="eyebrow">Résumé audio · moins de 2 minutes</p><audio controls preload="none" src="audio/s{w["n"]}.mp3">Votre navigateur ne lit pas l\'audio : <a href="audio/s{w["n"]}.mp3">télécharger le MP3</a>.</audio></div><details><summary>Lire la transcription</summary>{aud}</details><p class="audio-note">Voix de synthèse : en cas de doute sur une prononciation, le texte écrit fait foi.</p></section>'
+      f'<section class="audio" id="audio" aria-label="Résumé audio de la semaine {w["n"]}"><div class="audio-head"><p class="eyebrow">Résumé audio · moins de 2 minutes · à votre rythme</p><audio controls preload="none" src="audio/s{w["n"]}.mp3">Votre navigateur ne lit pas l\'audio : <a href="audio/s{w["n"]}.mp3">télécharger le MP3</a>.</audio></div><details><summary>Lire la transcription</summary>{aud}</details><p class="audio-note">Voix de synthèse : en cas de doute sur une prononciation, le texte écrit fait foi.</p></section>'
       f'<h2 class="deckt">La présentation</h2>'
       f'<div class="stage" id="stage" tabindex="0" aria-label="Présentation, flèches pour naviguer">{frames}</div>'
       '<div class="controls"><button id="prev" aria-label="Diapositive précédente">←</button><span id="count" class="count"></span><button id="next" aria-label="Diapositive suivante">→</button><span class="spacer"></span><label class="tog"><input type="checkbox" id="shownotes"> Notes de l\'enseignant</label><a class="btn" href="prof-s'+str(w["n"])+'.html">Guide imprimable</a><button id="fs">Plein écran</button></div>'
@@ -454,7 +478,7 @@ def index_page():
       '<section class="how"><h2>Comment on travaille</h2><div class="howgrid">'
       '<div><b>Chaque semaine</b>Des objectifs clairs, les textes de la fiche du cours, trois séances (contexte, texte, nouvelle et IA) et une petite production à déposer sur Classroom.</div>'
       '<div><b>La fiche du cours</b>Les six paires de la liste A.1, les nouvelles de la partie B et des extraits pour votre anthologie A.2 sont tous travaillés en classe, par extraits.</div>'
-      '<div><b>L\'examen</b>Je ne fais pas passer l\'examen. Le cours vous y prépare : commentaire écrit en huit étapes, lecture expressive, traduction, contexte.</div>'
+      '<div><b>L\'examen</b>Je ne fais pas passer l\'examen. Le cours vous y prépare : commentaire écrit en huit étapes, lecture expressive, contexte.</div>'
       '<div><b>Pour réviser</b>Un résumé audio de moins de deux minutes par semaine, avec sa transcription, et l\'Atelier du siècle pour s\'entraîner.</div>'
       '<div><b>Première visite ?</b>Lisez le <a href="guide.html">mode d\'emploi du site</a> : cinq minutes pour savoir où tout se trouve.</div>'
       '</div></section>'
@@ -489,13 +513,14 @@ def carnet_page():
           f'<p><strong>Production des étudiants.</strong> {e(w["production"])}</p>'
           + "".join(f'<p><strong>Lecture critique.</strong> {e(ar["ref"])} Idées utilisées en classe : ' + "; ".join(e(k)+" ("+e(v)+")" for k,v in ar["idees"]) + f'. À discuter : {e(ar["debat"])}</p>' for ar in ARTICLES.get(w["n"], [])))
     body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 11 octobre 2026 · <a href="prof-s1.html">Guides imprimables S1</a> à <a href="prof-s8.html">S8</a> · <a href="prof-oeuvres.html">Fiches des œuvres</a> · <a href="lecture.html">Plan de lecture</a> · <a href="biblio.html">Bibliographie</a></p>'
+      '<div class="callout"><b>Principes de la page étudiante (11 octobre 2026).</b> Chaque semaine commence par trois lignes, Cette semaine, l\'essentiel : lire pour la semaine suivante, produire, avancer dans la lecture intégrale. Les cartes sont rangées en trois niveaux : Essentiel, En classe, À votre rythme (facultatif). La structure du site ne change plus pendant le semestre : seul le contenu est mis à jour. Le journal de lecture demande ce que chacun a utilisé et combien de temps : relire les réponses après la semaine 2 et retirer ce qui ne sert pas. La traduction ne fait pas partie de ce cours : les séances B travaillent la lecture expressive, l\'analyse et le commentaire oral.</div>'
       '<h2>Architecture du cours</h2>'
       '<p>48 heures en 8 semaines, du 12 octobre au 5 décembre 2026, en trois séances de 2 heures par semaine. Le cours suit la fiche de Carminella Sipala (Laurea L11, L-LIN/03) : partie A, fondements du XIXe siècle et des vingt premières années du XXe, avec les six paires de la liste A.1 ; partie B, la nouvelle au XIXe siècle. La méthode est la mienne : la sociocritique comme lecture, l\'IA comme outil vérifié, une production par semaine.</p>'
-      '<p><strong>Examen.</strong> Je ne fais pas passer l\'examen (écrit de commentaire puis oral, en français, selon la fiche). Le cours y prépare : méthode du commentaire en huit étapes, lecture expressive, traduction italienne, contexte, fiches A.1 et anthologie A.2. Deux ateliers de commentaire (semaines 5 et 8) reçoivent un retour écrit, sans note.</p>'
+      '<p><strong>Examen.</strong> Je ne fais pas passer l\'examen (écrit de commentaire puis oral, en français, selon la fiche). Le cours y prépare : méthode du commentaire en huit étapes, lecture expressive, contexte, fiches A.1 et anthologie A.2. Deux ateliers de commentaire (semaines 5 et 8) reçoivent un retour écrit, sans note.</p>'
       '<p><strong>Principe de simplicité.</strong> Chaque semaine : quatre objectifs en je, deux textes à la loupe, un outil sociocritique en trois mots, une étape de méthode, une nouvelle ou une scène, un labo IA en trois gestes (demander, vérifier, améliorer).</p>'
       '<h2>Rythme d\'une semaine</h2><table><thead><tr><th>Séance</th><th>Contenu</th></tr></thead><tbody>'
       '<tr><td>A · Contexte</td><td>énigme, frise, auteurs, outil sociocritique, premier texte</td></tr>'
-      '<tr><td>B · Atelier du texte</td><td>texte du programme, lecture expressive, traduction, étape de méthode</td></tr>'
+      '<tr><td>B · Atelier du texte</td><td>texte du programme, lecture expressive, analyse, étape de méthode</td></tr>'
       '<tr><td>C · Nouvelle et IA</td><td>nouvelle de la partie B, labo IA, pont italien, devoirs</td></tr></tbody></table>'
       f'<h2>Calendrier</h2><table><thead><tr><th>S</th><th>Dates</th><th>Titre</th><th>Fiche du cours</th><th>Méthode</th></tr></thead><tbody>{cal}</tbody></table>'
       f'<h2>Correspondance avec la fiche</h2>{a1_table()}{b_table()}'
@@ -641,7 +666,7 @@ def parler_block():
     qs = "".join(f"<li>{qlink(q, 0)}</li>" for q in QUESTIONS["general"])
     return ('<section class="how" id="parler"><h2>Parler du cours : le Compagnon oral</h2>'
       '<p class="lead small">Un chatbot vocal qui connaît le contenu de ce site : il vous pose des questions, vous répondez en français, à l\'écrit ou à voix haute. '
-      'Il sert à préparer l\'oral (présenter un texte, lire, traduire, argumenter) et à revoir chaque semaine. Il ne remplace ni la lecture ni l\'édition : vérifiez ce qu\'il affirme.</p>'
+      'Il sert à préparer l\'oral (présenter un texte, lire, expliquer, argumenter) et à revoir chaque semaine. Il ne remplace ni la lecture ni l\'édition : vérifiez ce qu\'il affirme.</p>'
       f'<p>{compagnon_link()}</p><div class="prose wide"><p><b>Questions générales pour s\'entraîner</b> (les questions de chaque semaine sont sur sa page)</p><ol>{qs}</ol></div></section>')
 
 # ------------------------------------------------------------------ plan de lecture : pages

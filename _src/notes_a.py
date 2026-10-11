@@ -17,10 +17,12 @@ NOTES[1] = {
   piege="Ne pas détailler les huit semaines maintenant : montrer la page d'accueil du site et la page Mode d'emploi, c'est suffisant."),
 
 "site": N("10 min, séance A, après les présentations",
-  "Projeter la diapositive puis ouvrir le site en direct. Montrer dans l'ordre : 1. la page d'accueil et la carte de la semaine 1 ; 2. la feuille de route (objectifs, fiche du cours, séances, devoirs, anthologie, labo IA, lecture critique) ; 3. le lecteur audio et la transcription ; 4. la présentation (flèches, plein écran) ; 5. la page Mode d'emploi ; 6. l'Atelier du siècle (ne pas encore se connecter, ce sera en séance C) ; 7. la Bibliographie. Demander aux étudiants d'ouvrir le site sur leur téléphone pendant la démonstration.",
-  essentiel="Le site remplace un polycopié : tout y est (objectifs, textes, devoirs, audio, présentation). Google Classroom est l'espace de la classe : chaque semaine l'enseignant y dépose la présentation et le dossier de textes en PDF (utile en cas de panne de réseau), les étudiants y déposent leurs productions. Le lien d'invitation et son QR code sont sur la page d'accueil du site et sur la diapositive Mode d'emploi. Le site est public et mis à jour chaque semaine ; les notes de l'enseignant sont visibles si on coche la case, ce qui est voulu : les étudiants peuvent relire les réponses après la séance.",
-  qr=[("Où trouve-t-on ce qu'il faut lire pour la semaine prochaine ?",
-       "Sur la page de la semaine, carte Avant la semaine 2 (et sur la dernière diapositive, Bilan et suite)."),
+  "Projeter la diapositive puis ouvrir le site en direct. Montrer dans l'ordre : 1. la page d'accueil et la carte de la semaine 1 ; 2. l'encadré Cette semaine, l'essentiel, puis les trois niveaux de la feuille de route : Essentiel (objectifs, lectures, production, lecture intégrale), En classe (séances, fiche du cours, labo IA), À votre rythme (anthologie, Parler de la semaine, lecture critique, documentaire) ; 3. le lecteur audio et la transcription ; 4. la présentation (flèches, plein écran) ; 5. la page Mode d'emploi ; 6. l'Atelier du siècle (ne pas encore se connecter, ce sera en séance C) ; 7. la Bibliographie. Demander aux étudiants d'ouvrir le site sur leur téléphone pendant la démonstration.",
+  essentiel="Le site remplace un polycopié : tout y est (objectifs, textes, devoirs, audio, présentation). Pour ne pas noyer les étudiants, chaque semaine commence par trois lignes, Cette semaine, l'essentiel : lire pour la semaine suivante, produire, avancer dans la lecture intégrale. Tout le reste est un appui : le dire clairement dès la première séance. Google Classroom est l'espace de la classe : chaque semaine l'enseignant y dépose la présentation et le dossier de textes en PDF (utile en cas de panne de réseau), les étudiants y déposent leurs productions. Le lien d'invitation et son QR code sont sur la page d'accueil du site et sur la diapositive Mode d'emploi. Le site est public et mis à jour chaque semaine ; les notes de l'enseignant sont visibles si on coche la case, ce qui est voulu : les étudiants peuvent relire les réponses après la séance.",
+  qr=[("Faut-il tout faire sur la page de la semaine ?",
+       "Non. L'encadré Cette semaine, l'essentiel donne les trois choses à faire. Les cartes En classe décrivent ce que nous faisons ensemble ; les cartes À votre rythme (audio, anthologie, Compagnon oral, lecture critique, documentaire) sont facultatives."),
+      ("Où trouve-t-on ce qu'il faut lire pour la semaine prochaine ?",
+       "En haut de la page de la semaine, encadré L'essentiel (et sur la dernière diapositive, Bilan et suite)."),
       ("Où dépose-t-on la production de la semaine ?",
        "Sur Classroom, pas sur le site. Le site dit seulement quoi produire (carte Ma production)."),
       ("Le site remplace-t-il la lecture des œuvres ?",
@@ -38,7 +40,7 @@ NOTES[1] = {
   piege="Les étudiants confondent souvent A.1 et A.2. Le dire deux fois et l'écrire au tableau."),
 
 "seances": N("3 min",
-  "Présenter le rythme fixe de chaque semaine : séance A, contexte (énigme, frise, auteurs, outil) ; séance B, atelier du texte (lecture à voix haute, analyse, traduction, étape de méthode) ; séance C, nouvelle et labo IA. Chaque semaine se termine par une petite production déposée sur Classroom : une trace de travail qui prépare l'écrit.",
+  "Présenter le rythme fixe de chaque semaine : séance A, contexte (énigme, frise, auteurs, outil) ; séance B, atelier du texte (lecture à voix haute, analyse, étape de méthode) ; séance C, nouvelle et labo IA. Chaque semaine se termine par une petite production déposée sur Classroom : une trace de travail qui prépare l'écrit.",
   qr=[("Pourquoi lire à voix haute à l'université ?",
        "Parce que l'oral de l'examen comporte une lecture expressive, et parce que la voix révèle le rythme, la ponctuation et la syntaxe : on comprend mieux un texte qu'on a dit.")]),
 
@@ -130,7 +132,7 @@ NOTES[1] = {
   citations=[("Me voici donc seul sur la terre, n'ayant plus de frère, de prochain, d'ami, de société que moi-même.","Rousseau, Rêveries, Première promenade"),
              ("Le plus sociable et le plus aimant des humains en a été proscrit par un accord unanime.","phrase suivante")],
   piege="Le je de Rousseau n'est pas neutre : le texte construit sa propre innocence. C'est une très bonne réponse à la question Que tait-il ? (sa part dans les conflits).",
-  plus="Comparer avec une traduction italienne publiée (Fantasticherie del passeggiatore solitario) et faire repérer ce qui se perd dans l'énumération."),
+  plus="Faire relire l'énumération à voix haute en accélérant : le rythme isole le je avant même qu'on analyse le sens."),
 
 "texte2": N("30 min, séance B",
   "Trois lecteurs pour la phrase des orages, du plus calme au plus exalté. Puis analyse. Raconter l'histoire de René en deux minutes avant l'analyse.",
@@ -139,8 +141,6 @@ NOTES[1] = {
        "Il se regarde souffrir, comme un personnage de roman : c'est une mise en scène de soi (on parle d'énallage de personne). Il se voit déjà comme un héros emporté par le destin."),
       ("Apostrophe et impératif : à qui s'adresse-t-il ?",
        "Aux orages, personnifiés par l'apostrophe et commandés par l'impératif (Levez-vous). Il s'adresse à la nature comme à une puissance capable de le délivrer de sa vie présente."),
-      ("Comment dire orages désirés en italien ?",
-       "Plusieurs choix sont possibles : tempeste desiderate (fidèle), desiderate tempeste (l'adjectif placé avant donne un registre poétique), bramate tempeste (bramare est plus fort et plus littéraire que desiderare). Orage se traduit mieux par tempesta que par temporale, trop météorologique. Une bonne réponse : Levatevi presto, desiderate tempeste."),
       ("Que cherche René dans l'orage ?",
        "Une autre vie, un ailleurs, peut-être la mort : le paradoxe est de désirer ce qui détruit. C'est le cœur du vague des passions : un désir sans objet précis.")],
   citations=[("Levez-vous vite, orages désirés, qui devez emporter René dans les espaces d'une autre vie !","Chateaubriand, René, 1802"),
@@ -281,7 +281,7 @@ NOTES[2] = {
        "C'est un journal libéral fondé en 1824 où écrit le jeune Sainte-Beuve ; il fait le lien entre romantisme et libéralisme. Plus tard il devient saint-simonien (socialisme utopique).")]),
 
 "texte1": N("60 min, séance B",
-  "1. Lecture expressive par trois lecteurs (15 min). 2. Scansion au tableau de la strophe (20 min). 3. Analyse : mètre, figures, thème (15 min). 4. Traduction italienne de la strophe en gardant l'alternance long / court (10 min).",
+  "1. Lecture expressive par trois lecteurs (15 min). 2. Scansion au tableau de la strophe (20 min). 3. Analyse : mètre, figures, thème (15 min). 4. Commentaire oral en binômes : chacun présente la strophe en une minute, l'autre ajoute une remarque (10 min).",
   essentiel="Le Lac est le poème le plus célèbre des Méditations (1820). Lamartine l'écrit en 1817 : il revient seul au lac du Bourget (Savoie), où il a aimé l'année précédente Julie Charles, gravement malade, qui n'a pas pu venir et meurt en décembre 1817. Dans le poème, elle s'appelle Elvire. La strophe Ô temps est la voix de la femme aimée, rapportée par le poète : le mètre change à ce moment, on passe de strophes de trois alexandrins et un vers de six syllabes à une alternance régulière 12 / 6 / 12 / 6.",
   qr=[("Mètre : comptez. Que produit l'alternance 12 / 6 ?",
        "Ô / temps / sus / pends / ton / vol // et / vous / heu / res / pro / pi(ces) = 12 ; Sus / pen / dez / vo / tre / cours = 6 ; Lais / sez / nous / sa / vou / rer // les / ra / pi / des / dé / li(ces) = 12 ; Des / plus / beaux / de / nos / jours = 6. Le vers court arrête le mouvement du vers long : la forme mime la suspension demandée au temps."),
