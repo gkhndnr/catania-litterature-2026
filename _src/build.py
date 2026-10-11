@@ -168,8 +168,9 @@ def s_labo(w):
     inner = head("Labo IA · l'Atelier du siècle", lb["title"], col=GOLD) + (
       f'<div style="display:flex; gap:28px">{steps}</div>'
       f'<p style="font-size:30px; line-height:1.4"><span style="color:{GOLD}; font-weight:700">À déposer :</span> {e(lb["produit"])}</p>'
-      f'<p style="font-family:{HAND}; font-size:44px; color:#F2D9A8">L\'IA propose, le lecteur vérifie, l\'auteur, c\'est vous.</p>')
-    return slide("labo", INK, PAPER, inner, extra="gap:40px", foot=footer(w))
+      f'<p style="font-family:{HAND}; font-size:44px; color:#F2D9A8">L\'IA propose, le lecteur vérifie, l\'auteur, c\'est vous.</p>'
+      + (f'<p style="font-size:26px; line-height:1.4; color:#D8CFDD"><i>IT · {e(lb["it"])}</i></p>' if lb.get("it") else ''))
+    return slide("labo", INK, PAPER, inner, extra="gap:28px" if lb.get("it") else "gap:40px", foot=footer(w))
 
 def s_italia(w):
     rows = "".join(f'<div style="display:flex; gap:36px; align-items:baseline; padding:26px 0; border-bottom:1px solid {LINE}"><p style="flex:none; width:300px; font-family:{SERIF}; font-size:44px; font-weight:700; color:{BLUE}">{e(k)}</p><p style="font-size:32px; line-height:1.4">{e(v)}</p></div>' for k,v in w["italia"])
@@ -304,7 +305,7 @@ def note_lecture(w):
     if n == 1:
         return ("DURÉE · 10 min, en fin de séance A.\n\n"
           "L'ESSENTIEL POUR L'ENSEIGNANT · La fiche du cours demande de lire en entier six œuvres A.1 et toute la partie B. Le cours ne peut pas tout lire en classe : il donne les passages clés, la méthode et un plan. La lecture intégrale se fait sur 16 semaines, jusqu'à fin janvier, à raison de 3 à 4 heures par semaine.\n\n"
-          "DÉROULÉ · Montrer le tableau, puis ouvrir la page Plan de lecture du site. Annoncer les 8 groupes de 5 et leur fiche d'œuvre (une œuvre A.1 et une nouvelle des recueils B par groupe). Annoncer le journal de lecture sur Classroom : deux minutes par semaine.\n\n"
+          "DÉROULÉ · Montrer le tableau, puis ouvrir la page Plan de lecture du site. Annoncer les 8 groupes de 5 et leur fiche d'œuvre (une œuvre A.1 et une nouvelle des recueils B par groupe). Annoncer le journal de lecture sur Classroom : deux minutes par semaine. Les huit groupes formés aujourd'hui travaillent ensemble toute la semaine, puis pour le plan de lecture.\n\n"
           "QUESTIONS ET RÉPONSES · Q. Faut-il vraiment lire les deux œuvres de chaque paire ?\nR. Non : une par paire. En classe, on lit les deux par extraits, ce qui aide à choisir.\n"
           "Q. Peut-on lire en traduction italienne ?\nR. La fiche demande une édition intégrale en français. La traduction peut aider à côté, pour les passages difficiles.\n"
           "Q. Quelles œuvres sont les plus courtes ?\nR. Le Bateau ivre, les deux manifestes, Salomé ou Ubu Roi, et Études et préludes. Le roman de la paire 6 et Les Diaboliques sont les lectures les plus longues : le calendrier les place après la fin du cours.\n\n"
@@ -366,9 +367,12 @@ def essentiel(w):
     if cal:
         av = " ".join(w["avant"])
         keep = [x for x in re.split(r"(?<=\.) ", cal[2]) if not (x.startswith("Lire ") and x[5:].rstrip(".").split(" et ")[0] in av)]
-        if keep: items.append(("Lecture intégrale", f"{' '.join(keep)} Environ {hfmt(cal[3])}."))
+        pre = (w["integrale_avant"] + " ") if w.get("integrale_avant") else ""
+        if w.get("integrale"): items.append(("Lecture intégrale", w["integrale"]))
+        elif keep: items.append(("Lecture intégrale", f"{pre}{' '.join(keep)} Environ {hfmt(cal[3])}."))
     lis = "".join(f'<li><b>{e(k)}</b> {e(v)}</li>' for k, v in items)
-    return (f'<section class="essentiel" aria-label="L\'essentiel de la semaine {n}"><h2>Cette semaine, l\'essentiel</h2><ol>{lis}</ol>'
+    it = f'<p><i>IT · {e(w["essentiel_it"])}</i></p>' if w.get("essentiel_it") else ""
+    return (f'<section class="essentiel" aria-label="L\'essentiel de la semaine {n}"><h2>Cette semaine, l\'essentiel</h2><ol>{lis}</ol>{it}'
             '<p>Le reste de la page vous aide : <b>En classe</b>, ce que nous faisons ensemble ; <b>À votre rythme</b>, pour réviser et approfondir, sans obligation.</p></section>')
 
 TIERS = [("t-ess", "Essentiel", "ce qu'il faut savoir faire, lire et produire"),
@@ -387,7 +391,10 @@ def route(w):
     seances = f'<div class="rc rc-seances"><h2>Les trois séances</h2><ul>{se}</ul></div>'
     avant = f'<div class="rc rc-avant"><h2>{e(nxt)}</h2><ul>{av}</ul><p class="prod"><b>Ma production :</b> {e(w["production"])}</p></div>'
     antho = f'<div class="rc rc-antho"><h2>Pour mon anthologie (A.2)</h2><ul>{an}</ul></div>'
-    labo = (f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + f'</ol><p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p></div>')
+    labo = (f'<div class="rc ia"><h2>Labo IA</h2><p><b>{e(w["labo"]["title"])}</b></p><ol>' + "".join(f"<li><b>{e(k)}</b> {e(v)}</li>" for k,v in w["labo"]["steps"]) + '</ol>'
+            + (f'<p><b>À déposer :</b> {e(w["labo"]["produit"])}</p>' if w["labo"].get("depot_carte") else '')
+            + f'<p><a href="{APP}" target=_blank rel=noopener>Ouvrir l\'Atelier du siècle ↗</a></p>'
+            + (f'<p><i>IT · {e(w["labo"]["it"])}</i></p>' if w["labo"].get("it") else '') + '</div>')
     site = (f'<div class="rc rc-site"><h2>Le site du cours</h2><p><b>Première visite ?</b> La page <a href="guide.html">Mode d\'emploi</a> explique en cinq minutes où trouver chaque chose, pour les étudiants comme pour les enseignants.</p><p><a href="guide.html#etudiants">Étudiants</a> · <a href="guide.html#enseignants">Enseignants</a> · <a href="prof-s{w["n"]}.html">Guide imprimable de l\'enseignant</a></p></div>' if w.get("site_slide") else '')
     lire = cls(route_lecture(w), "rc-lire")
     parler = cls(route_parler(w), "rc-parler")
@@ -510,7 +517,7 @@ def carnet_page():
           f'<p><strong>Objectif :</strong> {e(c["objectif"])} <a href="s{w["n"]}.html">Présentation S{w["n"]}</a> · <a href="prof-s{w["n"]}.html"><b>Guide de l\'enseignant S{w["n"]} (imprimable)</b></a></p>'
           f'<p><strong>Séance A.</strong> {e(c["A"])}</p><p><strong>Séance B.</strong> {e(c["B"])}</p><p><strong>Séance C.</strong> {e(c["C"])}</p>'
           f'<p><strong>À anticiper.</strong> {e(c["anticiper"])}</p>'
-          f'<p><strong>Production des étudiants.</strong> {e(w["production"])}</p>'
+          f'<p><strong>Production des étudiants.</strong> {e(c.get("production", w["production"]))}</p>'
           + "".join(f'<p><strong>Lecture critique.</strong> {e(ar["ref"])} Idées utilisées en classe : ' + "; ".join(e(k)+" ("+e(v)+")" for k,v in ar["idees"]) + f'. À discuter : {e(ar["debat"])}</p>' for ar in ARTICLES.get(w["n"], [])))
     body = (f'<main class="prose"><p class="eyebrow">Carnet de l\'enseignant · Catania 2026</p><h1>Carnet de l\'enseignant</h1><p class="sub">Gökhan Dinar · mis à jour le 11 octobre 2026 · <a href="prof-s1.html">Guides imprimables S1</a> à <a href="prof-s8.html">S8</a> · <a href="prof-oeuvres.html">Fiches des œuvres</a> · <a href="lecture.html">Plan de lecture</a> · <a href="biblio.html">Bibliographie</a></p>'
       '<div class="callout"><b>Principes de la page étudiante (11 octobre 2026).</b> Chaque semaine commence par trois lignes, Cette semaine, l\'essentiel : lire pour la semaine suivante, produire, avancer dans la lecture intégrale. Les cartes sont rangées en trois niveaux : Essentiel, En classe, À votre rythme (facultatif). La structure du site ne change plus pendant le semestre : seul le contenu est mis à jour. Le journal de lecture demande ce que chacun a utilisé et combien de temps : relire les réponses après la semaine 2 et retirer ce qui ne sert pas. La traduction ne fait pas partie de ce cours : les séances B travaillent la lecture expressive, l\'analyse et le commentaire oral.</div>'
@@ -555,6 +562,7 @@ def fmt_note(t):
             elif l.startswith("R. "): ps.append(f'<p class="r"><b>R.</b> {l[3:]}</p>')
             elif l.startswith("« "): ps.append(f'<p class="cit">{l}</p>')
             elif l.startswith("– "): ps.append(f'<p class="li">{l}</p>')
+            elif l.startswith("IT "): ps.append(f"<p><i>{l}</i></p>")
             elif l: ps.append(f"<p>{l}</p>")
         out.append(f"<section>{lab}{''.join(ps)}</section>")
     return "".join(out)
@@ -593,7 +601,7 @@ def prof_page(w, slides, notes, ids):
       f'<p class="noprint"><a href="s{w["n"]}.html">← Page de la semaine</a> · <a href="carnet.html#s{w["n"]}">Carnet</a> · <button class="btn" onclick="window.print()">Imprimer ce guide</button></p>'
       '<div class="callout"><b>Comment utiliser ce guide.</b> Il est écrit pour un enseignant qui découvre la période. Lisez d\'abord L\'essentiel (10 minutes), puis les notes diapositive par diapositive : chaque question posée en classe y a sa réponse (Q. / R.). Les mêmes notes s\'affichent sous la présentation si l\'on coche Notes de l\'enseignant.</div>'
       f'<h2>L\'essentiel avant d\'entrer en classe</h2><ol class="ess">{ess}</ol>'
-      f'<h2>Le plan des trois séances</h2><table><tbody><tr><th>Objectif</th><td>{e(c["objectif"])}</td></tr><tr><th>Séance A</th><td>{e(c["A"])}</td></tr><tr><th>Séance B</th><td>{e(c["B"])}</td></tr><tr><th>Séance C</th><td>{e(c["C"])}</td></tr><tr><th>À anticiper</th><td>{e(c["anticiper"])}</td></tr><tr><th>Production</th><td>{e(w["production"])}</td></tr></tbody></table>'
+      f'<h2>Le plan des trois séances</h2><table><tbody><tr><th>Objectif</th><td>{e(c["objectif"])}</td></tr><tr><th>Séance A</th><td>{e(c["A"])}</td></tr><tr><th>Séance B</th><td>{e(c["B"])}</td></tr><tr><th>Séance C</th><td>{e(c["C"])}</td></tr><tr><th>À anticiper</th><td>{e(c["anticiper"])}</td></tr><tr><th>Production</th><td>{e(c.get("production", w["production"]))}</td></tr></tbody></table>'
       + (f'<h2>Mots à maîtriser</h2><dl class="glo">{glo}</dl>' if glo else '')
       + (f'<h2>Prononcer les noms propres</h2><table><thead><tr><th>Nom</th><th>Prononciation conseillée</th></tr></thead><tbody>{noms}</tbody></table>' if noms else '')
       + (f'<h2>Questions fréquentes des étudiants</h2>{faq}' if faq else '')
