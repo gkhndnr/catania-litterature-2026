@@ -252,6 +252,9 @@ SLIDE_IDS = ["cover","objectifs","seances","enigme","frise","auteurs","outil","t
 
 def deck(w):
     n = w["n"]
+    if n == 1:  # présentation de la semaine 1 en deux séances de 1 h 45 (s1_deck.py, 12 octobre 2026)
+        import s1_deck
+        return s1_deck.deck()
     s = [s_cover(w), s_objectifs(w), s_seances(w), s_enigme(w), s_frise(w), s_auteurs(w), s_outil(w),
          s_texte(w,0), s_texte(w,1), s_methode(w), s_nouvelle(w), s_labo(w), s_italia(w), s_bilan(w)]
     ids = list(SLIDE_IDS)
@@ -603,6 +606,9 @@ LABELS = {"cover":"Couverture","objectifs":"Objectifs de la semaine","seances":"
           "italia":"Ponte con l'Italia","bilan":"Bilan et suite","site":"Mode d'emploi du site","moi":"Présentation de l'enseignant",
           "universite":"L'université d'origine","istanbul":"Istanbul et les écrivains français","vous":"Et vous ?","envers":"L'envers de la fête","lecture":"Lire l'œuvre en entier"}
 def slide_label(w, sid):
+    if w["n"] == 1:
+        import s1_deck
+        return s1_deck.label(sid)
     arts = {ar["id"]: ar for ar in ARTICLES.get(w["n"], [])}
     if sid.startswith("critique-"):
         k = sid[9:]

@@ -12,6 +12,8 @@ Ce dossier commence par `_` : GitHub Pages (Jekyll) ne le publie pas. Il contien
 | `loupe.py` | La langue à la loupe (11 octobre 2026) : grille hebdomadaire isotopie, lexique, morpho-syntaxe, rythme ou métrique, voix et codes, pour répondre aux Learning Objectives de la fiche ; diapositive après la méthode, carte En classe, objectif Je peux, glossaire, carnet, encadré du dossier de textes PDF, références Cairn de la semaine 1 |
 | `biblio.py` | Bibliographie : références par semaine et bibliographie générale |
 | `guide.py`, `shots.py`, `shots.json` | Page Mode d'emploi et captures d'écran annotées (Playwright) |
+| `s1_deck.py`, `s1_notes.json` | Semaine 1 (12 octobre 2026) : présentation en deux séances de 1 h 45, 25 diapositives reprises du fichier « Semaine 1 · Seuils du siècle.pptx », notes de l'enseignant par diapositive ; portraits dans `img/s1/` |
+| `s1_patch.py` | `python3 _src/s1_patch.py .` : remplace la présentation et les notes dans `s1.html` et `prof-s1.html` sans reconstruire le reste (garde les corrections faites à la main) |
 | `build.py` | Générateur : `python3 build.py <ancien_site> <sortie>` (l'ancien site sert à récupérer les diapositives conservées telles quelles : S1 présentation, S8 envers de la fête) |
 | `tts.py` | Résumés audio : `python3 tts.py <sortie>/_audio.json audio [semaines]` (Kokoro, voix ff_siwis, vitesse 0,8, corrections de prononciation `FIX`, mastering ffmpeg) |
 
